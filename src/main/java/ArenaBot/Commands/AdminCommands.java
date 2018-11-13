@@ -14,10 +14,10 @@ import java.util.*;
 import java.util.List;
 import java.util.Map.*;
 
-import static ArenaBot.App.adminIds;
-
 public class AdminCommands extends ListenerAdapter 
 {
+
+    public static ArrayList<String> adminIds = new ArrayList<String>();
 
     @Override
     public void onMessageReceived(MessageReceivedEvent e) 

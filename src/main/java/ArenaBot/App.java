@@ -9,7 +9,6 @@ import net.dv8tion.jda.core.exceptions.*;
 import net.dv8tion.jda.core.hooks.*;
 
 import javax.security.auth.login.LoginException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class App extends ListenerAdapter {
@@ -19,8 +18,6 @@ public class App extends ListenerAdapter {
 	public static int totalMessages = 0;
 
 	public static boolean isOnline = true;
-
-	public static ArrayList adminIds;
 	
 	public static HashMap<String, Integer> saveUsers = new HashMap<String, Integer>();
 
