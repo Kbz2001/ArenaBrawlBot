@@ -9,11 +9,12 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
 import java.awt.*;
-import java.io.File;
-import java.util.Iterator;
+import java.io.*;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Map.*;
+
+import static ArenaBot.App.adminIds;
 
 public class AdminCommands extends ListenerAdapter 
 {
@@ -28,6 +29,12 @@ public class AdminCommands extends ListenerAdapter
 
         String kbzID = "168490710666838017";
         String botID = "494363113030680576";
+
+        adminIds.add("161992742686162944");
+        adminIds.add("133619053435682816");
+        adminIds.add("168490710666838017");
+        adminIds.add("241713709708214275");
+        adminIds.add("237727981164953600");
 
         if(!user.isBot())
         {
@@ -81,7 +88,7 @@ public class AdminCommands extends ListenerAdapter
                 if(msg.getRawContent().equalsIgnoreCase("%shutdown"))
                 {
 
-                    if(user.getId().equals(kbzID))
+                    if(user.getId().equals(kbzID) || user.getId().equals("161992742686162944"))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -95,7 +102,7 @@ public class AdminCommands extends ListenerAdapter
 
                     }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!user.getId().equals(kbzID) || !user.getId().equals("161992742686162944"))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -110,7 +117,7 @@ public class AdminCommands extends ListenerAdapter
                 if(msg.getRawContent().startsWith("%userreset"))
                 {
 
-                    if(user.getId().equals(kbzID))
+                    if(adminIds.contains(user.getId()))
                     {
 
                         String[] userResetCmd = msg.getRawContent().split(" ");
@@ -184,7 +191,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!adminIds.contains(user.getId()))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -350,7 +357,7 @@ public class AdminCommands extends ListenerAdapter
                 if(msg.getRawContent().startsWith("%totaladd"))
                 {
 
-                    if(user.getId().equals(kbzID))
+                    if(adminIds.contains(user.getId()))
                     {
 
                         String[] addCmd = msg.getRawContent().split(" ");
@@ -456,7 +463,7 @@ public class AdminCommands extends ListenerAdapter
                 if(msg.getRawContent().startsWith("%addtokens"))
                 {
 
-                    if(user.getId().equals(kbzID))
+                    if(adminIds.contains(user.getId()))
                     {
 
                         String[] tokenAddCmd = msg.getRawContent().split(" ");
@@ -555,7 +562,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!adminIds.contains(user.getId()))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -570,7 +577,7 @@ public class AdminCommands extends ListenerAdapter
                 if(msg.getRawContent().startsWith("%tokenreset"))
                 {
 
-                    if(user.getId().equals(kbzID))
+                    if(adminIds.contains(user.getId()))
                     {
 
                         String[] tokenResetCmd = msg.getRawContent().split(" ");
@@ -658,7 +665,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!adminIds.contains(user.getId()))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -673,7 +680,7 @@ public class AdminCommands extends ListenerAdapter
                 if(msg.getRawContent().startsWith("%ban"))
                 {
 
-                   if(user.getId().equals(kbzID))
+                   if(adminIds.contains(user.getId()))
                    {
 
                        String[] banCmd = msg.getRawContent().split(" ");
@@ -749,7 +756,7 @@ public class AdminCommands extends ListenerAdapter
                        }
                    }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!adminIds.contains(user.getId()))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -764,7 +771,7 @@ public class AdminCommands extends ListenerAdapter
                 if(msg.getRawContent().startsWith("%unban"))
                 {
 
-                    if(user.getId().equals(kbzID))
+                    if(adminIds.contains(user.getId()))
                     {
 
                         String[] unbanCmd = msg.getRawContent().split(" ");
@@ -828,7 +835,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!adminIds.contains(user.getId()))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -861,7 +868,7 @@ public class AdminCommands extends ListenerAdapter
                         e.getMessage().delete().queue();
 
                         MessageHistory messageHistory = new MessageHistory(e.getTextChannel());
-                        List <Message> msgs;
+                        List<Message> msgs;
 
                         msgs = messageHistory.retrievePast(msgsToPurge).complete();
                         e.getTextChannel().deleteMessages(msgs).queue();
