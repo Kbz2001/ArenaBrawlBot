@@ -9,5 +9,8 @@
         <module name="ArenaBrawlDiscordBot" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="ArenaBrawlDiscordBot" target="8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
