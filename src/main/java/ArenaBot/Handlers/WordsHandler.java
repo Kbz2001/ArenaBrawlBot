@@ -115,7 +115,7 @@ public class WordsHandler extends ListenerAdapter
 
 				ArrayList<String> mandemEmotes = new ArrayList <String>();
 
-				mandemEmotes.add(":Kbz:336927247363604491");
+				mandemEmotes.add(":KbzYouyou:336927247363604491");
 				mandemEmotes.add(":SmellyDoe:337019229180133376");
 				mandemEmotes.add(":Ryan:341311929517735936");
 				mandemEmotes.add(":Smellypizza:336993029359665155");
@@ -135,6 +135,9 @@ public class WordsHandler extends ListenerAdapter
 				mandemEmotes.add(":Martinreece:338019688149942272");
 				mandemEmotes.add(":SnapDoomy:336660661570502656");
 				mandemEmotes.add(":Invincitron2000:336680103973093387");
+				mandemEmotes.add(":Smoarzified:511750990865760257");
+				mandemEmotes.add(":Beggar_Douglas:512036762923696141");
+				mandemEmotes.add(":Edupa:338012355227287563");
 
 				Collections.shuffle(mandemEmotes);
 
