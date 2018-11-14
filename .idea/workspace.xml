@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="15960e83-62fa-4dfa-aa2b-a8fd3f7e0155" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/ArenaBrawlDiscordBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/ArenaBrawlDiscordBot.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -66,24 +65,24 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="MF" value="4" />
-          <entry key="java" value="92" />
-          <entry key="txt" value="16" />
+          <entry key="java" value="225" />
+          <entry key="txt" value="36" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="92" />
+          <entry key="JAVA" value="225" />
           <entry key="Manifest" value="4" />
-          <entry key="PLAIN_TEXT" value="16" />
+          <entry key="PLAIN_TEXT" value="36" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.0" value="2" />
-          <entry key="project.open.time.7" value="1" />
+          <entry key="project.open.time.7" value="2" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -94,8 +93,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="574">
-              <caret line="53" column="24" lean-forward="true" selection-start-line="53" selection-start-column="24" selection-end-line="53" selection-end-column="24" />
+            <state relative-caret-position="353">
+              <caret line="46" selection-start-line="46" selection-end-line="46" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -124,8 +123,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-293">
-              <caret line="117" column="66" lean-forward="true" selection-start-line="117" selection-start-column="66" selection-end-line="117" selection-end-column="66" />
+            <state relative-caret-position="98">
+              <caret line="138" column="68" lean-forward="true" selection-start-line="138" selection-start-column="68" selection-end-line="138" selection-end-column="68" />
+              <folding>
+                <element signature="e#2958#2966#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -194,6 +196,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -230,8 +234,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -357,7 +359,14 @@
       <option name="project" value="LOCAL" />
       <updated>1542086794470</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Updated Mandem List.">
+      <created>1542229787429</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1542229787429</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -365,9 +374,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="436" y="132" width="1343" height="825" extended-state="0" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.26890102" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27279812" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -377,7 +385,7 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32900432" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49961028" weight="0.32756132" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49961028" visible="true" weight="0.32756132" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -440,7 +448,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Yay!" />
     <MESSAGE value="Fixed Stuff." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Stuff." />
+    <MESSAGE value="Updated Mandem List." />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated Mandem List." />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -514,8 +523,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/App.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="53" column="24" lean-forward="true" selection-start-line="53" selection-start-column="24" selection-end-line="53" selection-end-column="24" />
+        <state relative-caret-position="353">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -538,8 +547,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-293">
-          <caret line="117" column="66" lean-forward="true" selection-start-line="117" selection-start-column="66" selection-end-line="117" selection-end-column="66" />
+        <state relative-caret-position="98">
+          <caret line="138" column="68" lean-forward="true" selection-start-line="138" selection-start-column="68" selection-end-line="138" selection-end-column="68" />
+          <folding>
+            <element signature="e#2958#2966#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

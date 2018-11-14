@@ -128,7 +128,6 @@ public class WordsHandler extends ListenerAdapter
 				mandemEmotes.add(":Gormley:337031923182469122");
 				mandemEmotes.add(":Qwed:337025936706764801");
 				mandemEmotes.add(":Pekkaguey:472570497662451745");
-				mandemEmotes.add(":NickTheWaffle14:466849217638301697");
 				mandemEmotes.add(":lemowel:394963855132065792");
 				mandemEmotes.add(":Mitchellith:337029090710388736");
 				mandemEmotes.add(":LadyPiper:336631732079951872");
