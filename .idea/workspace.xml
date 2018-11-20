@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15960e83-62fa-4dfa-aa2b-a8fd3f7e0155" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ArenaBrawlDiscordBot.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ArenaBrawlDiscordBot.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -68,13 +67,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="MF" value="4" />
-          <entry key="java" value="253" />
+          <entry key="java" value="278" />
           <entry key="txt" value="36" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="253" />
+          <entry key="JAVA" value="278" />
           <entry key="Manifest" value="4" />
           <entry key="PLAIN_TEXT" value="36" />
         </counts>
@@ -96,7 +95,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/App.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="540">
@@ -126,11 +125,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2210">
-              <caret line="140" selection-start-line="140" selection-end-line="140" />
+            <state relative-caret-position="608">
+              <caret line="140" column="64" lean-forward="true" selection-start-line="140" selection-start-column="64" selection-end-line="140" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -391,7 +390,14 @@
       <option name="project" value="LOCAL" />
       <updated>1542591197152</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Updated Mandem List.">
+      <created>1542727483535</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1542727483535</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
@@ -399,8 +405,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="257" y="147" width="1343" height="825" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.30085737" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.30085737" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -571,8 +578,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2210">
-          <caret line="140" selection-start-line="140" selection-end-line="140" />
+        <state relative-caret-position="608">
+          <caret line="140" column="64" lean-forward="true" selection-start-line="140" selection-start-column="64" selection-end-line="140" selection-end-column="64" />
         </state>
       </provider>
     </entry>

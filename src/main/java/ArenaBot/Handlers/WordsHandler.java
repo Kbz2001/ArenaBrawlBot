@@ -139,6 +139,7 @@ public class WordsHandler extends ListenerAdapter
 				mandemEmotes.add(":Cashboys:513889060708941846");
 				mandemEmotes.add(":Edupa:338012355227287563");
 				mandemEmotes.add(":xLatios:514458844517367808");
+				mandemEmotes.add(":Brillianze:514464422312411166");
 
 				Collections.shuffle(mandemEmotes);
 
