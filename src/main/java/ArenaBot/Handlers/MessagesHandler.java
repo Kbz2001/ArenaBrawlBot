@@ -45,7 +45,7 @@ public class MessagesHandler extends ListenerAdapter
     	if(App.isOnline && !user.isBot())
 		{
 
-			if(msg.getRawContent().length() != 0 && !msg.getRawContent().startsWith("%"))
+			if(msg.getContentRaw().length() != 0 && !msg.getContentRaw().startsWith("%"))
 			{
 
 				App.totalMessages = App.totalMessages +1;
@@ -54,7 +54,7 @@ public class MessagesHandler extends ListenerAdapter
 
 			}
 
-			if(msg.getRawContent().length() != 0 && !msg.getRawContent().startsWith("%"))
+			if(msg.getContentRaw().length() != 0 && !msg.getContentRaw().startsWith("%"))
 			{
 
 				if(App.saveUsers.containsKey(user.getId()))
@@ -87,7 +87,7 @@ public class MessagesHandler extends ListenerAdapter
     		
     	}
 
-		if(!App.isOnline && !msg.getRawContent().equalsIgnoreCase("%toggleonline") && msg.getRawContent().startsWith("%"))
+		if(!App.isOnline && !msg.getContentRaw().equalsIgnoreCase("%toggleonline") && msg.getContentRaw().startsWith("%"))
 		{
 
 			EmbedBuilder builder = new EmbedBuilder();

@@ -5,13 +5,13 @@ import ArenaBot.Currency.*;
 import ArenaBot.Handlers.*;
 import net.dv8tion.jda.core.*;
 import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.exceptions.*;
 import net.dv8tion.jda.core.hooks.*;
 
 import javax.security.auth.login.LoginException;
 import java.util.HashMap;
 
-public class App extends ListenerAdapter {
+public class App extends ListenerAdapter
+{
 
 	public static JDA jdaBot;
 
@@ -19,15 +19,14 @@ public class App extends ListenerAdapter {
 
 	public static boolean isOnline = true;
 	
-	public static HashMap<String, Integer> saveUsers = new HashMap<String, Integer>();
+	public static HashMap<String, Integer> saveUsers = new HashMap();
 
-	public App() throws LoginException, InterruptedException, RateLimitedException
+	public App() throws LoginException
 	{
 
 		jdaBot = new JDABuilder(AccountType.BOT)
-				.setGame(Game.of("Doe:Type %help!"))
-				.setToken(MethodsHandler.getToken())
-				.buildBlocking();
+				.setGame(Game.playing("Doe:Type %help!")).setToken(MethodsHandler.getToken())
+				.build();
 
 		jdaBot.addEventListener(
 				this,
@@ -37,7 +36,8 @@ public class App extends ListenerAdapter {
 				new MessagesHandler(),
 				new KbzTokens(),
 				new BotCommands(),
-                new SlotsCommand());
+                new SlotsCommand(),
+				new FlagGameHandler());
 
 		MethodsHandler.loadMessageConfig();
 		MethodsHandler.loadTokenConfig();

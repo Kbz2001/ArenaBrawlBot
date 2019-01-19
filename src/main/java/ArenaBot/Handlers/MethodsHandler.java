@@ -5,13 +5,16 @@ import ArenaBot.Currency.KbzTokens;
 import net.dv8tion.jda.core.entities.Member;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MethodsHandler
 {
 
-	private static String token = "NDk0MzYzMTEzMDMwNjgwNTc2.DoycMw.CN89oPPx5MKKJnGCLF7-lzR9fOM";
+	private static String token = "NDk0MzYzMTEzMDMwNjgwNTc2.Dx7CjQ.Fs3BGEbM9JvEv_t2buV6GXFEXUQ";
+	public static String part4 = "";
 
 	public static String getToken()
 	{
@@ -231,4 +234,46 @@ public class MethodsHandler
         return members;
 
     }
+
+	public static String GETArenaRequest() throws IOException
+	{
+		URL urlForGetRequest = new URL("https://api.hypixel.net/gamecounts?key=bf4ccdca-4c57-4fc3-ba91-30b5c7c4b373");
+		String readLine = null;
+		HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
+		conection.setRequestMethod("GET");
+		conection.setRequestProperty("ARENA", "a1bcdef");
+		int responseCode = conection.getResponseCode();
+
+		if (responseCode == HttpURLConnection.HTTP_OK)
+		{
+			BufferedReader in = new BufferedReader(new InputStreamReader(conection.getInputStream()));
+
+			StringBuffer response = new StringBuffer();
+
+			while ((readLine = in .readLine()) != null)
+			{
+
+				response.append(readLine);
+
+			}
+
+			in .close();
+
+			String enitreGameCount = response.toString();
+			String[] parts = enitreGameCount.split("ARENA");
+			String part2 = parts[1];
+			String[] part3 = part2.split(",");
+			part4 = part3[0].replace("\":", "");
+
+		}
+		else
+		{
+
+			System.out.println("GET NOT WORKED");
+
+		}
+
+		return part4;
+
+	}
 }

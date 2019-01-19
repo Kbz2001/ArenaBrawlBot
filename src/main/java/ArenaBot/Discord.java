@@ -1,7 +1,5 @@
 package ArenaBot;
 
-import net.dv8tion.jda.core.exceptions.RateLimitedException;
-
 import javax.security.auth.login.LoginException;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
@@ -23,7 +21,7 @@ public class Discord extends Application
 
             }
 
-            catch (LoginException | InterruptedException | RateLimitedException e)
+            catch (LoginException e)
             {
 
                 e.printStackTrace();

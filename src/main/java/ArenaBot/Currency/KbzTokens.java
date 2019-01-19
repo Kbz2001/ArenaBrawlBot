@@ -24,7 +24,7 @@ public class KbzTokens extends ListenerAdapter
 		if(App.isOnline && !user.isBot())
 		{
 
-			if(msg.getRawContent().length() != 0 && !msg.getRawContent().startsWith("%"))
+			if(msg.getContentRaw().length() != 0 && !msg.getContentRaw().startsWith("%"))
 			{
 
 				if(!KbzTokens.Tokens.containsKey(user.getId()) || KbzTokens.Tokens.get(user.getId()) < 0)

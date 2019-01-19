@@ -1,14 +1,16 @@
 package ArenaBot.Commands;
 
 import ArenaBot.App;
+import ArenaBot.Handlers.ArenaRandomizeHandler;
+import ArenaBot.Handlers.FlagGameHandler;
 import ArenaBot.Handlers.MethodsHandler;
 import ArenaBot.Currency.KbzTokens;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-
 import java.awt.*;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Map.Entry;
@@ -20,7 +22,8 @@ public class UserCommands extends ListenerAdapter
 
     public static ArrayList<String> listOfEnteredPlayers = new ArrayList <String>();
     public static ArrayList<String> listToRandom = new ArrayList <String>();
-    public static HashMap<String, LocalDateTime> someoneCD = new HashMap<String, LocalDateTime>();
+    private static HashMap<String, LocalDateTime> someoneCD = new HashMap <>();
+    private static HashMap<String, LocalDateTime> playerCountCD = new HashMap <>();
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent e)
@@ -34,7 +37,7 @@ public class UserCommands extends ListenerAdapter
     	if(App.isOnline && !user.isBot())
     	{
 
-    		if(msg.getRawContent().equalsIgnoreCase("%help"))
+    		if(msg.getContentRaw().equalsIgnoreCase("%help"))
     		{
 
 				EmbedBuilder builder = new EmbedBuilder();
@@ -47,78 +50,13 @@ public class UserCommands extends ListenerAdapter
 						+ "\n"
 						+ "```"
 						+ "\n"
-						+ "**__User Commands__**"
+						+ "\n**%help utility**: Gives you a list of utility commands."
 						+ "\n"
-						+ "\n*__Utility Commands__*"
+						+ "\n**%help fungames**: Gives you a list of Fun and Games commands."
 						+ "\n"
-						+ "\n```css"
+						+ "\n**%help message**: Gives you a list of Message commands."
 						+ "\n"
-						+ "\n- %help: Shows a list of commands."
-						+ "\n- %playlist: Give you the links to all of the music playlists."
-						+ "\n- %ping: Tells you my ping."
-						+ "\n- %tokens: Tells you how many Kbz Tokens you have."
-						+ "\n- %server-info: Tells you the creation date of the Discord."
-						+ "\n- %random2v2info: A guide on how to use the random2v2 command."
-						+ "\n"
-						+ "\n```"
-						+ "\n"
-						+ "*__Fun and Games__*"
-						+ "\n"
-						+ "\n```css"
-						+ "\n"
-						+ "\n- %flip: Flips a coin. Heads or Tails. Bet x amount(Between 1 and 50). If you win you earn x, if you lose, you lose x. Good luck!"
-						+ "\n- %dice: Rolls a dice. Numbers are between 1 and 6."
-						+ "\n- %lenny: Gives you a random lenny face!"
-						+ "\n- %slots: Gamble away your Tokens with this command! For more info do %slotinfo."
-						+ "\n- %slotinfo: A guide on how to use the slot command."
-						+ "\n- %someone: Mentions a random person in the Discord!"
-						+ "\n```"
-						+ "\n"
-						+ "*__Message Commands__*"
-						+ "\n"
-						+ "\n```css"
-						+ "\n"
-						+ "\n- %totalmsgs: Shows you the total amount of messages we have sent."
-						+ "\n- %mymsgs: Shows you the total messages you have sent."
-						+ "\n- %lb: Displays the top 10 message senders."
-						+ "\n```"
-						+ "\n"
-						+ "**__Admin Commands__**"
-						+ "\n"
-						+ "\n"
-						+ "\n*__Utility Commands__*"
-						+ "\n"
-						+ "\n```css"
-						+ "\n"
-						+ "\n- %addtokens: Gives the specified numbers of tokens to the given player."
-						+ "\n- %tokenreset: Resets the specified user's token count."
-						+ "\n- %alltokenreset: Resets all personal Kbz Token counts to 0."
-						+ "\n```"
-						+ "\n"
-						+ "*__Bot Commands__*"
-						+ "\n"
-						+ "\n"
-						+ "```css"
-						+ "\n"
-						+ "\n- %toggleonline: Brings me into Online/Offline mode."
-						+ "\n- %shutdown: Shuts me down."
-						+ "\n"
-						+ "\n```"
-						+ "\n"
-						+ "*__Message Commands__*"
-						+ "\n"
-						+ "\n```css"
-						+ "\n"
-						+ "\n- %totalreset: Resets the current number of messages to 0."
-						+ "\n- %totaladd: Adds a certain number to the total message count."
-						+ "\n- %totalsub: Subtracts a certain number to the total message count."
-						+ "\n- %lbreset: Resets the current leaderboard."
-						+ "\n- %alluserreset: Resets all personal message counts to 0."
-						+ "\n- %userreset: Resets the specified user's message count."
-						+ "\n- %purge: Deletes a specific number messages in the text channel."
-						+ "```"
-						+ "\n"
-						+ "\n__Credits:__"
+						+ "\n**%help bot**: Gives you a list of bot commands."
 						+ "\n"
 						+ "\nThis bot was created by Kbz with help from P0ke, Retopia & TheMadMillenium!");
 
@@ -126,7 +64,151 @@ public class UserCommands extends ListenerAdapter
 
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%playlist"))
+			if(msg.getContentRaw().equalsIgnoreCase("%help utility"))
+			{
+
+				EmbedBuilder builder = new EmbedBuilder();
+
+				builder.setColor(Color.BLUE).setDescription("\n**__Utility Commands__**"
+						+ "\n"
+						+ "\n"
+						+ "*__User Commands__*"
+						+ "\n"
+						+ "\n```css"
+						+ "\n"
+						+ "\n%help: Shows a list of commands."
+						+ "\n"
+						+ "\n%playlist: Give you the links to all of the music playlists."
+						+ "\n"
+						+ "\n%ping: Tells you my ping."
+						+ "\n"
+						+ "\n%tokens: Tells you how many Kbz Tokens you have."
+						+ "\n"
+						+ "\n%server-info: Tells you the creation date of the Discord."
+						+ "\n"
+						+ "\n%random2v2info: A guide on how to use the random2v2 command."
+						+ "\n"
+						+ "\n%abplayers: Displays the current # of people playing Arena."
+						+ "\n"
+						+ "\n```"
+						+ "\n"
+						+ "\n*__Admin Commands__*"
+						+ "\n"
+						+ "\n```css"
+						+ "\n"
+						+ "\n%addtokens: Gives the specified numbers of tokens to the given player."
+						+ "\n"
+						+ "\n%tokenreset: Resets the specified user's token count."
+						+ "\n"
+						+ "\n%alltokenreset: Resets all personal Kbz Token counts to 0."
+						+ "\n"
+						+ "\n```"
+						+ "\n"
+						+ "\nThis bot was created by Kbz with help from P0ke, Retopia & TheMadMillenium!");
+
+				channel.sendMessage(builder.build()).queue();
+
+			}
+
+			if(msg.getContentRaw().equalsIgnoreCase("%help fungames"))
+			{
+
+				EmbedBuilder builder = new EmbedBuilder();
+
+				builder.setColor(Color.BLUE).setDescription("\n**__Fun and Games__**"
+						+ "\n"
+						+ "\n"
+						+ "\n```css"
+						+ "\n"
+						+ "\n%flip: Flips a coin. Heads or Tails. Bet x amount(Between 1 and 50). If you win you earn x, if you lose, you lose x. Good luck!"
+						+ "\n"
+						+ "\n%dice: Rolls a dice. Numbers are between 1 and 6."
+						+ "\n"
+						+ "\n%lenny: Gives you a random lenny face!"
+						+ "\n"
+						+ "\n%slots: Gamble away your Tokens with this command! For more info do %slotinfo."
+						+ "\n"
+						+ "\n%slotinfo: A guide on how to use the slot command."
+						+ "\n"
+						+ "\n%someone: Mentions a random person in the Discord!"
+						+ "\n"
+						+ "\n```"
+						+ "\n"
+						+ "\nThis bot was created by Kbz with help from P0ke, Retopia & TheMadMillenium!");
+
+				channel.sendMessage(builder.build()).queue();
+
+			}
+
+			if(msg.getContentRaw().equalsIgnoreCase("%help message"))
+			{
+
+				EmbedBuilder builder = new EmbedBuilder();
+
+				builder.setColor(Color.BLUE).setDescription("\n**__Message Commands__**"
+						+ "\n"
+						+ "\n"
+						+ "*__User Commands__*"
+						+ "\n"
+						+ "\n```css"
+						+ "\n"
+						+ "\n%totalmsgs: Shows you the total amount of messages we have sent."
+						+ "\n"
+						+ "\n%mymsgs: Shows you the total messages you have sent."
+						+ "\n"
+						+ "\n%lb: Displays the top 10 message senders."
+						+ "\n"
+						+ "\n```"
+						+ "\n"
+						+ "\n*__Admin Commands__*"
+						+ "\n"
+						+ "\n```css"
+						+ "\n"
+						+ "\n%totalreset: Resets the current number of messages to 0."
+						+ "\n"
+						+ "\n%totaladd: Adds a certain number to the total message count."
+						+ "\n"
+						+ "\n%totalsub: Subtracts a certain number to the total message count."
+						+ "\n"
+						+ "\n%lbreset: Resets the current leaderboard."
+						+ "\n"
+						+ "\n%alluserreset: Resets all personal message counts to 0."
+						+ "\n"
+						+ "\n%userreset: Resets the specified user's message count."
+						+ "\n"
+						+ "\n%purge: Deletes a specific number messages in the text channel."
+						+ "\n"
+						+ "\n```"
+						+ "\n"
+						+"\nThis bot was created by Kbz with help from P0ke, Retopia & TheMadMillenium!");
+
+				channel.sendMessage(builder.build()).queue();
+
+			}
+
+			if(msg.getContentRaw().equalsIgnoreCase("%help bot"))
+			{
+
+				EmbedBuilder builder = new EmbedBuilder();
+
+				builder.setColor(Color.BLUE).setDescription("**__Bot Commands__**"
+						+ "\n"
+						+ "\n"
+						+ "```css"
+						+ "\n"
+						+ "\n%toggleonline: Brings me into Online/Offline mode."
+						+ "\n"
+						+ "\n%shutdown: Shuts me down."
+						+ "\n"
+						+ "\n```"
+						+ "\n"
+						+"\nThis bot was created by Kbz with help from P0ke, Retopia & TheMadMillenium!");
+
+				channel.sendMessage(builder.build()).queue();
+
+			}
+
+			if(msg.getContentRaw().equalsIgnoreCase("%playlist"))
 			{
 
 				channel.sendMessage(
@@ -137,7 +219,7 @@ public class UserCommands extends ListenerAdapter
 
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%ping"))
+			if(msg.getContentRaw().equalsIgnoreCase("%ping"))
 			{
 
 				if(!user.isBot())
@@ -161,14 +243,14 @@ public class UserCommands extends ListenerAdapter
 				}
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%totalmsgs"))
+			if(msg.getContentRaw().equalsIgnoreCase("%totalmsgs"))
 			{
 
 				channel.sendMessage("We have sent " + App.totalMessages + " " + "messages " + msg.getAuthor().getName() + ".").queue();
 
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%mymsgs"))
+			if(msg.getContentRaw().equalsIgnoreCase("%mymsgs"))
 			{
 
 				if(App.saveUsers.containsKey(user.getId()))
@@ -190,7 +272,7 @@ public class UserCommands extends ListenerAdapter
 				}
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%dice"))
+			if(msg.getContentRaw().equalsIgnoreCase("%dice"))
 			{
 
 				if(!user.isBot())
@@ -202,12 +284,12 @@ public class UserCommands extends ListenerAdapter
 				}
 			}
 
-			if(msg.getRawContent().startsWith("%flip"))
+			if(msg.getContentRaw().startsWith("%flip"))
 			{
 
 				if(!user.isBot())
 				{
-					String[] flipCmd = msg.getRawContent().split(" ");
+					String[] flipCmd = msg.getContentRaw().split(" ");
 					int heads = 0;
 					int tails = 1;
 					int random = (int) (Math.random() * 2);
@@ -307,7 +389,7 @@ public class UserCommands extends ListenerAdapter
 				}
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%lenny") && App.isOnline)
+			if(msg.getContentRaw().equalsIgnoreCase("%lenny") && App.isOnline)
 			{
 
 				if(!user.isBot())
@@ -346,7 +428,7 @@ public class UserCommands extends ListenerAdapter
 				}
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%lb"))
+			if(msg.getContentRaw().equalsIgnoreCase("%lb"))
 			{
 
 				if(!user.isBot())
@@ -383,7 +465,7 @@ public class UserCommands extends ListenerAdapter
 				}
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%tokens"))
+			if(msg.getContentRaw().equalsIgnoreCase("%tokens"))
 			{
 
 				if(KbzTokens.Tokens.containsKey(user.getId()))
@@ -401,7 +483,7 @@ public class UserCommands extends ListenerAdapter
 				}
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%server-info"))
+			if(msg.getContentRaw().equalsIgnoreCase("%server-info"))
 			{
 
 				Channel generalChannel = guild.getTextChannelById("336291415908679690");
@@ -410,7 +492,7 @@ public class UserCommands extends ListenerAdapter
 
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%random2v2info"))
+			if(msg.getContentRaw().equalsIgnoreCase("%random2v2info"))
 			{
 
 				EmbedBuilder builder = new EmbedBuilder();
@@ -452,7 +534,7 @@ public class UserCommands extends ListenerAdapter
 
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%random2v2add") && msg.getRawContent().length() == 13)
+			if(msg.getContentRaw().equalsIgnoreCase("%random2v2add") && msg.getContentRaw().length() == 13)
 			{
 
 				channel.sendMessage("Missing arguments!"
@@ -460,10 +542,10 @@ public class UserCommands extends ListenerAdapter
 						"\nCorrect command format: %random2v2add <name>/<names>.").queue();
 			}
 
-			if(msg.getRawContent().startsWith("%random2v2add") && msg.getRawContent().length() > 13)
+			if(msg.getContentRaw().startsWith("%random2v2add") && msg.getContentRaw().length() > 13)
 			{
 
-				String[] playersEntered = msg.getRawContent().replace("%random2v2add", "").split(",", 8);
+				String[] playersEntered = msg.getContentRaw().replace("%random2v2add", "").split(",", 8);
 
 				String playersEnteredString = String.join(",", playersEntered);
 
@@ -529,7 +611,7 @@ public class UserCommands extends ListenerAdapter
 				}
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%random2v2remove") && msg.getRawContent().length() == 16)
+			if(msg.getContentRaw().equalsIgnoreCase("%random2v2remove") && msg.getContentRaw().length() == 16)
 			{
 
 				channel.sendMessage("Missing arguments!"
@@ -538,10 +620,10 @@ public class UserCommands extends ListenerAdapter
 
 			}
 
-			if(msg.getRawContent().startsWith("%random2v2remove") && msg.getRawContent().length() > 16)
+			if(msg.getContentRaw().startsWith("%random2v2remove") && msg.getContentRaw().length() > 16)
 			{
 
-				String[] playersEntered = msg.getRawContent().replace("%random2v2remove", "").split(",", 8);
+				String[] playersEntered = msg.getContentRaw().replace("%random2v2remove", "").split(",", 8);
 
 				String playersEnteredString = String.join(",", playersEntered);
 
@@ -587,7 +669,7 @@ public class UserCommands extends ListenerAdapter
 				}
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%random2v2list"))
+			if(msg.getContentRaw().equalsIgnoreCase("%random2v2list"))
 			{
 
 				String listToStringEnteredPlayers = String.join(", ", listOfEnteredPlayers);
@@ -596,7 +678,7 @@ public class UserCommands extends ListenerAdapter
 
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%random2v2listclear"))
+			if(msg.getContentRaw().equalsIgnoreCase("%random2v2listclear"))
 			{
 
 				listOfEnteredPlayers.clear();
@@ -606,110 +688,23 @@ public class UserCommands extends ListenerAdapter
 
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%random2v2randomize"))
+			if(msg.getContentRaw().equalsIgnoreCase("%random2v2randomize"))
 			{
 
-				if(listOfEnteredPlayers.size() % 4 != 0 || listOfEnteredPlayers.size() == 0)
-				{
+				ArenaRandomizeHandler.runRandomize(e);
 
-					channel.sendMessage("I cannot randomize because I require 4, 8, or 12 players to function!").queue();
-
-					return;
-
-				}
-
-				if(listToRandom.size() == 4)
-				{
-
-					Collections.shuffle(listToRandom);
-
-					String team1 = "";
-					String team2 = "";
-
-					team1 = listToRandom.get(0) + " " + listToRandom.get(1);
-					team2 = listToRandom.get(2) + " " + listToRandom.get(3);
-
-					channel.sendMessage("*__Teams:__*"
-							+ "\n"
-							+ "**Team 1:** " + team1
-							+ "\n"
-							+ "**Team 2:** " + team2).queue();
-
-				}
-
-				if(listOfEnteredPlayers.size() == 8)
-				{
-
-					Collections.shuffle(listToRandom);
-
-					String team1 = "";
-					String team2 = "";
-					String team3 = "";
-					String team4 = "";
-
-					team1 = listToRandom.get(0) + " " + listToRandom.get(1);
-					team2 = listToRandom.get(2) + " " + listToRandom.get(3);
-					team3 = listToRandom.get(4) + " " + listToRandom.get(5);
-					team4 = listToRandom.get(6) + " " + listToRandom.get(7);
-
-
-					channel.sendMessage("*__Teams:__*"
-							+ "\n"
-							+ "**Team 1:** " + team1
-							+ "\n"
-							+ "**Team 2:** " + team2
-							+ "\n"
-							+ "**Team 3:** " + team3
-							+ "\n"
-							+ "**Team 4:** " + team4).queue();
-				}
-
-				if(listOfEnteredPlayers.size() == 12)
-				{
-
-					Collections.shuffle(listToRandom);
-
-					String team1 = "";
-					String team2 = "";
-					String team3 = "";
-					String team4 = "";
-					String team5 = "";
-					String team6 = "";
-
-					team1 = listToRandom.get(0) + " " + listToRandom.get(1);
-					team2 = listToRandom.get(2) + " " + listToRandom.get(3);
-					team3 = listToRandom.get(4) + " " + listToRandom.get(5);
-					team4 = listToRandom.get(6) + " " + listToRandom.get(7);
-					team5 = listToRandom.get(8) + " " + listToRandom.get(9);
-					team6 = listToRandom.get(10) + " " + listToRandom.get(11);
-
-					channel.sendMessage("*__Teams:__*"
-							+ "\n"
-							+ "**Team 1:** " + team1
-							+ "\n"
-							+ "**Team 2:** " + team2
-							+ "\n"
-							+ "**Team 3:** " + team3
-							+ "\n"
-							+ "**Team 4:** " + team4
-							+ "\n"
-							+ "**Team 5:** " + team5
-							+ "\n"
-							+ "**Team 6:** " + team6).queue();
-
-				}
 			}
 
-			if(msg.getRawContent().equalsIgnoreCase("%someone"))
+			if(msg.getContentRaw().equalsIgnoreCase("%someone"))
 			{
+
+				Random ran = new Random();
+
+				int max = MethodsHandler.getMembers().size();
+				Member randomMember = MethodsHandler.getMembers().get(ran.nextInt(max));
 
 				if(!someoneCD.containsKey(user.getId()))
 				{
-
-					Random ran = new Random();
-
-					int max = MethodsHandler.getMembers().size();
-					Member randomMember = MethodsHandler.getMembers().get(ran.nextInt(max));
 
 					channel.sendMessage(randomMember.getAsMention()).queue();
 
@@ -720,7 +715,7 @@ public class UserCommands extends ListenerAdapter
 				if(someoneCD.containsKey(user.getId()))
 				{
 
-					if(someoneCD.get(user.getId()).plusMinutes(1).isBefore(LocalDateTime.now()))
+					if(someoneCD.get(user.getId()).plusMinutes(10).isBefore(LocalDateTime.now()))
 					{
 
 						someoneCD.remove(user.getId());
@@ -730,12 +725,64 @@ public class UserCommands extends ListenerAdapter
 					else
 					{
 
-						someoneCD.put(user.getId(), LocalDateTime.now());
+						channel.sendMessage("You are currently on cooldown for 10 minutes " + user.getAsMention() + "!").queue();
 
-						channel.sendMessage("You are currently on cooldown " + user.getAsMention() + " for one minute!").queueAfter((long)0.75, TimeUnit.SECONDS);
+						someoneCD.put(user.getId(), LocalDateTime.now());
 
 					}
 				}
+			}
+
+			if(msg.getContentRaw().equalsIgnoreCase("%abplayers"))
+			{
+
+				if(!playerCountCD.containsKey(user.getId()))
+				{
+
+					try
+					{
+
+						channel.sendMessage("Currently " + MethodsHandler.GETArenaRequest() + " people playing Arena!").queue();
+
+						playerCountCD.put(user.getId(), LocalDateTime.now());
+
+					}
+					catch (IOException e1)
+					{
+
+						e1.printStackTrace();
+
+					}
+				}
+
+				if(playerCountCD.containsKey(user.getId()))
+				{
+
+					if(playerCountCD.get(user.getId()).plusMinutes(1).isBefore(LocalDateTime.now()))
+					{
+
+						playerCountCD.remove(user.getId());
+
+					}
+
+					else
+					{
+
+
+						channel.sendMessage("You are currently on cooldown for 1 minute " + user.getAsMention() + "!").queue();
+
+						playerCountCD.put(user.getId(), LocalDateTime.now());
+
+					}
+				}
+			}
+
+			if(msg.getContentRaw().equalsIgnoreCase("%flaggame"))
+			{
+
+				FlagGameHandler.startFlagGame(e);
+				FlagGameHandler.runFlagGame(e);
+
 			}
 		}
 	}

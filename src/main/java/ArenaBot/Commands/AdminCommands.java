@@ -4,6 +4,7 @@ import ArenaBot.App;
 import ArenaBot.Handlers.MethodsHandler;
 import ArenaBot.Currency.KbzTokens;
 import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.OnlineStatus;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
@@ -17,7 +18,7 @@ import java.util.Map.*;
 public class AdminCommands extends ListenerAdapter 
 {
 
-    public static ArrayList<String> adminIds = new ArrayList<String>();
+    public static String adminRoleString = "480561808021913610";
 
     @Override
     public void onMessageReceived(MessageReceivedEvent e) 
@@ -26,23 +27,18 @@ public class AdminCommands extends ListenerAdapter
         Message msg = e.getMessage();
         MessageChannel channel = e.getChannel();
         User user = e.getAuthor();
+        Member member = e.getMember();
+        Role adminRole = e.getJDA().getRoleById(adminRoleString);
 
-        String kbzID = "168490710666838017";
         String botID = "494363113030680576";
-
-        adminIds.add("161992742686162944");
-        adminIds.add("133619053435682816");
-        adminIds.add("168490710666838017");
-        adminIds.add("241713709708214275");
-        adminIds.add("237727981164953600");
 
         if(!user.isBot())
         {
 
-            if(msg.getRawContent().equalsIgnoreCase("%toggleonline"))
+            if(msg.getContentRaw().equalsIgnoreCase("%toggleonline"))
             {
 
-                if(user.getId().equals(kbzID))
+                if(member.getRoles().contains(adminRole))
                 {
 
                     if(App.isOnline)
@@ -53,6 +49,9 @@ public class AdminCommands extends ListenerAdapter
                         builder.setColor(Color.gray).setDescription("***I am now Offline!***");
 
                         channel.sendMessage(builder.build()).queue();
+
+                        e.getJDA().getPresence().setStatus(OnlineStatus.INVISIBLE);
+
                         App.isOnline = false;
 
                     }
@@ -65,12 +64,15 @@ public class AdminCommands extends ListenerAdapter
                         builder.setColor(Color.GREEN).setDescription("***I am now Online!***");
 
                         channel.sendMessage(builder.build()).queue();
+
+                        e.getJDA().getPresence().setStatus(OnlineStatus.ONLINE);
+
                         App.isOnline = true;
 
                     }
                 }
 
-                if(!user.getId().equals(kbzID))
+                if(!member.getRoles().contains(adminRole))
                 {
 
                     EmbedBuilder builder = new EmbedBuilder();
@@ -85,10 +87,10 @@ public class AdminCommands extends ListenerAdapter
             if(App.isOnline) 
             {
 
-                if(msg.getRawContent().equalsIgnoreCase("%shutdown"))
+                if(msg.getContentRaw().equalsIgnoreCase("%shutdown"))
                 {
 
-                    if(user.getId().equals(kbzID) || user.getId().equals("161992742686162944"))
+                    if(member.getRoles().contains(adminRole) || user.getId().equals("161992742686162944"))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -102,7 +104,7 @@ public class AdminCommands extends ListenerAdapter
 
                     }
 
-                    if(!user.getId().equals(kbzID) || !user.getId().equals("161992742686162944"))
+                    if(!member.getRoles().contains(adminRole) || !user.getId().equals("161992742686162944"))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -114,13 +116,13 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getRawContent().startsWith("%userreset"))
+                if(msg.getContentRaw().startsWith("%userreset"))
                 {
 
-                    if(adminIds.contains(user.getId()))
+                    if(member.getRoles().contains(adminRole))
                     {
 
-                        String[] userResetCmd = msg.getRawContent().split(" ");
+                        String[] userResetCmd = msg.getContentRaw().split(" ");
 
                         if(userResetCmd.length <= 1)
                         {
@@ -191,7 +193,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!adminIds.contains(user.getId()))
+                    if(!member.getRoles().contains(adminRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -203,10 +205,10 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getRawContent().equalsIgnoreCase("%totalreset"))
+                if(msg.getContentRaw().equalsIgnoreCase("%totalreset"))
                 {
 
-                    if(user.getId().equals(kbzID))
+                    if(member.getRoles().contains(adminRole))
                     {
 
                         App.totalMessages = 0;
@@ -221,7 +223,7 @@ public class AdminCommands extends ListenerAdapter
 
                     }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!member.getRoles().contains(adminRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -233,10 +235,10 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getRawContent().equalsIgnoreCase("%alluserreset"))
+                if(msg.getContentRaw().equalsIgnoreCase("%alluserreset"))
                 {
 
-                    if(user.getId().equals(kbzID))
+                    if(member.getRoles().contains(adminRole))
                     {
 
                         if(App.saveUsers.containsKey(user.getId()))
@@ -260,7 +262,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!member.getRoles().contains(adminRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -272,10 +274,10 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getRawContent().equalsIgnoreCase("%alltokenreset"))
+                if(msg.getContentRaw().equalsIgnoreCase("%alltokenreset"))
                 {
 
-                    if(user.getId().equals(kbzID))
+                    if(member.getRoles().contains(adminRole))
                     {
 
                         if(KbzTokens.Tokens.containsKey(user.getId()))
@@ -299,7 +301,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!member.getRoles().contains(adminRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -311,10 +313,10 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getRawContent().equalsIgnoreCase("%lbreset"))
+                if(msg.getContentRaw().equalsIgnoreCase("%lbreset"))
                 {
 
-                    if(user.getId().equals(kbzID))
+                    if(member.getRoles().contains(adminRole))
                     {
 
                         if(App.saveUsers.containsKey(user.getId()))
@@ -342,7 +344,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!member.getRoles().contains(adminRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -354,13 +356,13 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getRawContent().startsWith("%totaladd"))
+                if(msg.getContentRaw().startsWith("%totaladd"))
                 {
 
-                    if(adminIds.contains(user.getId()))
+                    if(member.getRoles().contains(adminRole))
                     {
 
-                        String[] addCmd = msg.getRawContent().split(" ");
+                        String[] addCmd = msg.getContentRaw().split(" ");
 
                         if(addCmd[1] != null && MethodsHandler.isInteger(addCmd[1]) && !addCmd[1].startsWith("-"))
                         {
@@ -388,7 +390,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!member.getRoles().contains(adminRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -400,13 +402,13 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getRawContent().startsWith("%totalsub"))
+                if(msg.getContentRaw().startsWith("%totalsub"))
                 {
 
-                    if(user.getId().equals(kbzID))
+                    if(member.getRoles().contains(adminRole))
                     {
 
-                        String[] subCmd = msg.getRawContent().split(" ");
+                        String[] subCmd = msg.getContentRaw().split(" ");
 
                         if(subCmd[1] != null && MethodsHandler.isInteger(subCmd[1]) && !subCmd[1].startsWith("-"))
                         {
@@ -448,7 +450,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!user.getId().equals(kbzID))
+                    if(!member.getRoles().contains(adminRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -460,13 +462,13 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getRawContent().startsWith("%addtokens"))
+                if(msg.getContentRaw().startsWith("%addtokens"))
                 {
 
-                    if(adminIds.contains(user.getId()))
+                    if(member.getRoles().contains(adminRole))
                     {
 
-                        String[] tokenAddCmd = msg.getRawContent().split(" ");
+                        String[] tokenAddCmd = msg.getContentRaw().split(" ");
 
                         if(tokenAddCmd.length <= 1)
                         {
@@ -562,7 +564,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!adminIds.contains(user.getId()))
+                    if(!member.getRoles().contains(adminRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -574,13 +576,13 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getRawContent().startsWith("%tokenreset"))
+                if(msg.getContentRaw().startsWith("%tokenreset"))
                 {
 
-                    if(adminIds.contains(user.getId()))
+                    if(member.getRoles().contains(adminRole))
                     {
 
-                        String[] tokenResetCmd = msg.getRawContent().split(" ");
+                        String[] tokenResetCmd = msg.getContentRaw().split(" ");
 
                         if(tokenResetCmd.length >= 2)
                         {
@@ -665,7 +667,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!adminIds.contains(user.getId()))
+                    if(!member.getRoles().contains(adminRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -677,13 +679,13 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getRawContent().startsWith("%ban"))
+                if(msg.getContentRaw().startsWith("%ban"))
                 {
 
-                   if(adminIds.contains(user.getId()))
+                   if(member.getRoles().contains(adminRole))
                    {
 
-                       String[] banCmd = msg.getRawContent().split(" ");
+                       String[] banCmd = msg.getContentRaw().split(" ");
 
                        if(banCmd.length >= 2)
                        {
@@ -729,7 +731,6 @@ public class AdminCommands extends ListenerAdapter
 
                            e.getGuild().getController().ban(mentionedUser, banDays, sbuilder.toString());
 
-
                            if(!banCmd[1].startsWith("<@") || !banCmd[1].startsWith("<@!"))
                            {
 
@@ -756,7 +757,7 @@ public class AdminCommands extends ListenerAdapter
                        }
                    }
 
-                    if(!adminIds.contains(user.getId()))
+                    if(!member.getRoles().contains(adminRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -768,13 +769,13 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getRawContent().startsWith("%unban"))
+                if(msg.getContentRaw().startsWith("%unban"))
                 {
 
-                    if(adminIds.contains(user.getId()))
+                    if(member.getRoles().contains(adminRole))
                     {
 
-                        String[] unbanCmd = msg.getRawContent().split(" ");
+                        String[] unbanCmd = msg.getContentRaw().split(" ");
 
                         if(unbanCmd.length >= 2)
                         {
@@ -835,7 +836,7 @@ public class AdminCommands extends ListenerAdapter
                         }
                     }
 
-                    if(!adminIds.contains(user.getId()))
+                    if(!member.getRoles().contains(adminRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -849,13 +850,13 @@ public class AdminCommands extends ListenerAdapter
             }
         }
 
-        if(msg.getRawContent().startsWith("%purge"))
+        if(msg.getContentRaw().startsWith("%purge"))
         {
 
-            if(user.getId().equals(kbzID) || user.getId().equals(botID))
+            if(member.getRoles().contains(adminRole) || user.getId().equals(botID))
             {
 
-                String[] purgeCmd = msg.getRawContent().split(" ");
+                String[] purgeCmd = msg.getContentRaw().split(" ");
 
                 if(purgeCmd.length >= 2 && MethodsHandler.isInteger(purgeCmd[1]))
                 {
@@ -889,7 +890,7 @@ public class AdminCommands extends ListenerAdapter
                 }
             }
 
-            if(!user.getId().equals(kbzID) && user.getId().equals(botID))
+            if(!member.getRoles().contains(adminRole) && user.getId().equals(botID))
             {
 
                 EmbedBuilder builder = new EmbedBuilder();
@@ -898,6 +899,65 @@ public class AdminCommands extends ListenerAdapter
 
                 channel.sendMessage(builder.build()).queue();
 
+            }
+        }
+
+        if(msg.getContentRaw().startsWith("%warn"))
+        {
+
+            if(member.getRoles().contains(adminRole))
+            {
+
+                String[] warnCmd = msg.getContentRaw().split(" ");
+
+                if(warnCmd.length == 3)
+                {
+
+                    String reason = warnCmd[2];
+
+                    switch (reason)
+                    {
+
+                        case "inappropriate":
+                        case "Inapproriate":
+
+                            break;
+
+                        case "spam":
+                        case "Spam":
+
+                            break;
+
+                    }
+                }
+
+                if(warnCmd.length == 2)
+                {
+
+                    EmbedBuilder builder = new EmbedBuilder();
+
+                    builder.setColor(Color.RED).setDescription("Please select one of the following Reasons " + user.getAsMention() + " "
+                            + "\n"
+                            + "1.Inappropriate"
+                            +"\n"
+                            +"\n2.Spam"
+                            +"\n");
+
+                    channel.sendMessage(builder.build()).queue();
+
+                }
+
+                if(warnCmd.length <= 1)
+                {
+
+                    EmbedBuilder builder = new EmbedBuilder();
+
+                    builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
+                            + "\n %warn <@Username> <Reason>");
+
+                    channel.sendMessage(builder.build()).queue();
+
+                }
             }
         }
     }
