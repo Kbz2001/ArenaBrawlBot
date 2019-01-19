@@ -777,12 +777,63 @@ public class UserCommands extends ListenerAdapter
 				}
 			}
 
-			if(msg.getContentRaw().equalsIgnoreCase("%flaggame"))
+			if(msg.getContentRaw().startsWith("%flaggame"))
 			{
 
-				FlagGameHandler.startFlagGame(e);
-				FlagGameHandler.runFlagGame(e);
+				String[] flagCmd = msg.getContentRaw().split(" ");
 
+				if(flagCmd.length <= 1)
+				{
+
+					EmbedBuilder builder = new EmbedBuilder();
+
+					builder.setColor(Color.RED).setDescription("Please follow the command format!" + user.getAsMention()
+							+ "\n%flaggame <Start/Stop>");
+
+					channel.sendMessage(builder.build()).queue();
+
+				}
+
+				else
+				{
+
+					if(flagCmd[1].equalsIgnoreCase("start"))
+					{
+
+						if(!FlagGameHandler.isRunning)
+						{
+
+							FlagGameHandler.startFlagGame(e);
+							FlagGameHandler.runFlagGame(e);
+
+						}
+
+						else
+						{
+
+							channel.sendMessage("A Game is currently in session " + user.getAsMention() + "!").queue();
+
+						}
+					}
+
+					if(flagCmd[1].equalsIgnoreCase("stop"))
+					{
+
+						if(FlagGameHandler.isRunning)
+						{
+
+							FlagGameHandler.stopFlagGame(e);
+
+						}
+
+						else
+						{
+
+							channel.sendMessage("There is currently no game running " + user.getAsMention() + "!").queue();
+
+						}
+					}
+				}
 			}
 		}
 	}

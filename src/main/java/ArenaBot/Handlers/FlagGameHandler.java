@@ -24,6 +24,7 @@ public class FlagGameHandler extends ListenerAdapter
 	private static boolean guessedThree = false;
 	private static boolean guessedFour = false;
 	private static boolean guessedFive = false;
+	public static boolean isRunning = false;
 
 	private static int editCounter = 0;
 
@@ -40,16 +41,14 @@ public class FlagGameHandler extends ListenerAdapter
 
 		channel.sendMessage(builder1.build()).queue();
 
+		isRunning = true;
+
 	}
 
 	public static void runFlagGame(MessageReceivedEvent e)
 	{
 
-		Message msg = e.getMessage();
 		MessageChannel channel = e.getChannel();
-		User user = e.getAuthor();
-
-		EmbedBuilder builder = new EmbedBuilder();
 
 		HashMap<String, String> flags = Flags.getFlags();
 
@@ -71,6 +70,29 @@ public class FlagGameHandler extends ListenerAdapter
 			channel.sendMessage("#" + String.valueOf(i+1) + " Generating please wait...").queueAfter(1, TimeUnit.SECONDS, message -> message.editMessage(finalFlagToPlace.getKey()).queueAfter(2, TimeUnit.SECONDS));
 
 		}
+	}
+
+	public static void stopFlagGame(MessageReceivedEvent e)
+	{
+
+		User user = e.getAuthor();
+		MessageChannel channel = e.getChannel();
+
+		store5Flags.clear();
+		storeMessageIDs.clear();
+
+		editCounter = 0;
+
+		isRunning = false;
+
+		guessedOne = false;
+		guessedTwo = false;
+		guessedThree = false;
+		guessedFour = false;
+		guessedFive = false;
+
+		channel.sendMessage("The game has been stopped by " + user.getAsMention() + " !").queue();
+
 	}
 
 	@Override
@@ -134,7 +156,7 @@ public class FlagGameHandler extends ListenerAdapter
 		if(msg.getContentRaw().equalsIgnoreCase(store5Flags.get(0)))
 		{
 
-			if(guessedOne == false)
+			if(!guessedOne)
 			{
 
 				if(editCounter != 5)
@@ -147,8 +169,6 @@ public class FlagGameHandler extends ListenerAdapter
 					editCounter++;
 
 					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:336621149243047938>").queue();
-
-					System.out.println(editCounter);
 
 				}
 			}
@@ -164,7 +184,7 @@ public class FlagGameHandler extends ListenerAdapter
 		if(msg.getContentRaw().equalsIgnoreCase(store5Flags.get(1)))
 		{
 
-			if(guessedTwo == false)
+			if(!guessedTwo)
 			{
 
 				if(editCounter != 5)
@@ -177,8 +197,6 @@ public class FlagGameHandler extends ListenerAdapter
 					editCounter++;
 
 					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:336621149243047938>").queue();
-
-					System.out.println(editCounter);
 
 				}
 			}
@@ -195,7 +213,7 @@ public class FlagGameHandler extends ListenerAdapter
 
 		{
 
-			if(guessedThree == false)
+			if(!guessedThree)
 			{
 
 				if(editCounter != 5)
@@ -208,8 +226,6 @@ public class FlagGameHandler extends ListenerAdapter
 					editCounter++;
 
 					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:336621149243047938>").queue();
-
-					System.out.println(editCounter);
 
 				}
 			}
@@ -227,7 +243,7 @@ public class FlagGameHandler extends ListenerAdapter
 
 		{
 
-			if(guessedFour == false)
+			if(!guessedFour)
 			{
 
 				if(editCounter != 5)
@@ -240,8 +256,6 @@ public class FlagGameHandler extends ListenerAdapter
 					editCounter++;
 
 					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:336621149243047938>").queue();
-
-					System.out.println(editCounter);
 
 				}
 			}
@@ -258,7 +272,7 @@ public class FlagGameHandler extends ListenerAdapter
 		if(msg.getContentRaw().equalsIgnoreCase(store5Flags.get(4)))
 		{
 
-			if(guessedFive == false)
+			if(!guessedFive)
 			{
 
 				if(editCounter != 5)
@@ -271,8 +285,6 @@ public class FlagGameHandler extends ListenerAdapter
 					editCounter++;
 
 					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:336621149243047938>").queue();
-
-					System.out.println(editCounter);
 
 				}
 			}
@@ -296,6 +308,14 @@ public class FlagGameHandler extends ListenerAdapter
 			guessedThree = false;
 			guessedFour = false;
 			guessedFive = false;
+			isRunning = false;
+
+			for(int i = 0; i < 5; i++)
+			{
+
+				store5Flags.remove(i);
+
+			}
 
 			channel.sendMessage("The flag game has ended! The person with the most correct guesses wins!").queue();
 
