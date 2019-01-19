@@ -2,23 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="15960e83-62fa-4dfa-aa2b-a8fd3f7e0155" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/ArenaRandomizeHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/FlagGameHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/HypixelUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/RunSlotsHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/AdminCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/AdminCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/SlotsCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/SlotsCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Currency/KbzTokens.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Currency/KbzTokens.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Discord.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Discord.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/MessagesHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/MessagesHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/MethodsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/MethodsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -89,9 +73,9 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="11383" />
+          <entry key="JAVA" value="11558" />
           <entry key="Manifest" value="4" />
-          <entry key="PLAIN_TEXT" value="43" />
+          <entry key="PLAIN_TEXT" value="94" />
           <entry key="XML" value="148" />
         </counts>
       </usages-collector>
@@ -128,7 +112,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10370">
+            <state relative-caret-position="17">
               <caret line="625" selection-start-line="625" selection-end-line="625" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -140,8 +124,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/FlagGameHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1487">
-              <caret line="286" column="8" selection-start-line="286" selection-start-column="8" selection-end-line="286" selection-end-column="8" />
+            <state relative-caret-position="402">
+              <caret line="300" lean-forward="true" selection-start-line="300" selection-end-line="300" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -152,8 +136,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="29" column="45" lean-forward="true" selection-start-line="29" selection-start-column="45" selection-end-line="29" selection-end-column="45" />
+            <state relative-caret-position="161">
+              <caret line="114" column="28" selection-start-line="114" selection-start-column="28" selection-end-line="114" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -239,8 +223,8 @@
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/App.java" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/ArenaRandomizeHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/FlagGameHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java" />
       </list>
     </option>
   </component>
@@ -269,8 +253,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="212" />
-    <option name="y" value="88" />
+    <option name="x" value="406" />
+    <option name="y" value="151" />
     <option name="width" value="1343" />
     <option name="height" value="894" />
   </component>
@@ -529,14 +513,21 @@
       <option name="project" value="LOCAL" />
       <updated>1544482668635</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Added a whole lot of features + Flag Game yay!">
+      <created>1547873828465</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1547873828465</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="251000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="212" y="88" width="1343" height="894" extended-state="0" />
+    <frame x="406" y="151" width="1343" height="894" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49812734" visible="true" weight="0.48480123" />
@@ -614,7 +605,8 @@
     <MESSAGE value="Yay!" />
     <MESSAGE value="Fixed Stuff." />
     <MESSAGE value="Updated Mandem List." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated Mandem List." />
+    <MESSAGE value="Added a whole lot of features + Flag Game yay!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added a whole lot of features + Flag Game yay!" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -785,16 +777,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10370">
-          <caret line="625" selection-start-line="625" selection-end-line="625" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Commands/AdminCommands.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -814,8 +796,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/FlagGameHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1487">
-          <caret line="286" column="8" selection-start-line="286" selection-start-column="8" selection-end-line="286" selection-end-column="8" />
+        <state relative-caret-position="402">
+          <caret line="300" lean-forward="true" selection-start-line="300" selection-end-line="300" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="625" selection-start-line="625" selection-end-line="625" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -824,8 +816,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="29" column="45" lean-forward="true" selection-start-line="29" selection-start-column="45" selection-end-line="29" selection-end-column="45" />
+        <state relative-caret-position="161">
+          <caret line="114" column="28" selection-start-line="114" selection-start-column="28" selection-end-line="114" selection-end-column="28" />
         </state>
       </provider>
     </entry>
