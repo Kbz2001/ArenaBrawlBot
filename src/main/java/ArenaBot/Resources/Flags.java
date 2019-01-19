@@ -83,7 +83,7 @@ public class Flags
 		flags.put(":flag_mc:", "Monaco");
 		flags.put(":flag_md:", "Moldova");
 		flags.put(":flag_me:", "Montenegro");
-		flags.put(":flag_mf:", "Collectivity of Saint Martin / France");
+		flags.put(":flag_mf:", "Collectivity of Saint Martin");
 		flags.put(":flag_mg:", "Madagascar");
 		flags.put(":flag_mh:", "Marshall Islands");
 		flags.put(":flag_mk:", "North Macedonia");
@@ -130,7 +130,7 @@ public class Flags
 		flags.put(":flag_pw:", "Palau");
 		flags.put(":flag_py:", "Paraguay");
 		flags.put(":flag_qa:", "Qatar");
-		flags.put(":flag_re:", "Réunion");
+		flags.put(":flag_re:", "Reunion");
 		flags.put(":flag_ro:", "Romania");
 		flags.put(":flag_rs:", "Serbia");
 		flags.put(":flag_ru:", "Russia");
@@ -143,14 +143,14 @@ public class Flags
 		flags.put(":flag_sg:", "Singapore");
 		flags.put(":flag_sh:", "Saint Helena");
 		flags.put(":flag_si:", "Slovenia");
-		flags.put(":flag_sj:", "Svalbard and Jan Mayen Islands / Norway");
+		flags.put(":flag_sj:", "Svalbard and Jan Mayen Islands");
 		flags.put(":flag_sl:", "Sierra Leone");
 		flags.put(":flag_sm:", "San Marino");
 		flags.put(":flag_sn:", "Senegal");
 		flags.put(":flag_so:", "Somalia");
 		flags.put(":flag_sr:", "Suriname");
 		flags.put(":flag_ss:", "South Sudan");
-		flags.put(":flag_st:", "São Tomé and Príncipe");
+		flags.put(":flag_st:", "Sao Tome and Principe");
 		flags.put(":flag_sv:", "El Salvador");
 		flags.put(":flag_sx:", "Sint Maarten");
 		flags.put(":flag_sy:", "Syria");
@@ -174,7 +174,7 @@ public class Flags
 		flags.put(":flag_tz:", "Tanzania");
 		flags.put(":flag_ua:", "Ukraine");
 		flags.put(":flag_ug:", "Uganda");
-		flags.put(":flag_um:", "United States Minor Outlying Islands / United States of America");
+		flags.put(":flag_um:", "United States Minor Outlying Islands");
 		flags.put(":flag_us:", "United States of America");
 		flags.put(":flag_uy:", "Uruguay");
 		flags.put(":flag_uz:", "Uzbekistan");
