@@ -95,6 +95,22 @@ public class FlagGameHandler extends ListenerAdapter
 
 	}
 
+	public static void flagGameAnswers(MessageReceivedEvent e)
+	{
+
+		User user = e.getAuthor();
+		MessageChannel channel = e.getChannel();
+
+		channel.sendMessage("The answers to this round are:").queue();
+
+		for(int i = 0; i <= 4; i++)
+		{
+
+			channel.sendMessage("#" + String.valueOf(i+1) + " = " + store5Flags.get(i)).queue();
+
+		}
+	}
+
 	@Override
 	public void onMessageReceived(MessageReceivedEvent e)
 	{

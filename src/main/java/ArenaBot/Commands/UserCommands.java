@@ -23,7 +23,6 @@ public class UserCommands extends ListenerAdapter
     public static ArrayList<String> listOfEnteredPlayers = new ArrayList <String>();
     public static ArrayList<String> listToRandom = new ArrayList <String>();
     private static HashMap<String, LocalDateTime> someoneCD = new HashMap <>();
-    private static HashMap<String, LocalDateTime> playerCountCD = new HashMap <>();
 
 	@Override
 	public void onMessageReceived(MessageReceivedEvent e)
@@ -101,6 +100,16 @@ public class UserCommands extends ListenerAdapter
 						+ "\n%tokenreset: Resets the specified user's token count."
 						+ "\n"
 						+ "\n%alltokenreset: Resets all personal Kbz Token counts to 0."
+						+ "\n"
+						+ "\n%warn: Warns a user on the Discord via the Bot in PMs."
+						+ "\n"
+						+ "\n%mute: Mutes a user."
+						+ "\n"
+						+ "\n%unmute: Unmutes a user."
+						+ "\n"
+						+ "\n%kick: Kicks a user from the Discord."
+						+ "\n"
+						+ "\n%ban: Bans a user from the Discord."
 						+ "\n"
 						+ "\n```"
 						+ "\n"
@@ -736,103 +745,109 @@ public class UserCommands extends ListenerAdapter
 			if(msg.getContentRaw().equalsIgnoreCase("%abplayers"))
 			{
 
-				if(!playerCountCD.containsKey(user.getId()))
+				try
 				{
 
-					try
-					{
+					channel.sendMessage("Currently " + MethodsHandler.GETArenaRequest() + " people playing Arena!").queue();
 
-						channel.sendMessage("Currently " + MethodsHandler.GETArenaRequest() + " people playing Arena!").queue();
-
-						playerCountCD.put(user.getId(), LocalDateTime.now());
-
-					}
-					catch (IOException e1)
-					{
-
-						e1.printStackTrace();
-
-					}
 				}
-
-				if(playerCountCD.containsKey(user.getId()))
+				catch (IOException e1)
 				{
 
-					if(playerCountCD.get(user.getId()).plusMinutes(1).isBefore(LocalDateTime.now()))
+					e1.printStackTrace();
+
+				}
+			}
+
+			if(msg.getContentRaw().toLowerCase().startsWith("%flaggame"))
+			{
+
+				TextChannel botCmdChannel = guild.getTextChannelById("352674100176486410");
+
+				if(channel.getId().equals(botCmdChannel.getId()))
+				{
+
+					String[] flagCmd = msg.getContentRaw().split(" ");
+
+					if(flagCmd.length <= 1)
 					{
 
-						playerCountCD.remove(user.getId());
+						EmbedBuilder builder = new EmbedBuilder();
+
+						builder.setColor(Color.RED).setDescription("Please follow the command format!" + user.getAsMention()
+								+ "\n%flaggame <Start/Stop/Answers>");
+
+						channel.sendMessage(builder.build()).queue();
 
 					}
 
 					else
 					{
 
+						if(flagCmd[1].equalsIgnoreCase("start"))
+						{
 
-						channel.sendMessage("You are currently on cooldown for 1 minute " + user.getAsMention() + "!").queue();
+							if(!FlagGameHandler.isRunning)
+							{
 
-						playerCountCD.put(user.getId(), LocalDateTime.now());
+								FlagGameHandler.startFlagGame(e);
+								FlagGameHandler.runFlagGame(e);
 
+							}
+
+							else
+							{
+
+								channel.sendMessage("A Game is currently in session " + user.getAsMention() + "!").queue();
+
+							}
+						}
+
+						if(flagCmd[1].equalsIgnoreCase("stop"))
+						{
+
+							if(FlagGameHandler.isRunning)
+							{
+
+								FlagGameHandler.stopFlagGame(e);
+
+							}
+
+							else
+							{
+
+								channel.sendMessage("There is currently no game running " + user.getAsMention() + "!").queue();
+
+							}
+						}
+
+						if(flagCmd[1].equalsIgnoreCase("answers"))
+						{
+
+							if(FlagGameHandler.isRunning)
+							{
+
+								FlagGameHandler.flagGameAnswers(e);
+
+								FlagGameHandler.stopFlagGame(e);
+
+							}
+
+							else
+							{
+
+								channel.sendMessage("There are no answers to display!").queue();
+
+							}
+						}
 					}
 				}
-			}
 
-			if(msg.getContentRaw().startsWith("%flaggame"))
-			{
-
-				String[] flagCmd = msg.getContentRaw().split(" ");
-
-				if(flagCmd.length <= 1)
+				if(!channel.getId().equals(botCmdChannel.getId()))
 				{
 
-					EmbedBuilder builder = new EmbedBuilder();
+					channel.sendMessage("That command can only be done in " + botCmdChannel.getAsMention()).queue();
 
-					builder.setColor(Color.RED).setDescription("Please follow the command format!" + user.getAsMention()
-							+ "\n%flaggame <Start/Stop>");
-
-					channel.sendMessage(builder.build()).queue();
-
-				}
-
-				else
-				{
-
-					if(flagCmd[1].equalsIgnoreCase("start"))
-					{
-
-						if(!FlagGameHandler.isRunning)
-						{
-
-							FlagGameHandler.startFlagGame(e);
-							FlagGameHandler.runFlagGame(e);
-
-						}
-
-						else
-						{
-
-							channel.sendMessage("A Game is currently in session " + user.getAsMention() + "!").queue();
-
-						}
-					}
-
-					if(flagCmd[1].equalsIgnoreCase("stop"))
-					{
-
-						if(FlagGameHandler.isRunning)
-						{
-
-							FlagGameHandler.stopFlagGame(e);
-
-						}
-
-						else
-						{
-
-							channel.sendMessage("There is currently no game running " + user.getAsMention() + "!").queue();
-
-						}
-					}
 				}
 			}
 		}

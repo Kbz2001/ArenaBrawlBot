@@ -43,9 +43,9 @@ public class WordsHandler extends ListenerAdapter
 
 			}
 
-			if(msg.getContentRaw().equalsIgnoreCase("goodnight") ||
-					msg.getContentRaw().equalsIgnoreCase("good night") ||
-					msg.getContentRaw().equalsIgnoreCase("gn"))
+			if(msg.getContentRaw().toLowerCase().contains("goodnight") ||
+					msg.getContentRaw().toLowerCase().contains("good night") ||
+					msg.getContentRaw().toLowerCase().contains("gn"))
 			{
 
 				channel.sendMessage("Goodbye " + user.getAsMention() + "!").queue();
@@ -53,7 +53,7 @@ public class WordsHandler extends ListenerAdapter
 
 			}
 
-			if(msg.getContentRaw().equalsIgnoreCase("godnat"))
+			if(msg.getContentRaw().toLowerCase().contains("godnat"))
 			{
 
 				channel.sendMessage("Godnat " + user.getAsMention() + "!").queue();
@@ -61,7 +61,7 @@ public class WordsHandler extends ListenerAdapter
 
 			}
 
-			if(msg.getContentRaw().toLowerCase().equals("doe"))
+			if(msg.getContentRaw().toLowerCase().contains("doe"))
 			{
 
 				channel.sendMessage("You are a doe " + user.getAsMention()).queue();
@@ -76,10 +76,17 @@ public class WordsHandler extends ListenerAdapter
 
 			}
 
-			if(msg.getContentRaw().toLowerCase().contains("rily"))
+			if(msg.getContentRaw().toLowerCase().contains("rily") && !msg.getContentRaw().equalsIgnoreCase("narily"))
 			{
 
 				msg.addReaction(":SnapDoomy:336660661570502656").queue();
+
+			}
+
+			if(msg.getContentRaw().toLowerCase().contains("narily") && !msg.getContentRaw().equalsIgnoreCase("rily"))
+			{
+
+				msg.addReaction(":Natily:539196345966264371").queue();
 
 			}
 
@@ -141,7 +148,7 @@ public class WordsHandler extends ListenerAdapter
 				mandemEmotes.add(":Cashboys:513889060708941846");
 				mandemEmotes.add(":Edupa:338012355227287563");
 				mandemEmotes.add(":xLatios:514458844517367808");
-				mandemEmotes.add(":Brillianze:514464422312411166");
+				mandemEmotes.add(":Natily:539196345966264371");
 
 				Collections.shuffle(mandemEmotes);
 
@@ -182,7 +189,7 @@ public class WordsHandler extends ListenerAdapter
 				mandemEmotes.add(":Cashboys:513889060708941846");
 				mandemEmotes.add(":Edupa:338012355227287563");
 				mandemEmotes.add(":xLatios:514458844517367808");
-				mandemEmotes.add(":Brillianze:514464422312411166");
+				mandemEmotes.add(":Natily:539196345966264371");
 
 				Collections.shuffle(mandemEmotes);
 

@@ -18,7 +18,8 @@ import java.util.Map.*;
 public class AdminCommands extends ListenerAdapter 
 {
 
-    public static String adminRoleString = "480561808021913610";
+    private static String adminRoleString = "480561808021913610";
+    private static String modRoleString = "480558799850176523";
 
     @Override
     public void onMessageReceived(MessageReceivedEvent e) 
@@ -28,7 +29,9 @@ public class AdminCommands extends ListenerAdapter
         MessageChannel channel = e.getChannel();
         User user = e.getAuthor();
         Member member = e.getMember();
+
         Role adminRole = e.getJDA().getRoleById(adminRoleString);
+        Role modRole = e.getJDA().getRoleById(modRoleString);
 
         String botID = "494363113030680576";
 
@@ -542,6 +545,7 @@ public class AdminCommands extends ListenerAdapter
 
                             if(!KbzTokens.Tokens.containsKey(mentionedUser.getId()))
                             {
+
                                 EmbedBuilder builder = new EmbedBuilder();
 
                                 builder.setColor(Color.RED).setDescription("Please type in a valid username!");
@@ -682,82 +686,107 @@ public class AdminCommands extends ListenerAdapter
                 if(msg.getContentRaw().startsWith("%ban"))
                 {
 
-                   if(member.getRoles().contains(adminRole))
-                   {
+                    if(member.getRoles().contains(adminRole) || member.getRoles().contains(modRole))
+                    {
 
-                       String[] banCmd = msg.getContentRaw().split(" ");
+                        String[] banCmd = msg.getContentRaw().split(" ");
 
-                       if(banCmd.length >= 2)
-                       {
+                        if(banCmd.length >= 2)
+                        {
 
-                           User mentionedUser = null;
+                            User mentionedUser;
 
-                           if(banCmd[1].startsWith("<@") && !banCmd[1].startsWith("<@!"))
-                           {
+                            if(banCmd[1].startsWith("<@") && !banCmd[1].startsWith("<@!"))
+                            {
 
-                               String mentionedID = banCmd[1];
+                                String mentionedID = banCmd[1];
+                                int DelDays = Integer.parseInt(banCmd[2]);
+                                String reason;
 
-                               mentionedID = mentionedID.substring(2, mentionedID.length() - 1);
+                                mentionedID = mentionedID.substring(2, mentionedID.length() - 1);
 
-                               Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
+                                Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
 
-                               mentionedUser = mentionedMember.getUser();
+                                mentionedUser = mentionedMember.getUser();
 
-                           }
+                                StringBuilder sbuilder = new StringBuilder();
 
-                           if(banCmd[1].startsWith("<@!"))
-                           {
+                                for (int i = 1; i < banCmd.length; i++)
+                                {
 
-                               String mentionedID = banCmd[1];
+                                    sbuilder.append(' ').append(banCmd[i]);
 
-                               mentionedID = mentionedID.substring(3, mentionedID.length() - 1);
+                                }
 
-                               Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
+                                reason = sbuilder.toString();
 
-                               mentionedUser = mentionedMember.getUser();
+                                e.getGuild().getController().ban(mentionedUser, DelDays, reason).queue();
 
-                           }
+                                msg.delete().queue();
 
-                           int banDays = Integer.parseInt(banCmd[2]);
+                                e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getName() + " has banned " + mentionedUser.getName() + " for " + reason).queue();
 
-                           StringBuilder sbuilder = new StringBuilder();
+                            }
 
-                           for (int i = 1; i < banCmd.length; i++)
-                           {
+                            if(banCmd[1].startsWith("<@!"))
+                            {
 
-                               sbuilder.append(' ').append(banCmd[i + 3]);
+                                String mentionedID = banCmd[1];
+                                int DelDays = Integer.parseInt(banCmd[2]);
+                                String reason;
 
-                           }
+                                mentionedID = mentionedID.substring(3, mentionedID.length() - 1);
 
-                           e.getGuild().getController().ban(mentionedUser, banDays, sbuilder.toString());
+                                Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
 
-                           if(!banCmd[1].startsWith("<@") || !banCmd[1].startsWith("<@!"))
-                           {
+                                mentionedUser = mentionedMember.getUser();
 
-                               EmbedBuilder builder = new EmbedBuilder();
+                                StringBuilder sbuilder = new StringBuilder();
 
-                               builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
-                                       + "\n %ban <@Username> <Days> <Reason>");
+                                for (int i = 1; i < banCmd.length; i++)
+                                {
 
-                               channel.sendMessage(builder.build()).queue();
+                                    sbuilder.append(' ').append(banCmd[i]);
 
-                           }
-                       }
+                                }
 
-                       if(banCmd.length <= 1)
-                       {
+                                reason = sbuilder.toString();
 
-                           EmbedBuilder builder = new EmbedBuilder();
+                                e.getGuild().getController().ban(mentionedUser, DelDays, reason).queue();
 
-                           builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
-                                   + "\n %ban <@Username> <Days> <Reason>");
+                                msg.delete().queue();
 
-                           channel.sendMessage(builder.build()).queue();
+                                e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getName() + " has banned " + mentionedUser.getName() + " for " + reason).queue();
 
-                       }
-                   }
+                            }
 
-                    if(!member.getRoles().contains(adminRole))
+                            if(!banCmd[1].startsWith("<@") && !banCmd[1].startsWith("<@!"))
+                            {
+
+                                EmbedBuilder builder = new EmbedBuilder();
+
+                                builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
+                                        + "\n %ban <@Username> <DelDays> <Reason>");
+
+                                channel.sendMessage(builder.build()).queue();
+
+                            }
+                        }
+
+                        if(banCmd.length <= 1)
+                        {
+
+                            EmbedBuilder builder = new EmbedBuilder();
+
+                            builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
+                                    + "\n %ban <@Username> <DelDays> <Reason>");
+
+                            channel.sendMessage(builder.build()).queue();
+
+                        }
+                    }
+
+                    if(!member.getRoles().contains(adminRole) && !member.getRoles().contains(modRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -769,23 +798,109 @@ public class AdminCommands extends ListenerAdapter
                     }
                 }
 
-                if(msg.getContentRaw().startsWith("%unban"))
+//                if(msg.getContentRaw().startsWith("%unban"))
+//                {
+//
+//                    if(member.getRoles().contains(adminRole) || member.getRoles().contains(modRole))
+//                    {
+//
+//                        String[] unbanCmd = msg.getContentRaw().split(" ");
+//
+//                        if(unbanCmd.length >= 2)
+//                        {
+//
+//                            User mentionedUser;
+//
+//                            if(unbanCmd[1].startsWith("<@") && !unbanCmd[1].startsWith("<@!"))
+//                            {
+//
+//                                String mentionedID = unbanCmd[1];
+//
+//                                mentionedID = mentionedID.substring(2, mentionedID.length() - 1);
+//
+//                                Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
+//
+//                                mentionedUser = mentionedMember.getUser();
+//
+//                                e.getGuild().getController().unban(mentionedUser).queue();
+//
+//                                msg.delete().queue();
+//
+//                            }
+//
+//                            if(unbanCmd[1].startsWith("<@!"))
+//                            {
+//
+//                                String mentionedID = unbanCmd[1];
+//
+//                                mentionedID = mentionedID.substring(3, mentionedID.length() - 1);
+//
+//                                Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
+//
+//                                mentionedUser = mentionedMember.getUser();
+//
+//                                e.getGuild().getController().unban(mentionedUser).queue();
+//
+//                                msg.delete().queue();
+//
+//                            }
+//
+//                            if(!unbanCmd[1].startsWith("<@") && !unbanCmd[1].startsWith("<@!"))
+//                            {
+//
+//                                EmbedBuilder builder = new EmbedBuilder();
+//
+//                                builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
+//                                        + "\n %unban <@Username>");
+//
+//                                channel.sendMessage(builder.build()).queue();
+//
+//                            }
+//                        }
+//
+//                        if(unbanCmd.length <= 1)
+//                        {
+//
+//                            EmbedBuilder builder = new EmbedBuilder();
+//
+//                            builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
+//                                    + "\n %unban <@Username>");
+//
+//                            channel.sendMessage(builder.build()).queue();
+//
+//                        }
+//                    }
+//
+//                    if(!member.getRoles().contains(adminRole) && !member.getRoles().contains(modRole))
+//                    {
+//
+//                        EmbedBuilder builder = new EmbedBuilder();
+//
+//                        builder.setColor(Color.RED).setDescription("You cannot do this command " + user.getAsMention() + ".");
+//
+//                        channel.sendMessage(builder.build()).queue();
+//
+//                    }
+//                }
+
+                if(msg.getContentRaw().startsWith("%kick"))
                 {
 
-                    if(member.getRoles().contains(adminRole))
+                    if(member.getRoles().contains(adminRole) || member.getRoles().contains(modRole))
                     {
 
-                        String[] unbanCmd = msg.getContentRaw().split(" ");
+                        String[] kickCmd = msg.getContentRaw().split(" ");
 
-                        if(unbanCmd.length >= 2)
+                        if(kickCmd.length >= 3)
                         {
 
-                            User mentionedUser = null;
+                            User mentionedUser;
 
-                            if(unbanCmd[1].startsWith("<@") && !unbanCmd[1].startsWith("<@!"))
+                            if(kickCmd[1].startsWith("<@") && !kickCmd[1].startsWith("<@!"))
                             {
 
-                                String mentionedID = unbanCmd[1];
+                                String mentionedID = kickCmd[1];
+                                String reason;
 
                                 mentionedID = mentionedID.substring(2, mentionedID.length() - 1);
 
@@ -793,12 +908,32 @@ public class AdminCommands extends ListenerAdapter
 
                                 mentionedUser = mentionedMember.getUser();
 
+                                StringBuilder sbuilder = new StringBuilder();
+
+                                for (int i = 1; i < kickCmd.length; i++)
+                                {
+
+                                    sbuilder.append(' ').append(kickCmd[i]);
+
+                                }
+
+                                reason = sbuilder.toString();
+
+                                e.getGuild().getController().kick(mentionedMember, reason).queue();
+
+                                msg.delete().queue();
+
+                                mentionedUser.openPrivateChannel().queue((Pchannel -> Pchannel.sendMessage(reason).queue()));
+
+                                e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getName() + " has kicked " + mentionedUser.getName() + " for " + reason).queue();
+
                             }
 
-                            if(unbanCmd[1].startsWith("<@!"))
+                            if(kickCmd[1].startsWith("<@!"))
                             {
 
-                                String mentionedID = unbanCmd[1];
+                                String mentionedID = kickCmd[1];
+                                String reason;
 
                                 mentionedID = mentionedID.substring(3, mentionedID.length() - 1);
 
@@ -806,37 +941,53 @@ public class AdminCommands extends ListenerAdapter
 
                                 mentionedUser = mentionedMember.getUser();
 
-                            }
+                                StringBuilder sbuilder = new StringBuilder();
 
-                            e.getGuild().getController().unban(mentionedUser);
+                                for (int i = 1; i < kickCmd.length; i++)
+                                {
 
-                            if(!unbanCmd[1].startsWith("<@") || !unbanCmd[1].startsWith("<@!"))
-                            {
+                                    sbuilder.append(' ').append(kickCmd[i]);
 
-                                EmbedBuilder builder = new EmbedBuilder();
+                                }
 
-                                builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
-                                        + "\n %unban <@Username>");
+                                reason = sbuilder.toString();
 
-                                channel.sendMessage(builder.build()).queue();
+                                e.getGuild().getController().kick(mentionedMember, reason).queue();
+
+                                msg.delete().queue();
+
+                                mentionedUser.openPrivateChannel().queue((Pchannel -> Pchannel.sendMessage(reason).queue()));
+
+                                e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getName() + " has kicked " + mentionedUser.getName() + " for " + reason).queue();
 
                             }
                         }
 
-                        if(unbanCmd.length <= 1)
+                        if(kickCmd.length == 2)
+                        {
+
+                            EmbedBuilder builder = new EmbedBuilder();
+
+                            builder.setColor(Color.RED).setDescription("Please specify a reason " + user.getAsMention() + "!");
+
+                            channel.sendMessage(builder.build()).queue();
+
+                        }
+
+                        if(kickCmd.length <= 1)
                         {
 
                             EmbedBuilder builder = new EmbedBuilder();
 
                             builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
-                                    + "\n %unban <@Username>");
+                                    + "\n %kick <@Username> <Reason>");
 
                             channel.sendMessage(builder.build()).queue();
 
                         }
                     }
 
-                    if(!member.getRoles().contains(adminRole))
+                    if(!member.getRoles().contains(adminRole) && !member.getRoles().contains(modRole))
                     {
 
                         EmbedBuilder builder = new EmbedBuilder();
@@ -846,6 +997,293 @@ public class AdminCommands extends ListenerAdapter
                         channel.sendMessage(builder.build()).queue();
 
                     }
+                }
+            }
+        }
+
+        if(msg.getContentRaw().startsWith("%warn"))
+        {
+
+            if(member.getRoles().contains(adminRole) || member.getRoles().contains(modRole))
+            {
+
+                String[] warnCmd = msg.getContentRaw().split(" ");
+
+                if(warnCmd.length >= 3)
+                {
+
+                    User mentionedUser;
+
+                    if(warnCmd[1].startsWith("<@") && !warnCmd[1].startsWith("<@!"))
+                    {
+
+                        String mentionedID = warnCmd[1];
+                        String reason;
+
+                        mentionedID = mentionedID.substring(2, mentionedID.length() - 1);
+
+                        Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
+
+                        mentionedUser = mentionedMember.getUser();
+
+                        StringBuilder sbuilder = new StringBuilder();
+
+                        for (int i = 1; i < warnCmd.length; i++)
+                        {
+
+                            sbuilder.append(' ').append(warnCmd[i]);
+
+                        }
+
+                        reason = sbuilder.toString();
+
+                        msg.delete().queue();
+
+                        mentionedUser.openPrivateChannel().queue((Pchannel -> Pchannel.sendMessage(reason).queue()));
+
+                        e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getName() + " has warned " + mentionedUser.getName() + " for " + reason).queue();
+
+                    }
+
+                    if(warnCmd[1].startsWith("<@!"))
+                    {
+
+                        String mentionedID = warnCmd[1];
+                        String reason;
+
+                        mentionedID = mentionedID.substring(3, mentionedID.length() - 1);
+
+                        Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
+
+                        mentionedUser = mentionedMember.getUser();
+
+                        StringBuilder sbuilder = new StringBuilder();
+
+                        for (int i = 1; i < warnCmd.length; i++)
+                        {
+
+                            sbuilder.append(' ').append(warnCmd[i]);
+
+                        }
+
+                        reason = sbuilder.toString();
+
+                        msg.delete().queue();
+
+                        mentionedUser.openPrivateChannel().queue((Pchannel -> Pchannel.sendMessage(reason).queue()));
+
+                        e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getName() + " has warned " + mentionedUser.getName() + " for " + reason).queue();
+
+                    }
+                }
+
+                if(warnCmd.length == 2)
+                {
+
+                    EmbedBuilder builder = new EmbedBuilder();
+
+                    builder.setColor(Color.RED).setDescription("Please specify a reason " + user.getAsMention() + "!");
+
+                    channel.sendMessage(builder.build()).queue();
+
+                }
+
+                if(warnCmd.length <= 1)
+                {
+
+                    EmbedBuilder builder = new EmbedBuilder();
+
+                    builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
+                            + "\n %warn <@Username> <Reason>");
+
+                    channel.sendMessage(builder.build()).queue();
+
+                }
+            }
+
+            if(!member.getRoles().contains(adminRole) && !member.getRoles().contains(modRole))
+            {
+
+                EmbedBuilder builder = new EmbedBuilder();
+
+                builder.setColor(Color.RED).setDescription("You cannot do this command " + user.getAsMention() + ".");
+
+                channel.sendMessage(builder.build()).queue();
+
+            }
+        }
+
+        if(msg.getContentRaw().startsWith("%mute"))
+        {
+
+            Role muteRole = e.getGuild().getRoleById("371820966944440322");
+
+            if(member.getRoles().contains(adminRole) || member.getRoles().contains(modRole))
+            {
+
+                String[] muteCmd = msg.getContentRaw().split(" ");
+
+                if(muteCmd.length >= 2)
+                {
+
+                    User mentionedUser;
+
+                    if(muteCmd[1].startsWith("<@") && !muteCmd[1].startsWith("<@!"))
+                    {
+
+                        String mentionedID = muteCmd[1];
+
+                        mentionedID = mentionedID.substring(2, mentionedID.length() - 1);
+
+                        Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
+
+                        mentionedUser = mentionedMember.getUser();
+
+                        if(!mentionedMember.getRoles().contains(muteRole))
+                        {
+
+                            msg.delete().queue();
+
+                            e.getGuild().getController().addSingleRoleToMember(mentionedMember, muteRole).queue();
+
+                            e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getName() + " has muted " + mentionedUser.getName()).queue();
+
+                        }
+
+                        if(mentionedMember.getRoles().contains(muteRole))
+                        {
+
+                            msg.delete().queue();
+
+                            e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getAsMention() + " That person is already muted!").queue();
+
+                        }
+                    }
+
+                    if(muteCmd[1].startsWith("<@!"))
+                    {
+
+                        String mentionedID = muteCmd[1];
+
+                        mentionedID = mentionedID.substring(3, mentionedID.length() - 1);
+
+                        Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
+
+                        mentionedUser = mentionedMember.getUser();
+
+                        if(!mentionedMember.getRoles().contains(muteRole))
+                        {
+
+                            msg.delete().queue();
+
+                            e.getGuild().getController().addSingleRoleToMember(mentionedMember, muteRole).queue();
+
+                            e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getName() + " has muted " + mentionedUser.getName()).queue();
+
+                        }
+
+                        if(mentionedMember.getRoles().contains(muteRole))
+                        {
+
+                            msg.delete().queue();
+
+                            e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getAsMention() + " That person is already muted!").queue();
+
+                        }
+                    }
+                }
+
+                if(muteCmd.length <= 1)
+                {
+
+                    EmbedBuilder builder = new EmbedBuilder();
+
+                    builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
+                            + "\n %mute <@Username>");
+
+                    channel.sendMessage(builder.build()).queue();
+
+                }
+            }
+        }
+
+        if(msg.getContentRaw().startsWith("%unmute"))
+        {
+
+            Role muteRole = e.getGuild().getRoleById("371820966944440322");
+
+            if(member.getRoles().contains(adminRole) || member.getRoles().contains(modRole))
+            {
+
+                String[] unMuteCmd = msg.getContentRaw().split(" ");
+
+                if(unMuteCmd.length >= 2)
+                {
+
+                    User mentionedUser;
+
+                    if(unMuteCmd[1].startsWith("<@") && !unMuteCmd[1].startsWith("<@!"))
+                    {
+
+                        String mentionedID = unMuteCmd[1];
+
+                        mentionedID = mentionedID.substring(2, mentionedID.length() - 1);
+
+                        Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
+
+                        mentionedUser = mentionedMember.getUser();
+
+                        if(mentionedMember.getRoles().contains(muteRole))
+                        {
+
+                            msg.delete().queue();
+
+                            e.getGuild().getController().removeSingleRoleFromMember(mentionedMember, muteRole).queue();
+
+                            e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getName() + " has unmuted " + mentionedUser.getName()).queue();
+
+                        }
+
+                        if(!mentionedMember.getRoles().contains(muteRole))
+                        {
+
+                            msg.delete().queue();
+
+                            e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getAsMention() + " That person is not muted!").queue();
+
+                        }
+                    }
+
+                    if(unMuteCmd[1].startsWith("<@!"))
+                    {
+
+                        String mentionedID = unMuteCmd[1];
+
+                        mentionedID = mentionedID.substring(3, mentionedID.length() - 1);
+
+                        Member mentionedMember = msg.getGuild().getMemberById(mentionedID);
+
+                        mentionedUser = mentionedMember.getUser();
+
+                        msg.delete().queue();
+
+                        e.getGuild().getController().removeSingleRoleFromMember(mentionedMember, muteRole).queue();
+
+                        e.getJDA().getTextChannelById("511679196947546122").sendMessage("> " + user.getName() + " has unmuted " + mentionedUser.getName()).queue();
+
+                    }
+                }
+
+                if(unMuteCmd.length <= 1)
+                {
+
+                    EmbedBuilder builder = new EmbedBuilder();
+
+                    builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
+                            + "\n %unmute <@Username>");
+
+                    channel.sendMessage(builder.build()).queue();
+
                 }
             }
         }
@@ -899,65 +1337,6 @@ public class AdminCommands extends ListenerAdapter
 
                 channel.sendMessage(builder.build()).queue();
 
-            }
-        }
-
-        if(msg.getContentRaw().startsWith("%warn"))
-        {
-
-            if(member.getRoles().contains(adminRole))
-            {
-
-                String[] warnCmd = msg.getContentRaw().split(" ");
-
-                if(warnCmd.length == 3)
-                {
-
-                    String reason = warnCmd[2];
-
-                    switch (reason)
-                    {
-
-                        case "inappropriate":
-                        case "Inapproriate":
-
-                            break;
-
-                        case "spam":
-                        case "Spam":
-
-                            break;
-
-                    }
-                }
-
-                if(warnCmd.length == 2)
-                {
-
-                    EmbedBuilder builder = new EmbedBuilder();
-
-                    builder.setColor(Color.RED).setDescription("Please select one of the following Reasons " + user.getAsMention() + " "
-                            + "\n"
-                            + "1.Inappropriate"
-                            +"\n"
-                            +"\n2.Spam"
-                            +"\n");
-
-                    channel.sendMessage(builder.build()).queue();
-
-                }
-
-                if(warnCmd.length <= 1)
-                {
-
-                    EmbedBuilder builder = new EmbedBuilder();
-
-                    builder.setColor(Color.RED).setDescription("Please follow the command format" + user.getAsMention()
-                            + "\n %warn <@Username> <Reason>");
-
-                    channel.sendMessage(builder.build()).queue();
-
-                }
             }
         }
     }

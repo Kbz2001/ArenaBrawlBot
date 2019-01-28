@@ -3,8 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="15960e83-62fa-4dfa-aa2b-a8fd3f7e0155" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/App.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/AdminCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/AdminCommands.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/FlagGameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/FlagGameHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -59,11 +63,11 @@
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="CLASS" value="10" />
-          <entry key="IDEA_MODULE" value="8" />
-          <entry key="JAVA" value="49" />
+          <entry key="IDEA_MODULE" value="10" />
+          <entry key="JAVA" value="53" />
           <entry key="Manifest" value="3" />
-          <entry key="XML" value="14" />
-          <entry key="YAML" value="8" />
+          <entry key="XML" value="15" />
+          <entry key="YAML" value="9" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
@@ -76,23 +80,24 @@
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="12711" />
+          <entry key="JAVA" value="15478" />
           <entry key="Manifest" value="4" />
-          <entry key="PLAIN_TEXT" value="94" />
+          <entry key="PLAIN_TEXT" value="127" />
           <entry key="XML" value="148" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="43" />
+          <entry key="project.closed" value="52" />
           <entry key="project.open.time.0" value="2" />
-          <entry key="project.open.time.1" value="5" />
+          <entry key="project.open.time.1" value="6" />
+          <entry key="project.open.time.10" value="2" />
           <entry key="project.open.time.2" value="2" />
           <entry key="project.open.time.6" value="5" />
-          <entry key="project.open.time.7" value="10" />
-          <entry key="project.open.time.8" value="14" />
-          <entry key="project.open.time.9" value="4" />
-          <entry key="project.opened" value="43" />
+          <entry key="project.open.time.7" value="11" />
+          <entry key="project.open.time.8" value="16" />
+          <entry key="project.open.time.9" value="7" />
+          <entry key="project.opened" value="52" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -100,14 +105,23 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/App.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="52" selection-start-line="52" selection-end-line="52" />
+            <state relative-caret-position="425">
+              <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-816">
+              <caret line="38" column="20" lean-forward="true" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -115,8 +129,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="113">
-              <caret line="780" column="13" selection-start-line="780" selection-start-column="13" selection-end-line="780" selection-end-column="13" />
+            <state relative-caret-position="12308">
+              <caret line="739" selection-start-line="739" selection-end-line="739" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -125,22 +139,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/FlagGameHandler.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="161">
-              <caret line="198" selection-start-line="198" selection-end-line="198" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="2482">
+              <caret line="156" selection-start-line="156" selection-end-line="156" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Commands/AdminCommands.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="309" column="8" selection-start-line="309" selection-start-column="8" selection-end-line="309" selection-end-column="8" />
+            <state relative-caret-position="16524">
+              <caret line="985" selection-start-line="985" selection-end-line="985" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -164,6 +178,8 @@
       <find>turk</find>
       <find>ai</find>
       <find>ber</find>
+      <find>antlr</find>
+      <find>org.apache</find>
     </findStrings>
     <replaceStrings>
       <replace>msg.getContentRaw()</replace>
@@ -194,7 +210,6 @@
       <list>
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Mandem.java" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/HypixelUtil.java" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/MessagesHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Currency/KbzTokens.java" />
         <option value="$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" />
@@ -202,15 +217,16 @@
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Discord.java" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/MethodsHandler.java" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/someoneCD.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/AdminCommands.java" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/RunSlots.java" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/SlotsCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/App.java" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/ArenaRandomizeHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/FlagGameHandler.java" />
-        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java" />
         <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/App.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/FlagGameHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/AdminCommands.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java" />
+        <option value="$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -234,15 +250,26 @@
           <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
           <item name="ArenaBrawlDiscordBot" type="9519ce18:MavenProjectsStructure$ProjectNode" />
         </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="ArenaBrawlDiscordBot" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="ArenaBrawlDiscordBot" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
+          <item name="net.hypixel:Java:2.0.0" type="c0821a7e:MavenProjectsStructure$DependencyNode" />
+        </path>
       </expand>
       <select />
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="275" />
-    <option name="y" value="90" />
-    <option name="width" value="1343" />
-    <option name="height" value="894" />
+    <option name="x" value="306" />
+    <option name="y" value="73" />
+    <option name="width" value="1425" />
+    <option name="height" value="928" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -252,7 +279,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -327,18 +353,20 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/Kile/Desktop/Coding Related/Java/Java Coding/Java Workspace/ArenaBrawlBot/src/main/java/ArenaBot/Handlers/FlagGameHandler.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547876350005" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548366987201" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Confirmation" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -522,17 +550,24 @@
       <option name="project" value="LOCAL" />
       <updated>1547875834506</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Update &amp; Completed Flag Game!">
+      <created>1547942321226</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1547942321226</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
     <option name="totallyTimeSpent" value="251000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="275" y="90" width="1343" height="894" extended-state="0" />
+    <frame x="306" y="73" width="1425" height="928" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49812734" visible="true" weight="0.5003897" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49812734" visible="true" weight="0.26373628" />
       <window_info id="Structure" order="1" sideWeight="0.50187266" side_tool="true" weight="0.38737336" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -542,14 +577,14 @@
       <window_info id="Web" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3285151" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49571317" visible="true" weight="0.29790026" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4947839" weight="0.30778894" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39947438" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="IntelliGuard" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32900432" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5042868" side_tool="true" weight="0.29790026" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5052161" side_tool="true" weight="0.29589373" />
       <window_info anchor="bottom" id="Java Enterprise" order="10" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.49961028" weight="0.32720104" />
@@ -559,7 +594,7 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
-      <window_info anchor="right" id="Maven Projects" order="5" weight="0.32969603" />
+      <window_info anchor="right" id="Maven Projects" order="5" weight="0.32967034" />
       <window_info anchor="right" id="Database" order="6" />
       <window_info anchor="right" id="Palette&#9;" order="7" />
       <window_info anchor="right" id="Theme Preview" order="8" />
@@ -609,7 +644,8 @@
     <MESSAGE value="Updated Mandem List." />
     <MESSAGE value="Added a whole lot of features + Flag Game yay!" />
     <MESSAGE value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/ArenaBot/Resources/Flags.java" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge remote-tracking branch 'origin/master'&#10;&#10;# Conflicts:&#10;#&#9;src/main/java/ArenaBot/Resources/Flags.java" />
+    <MESSAGE value="Update &amp; Completed Flag Game!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update &amp; Completed Flag Game!" />
   </component>
   <component name="antWorkspaceConfiguration">
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
@@ -690,19 +726,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Test.java" />
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="577">
-          <caret line="63" column="21" lean-forward="true" selection-start-line="63" selection-start-column="21" selection-end-line="63" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/manifest.yml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ArenaBrawlDiscordBot.iml">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Discord.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -767,20 +790,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/App.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="52" selection-start-line="52" selection-end-line="52" />
+        <state relative-caret-position="952">
+          <caret line="56" column="42" selection-start-line="56" selection-start-column="42" selection-end-line="56" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/FlagGameHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="711">
+          <caret line="185" selection-start-line="185" selection-end-line="185" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Commands/AdminCommands.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="137" lean-forward="true" selection-start-line="137" selection-end-line="137" />
+        <state relative-caret-position="12308">
+          <caret line="739" selection-start-line="739" selection-end-line="739" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -789,35 +819,45 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/WordsHandler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="152" column="17" selection-start-line="152" selection-start-column="17" selection-end-line="152" selection-end-column="17" />
+        <state relative-caret-position="2482">
+          <caret line="156" selection-start-line="156" selection-end-line="156" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Commands/UserCommands.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Commands/AdminCommands.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="113">
-          <caret line="780" column="13" selection-start-line="780" selection-start-column="13" selection-end-line="780" selection-end-column="13" />
+        <state relative-caret-position="16524">
+          <caret line="985" selection-start-line="985" selection-end-line="985" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Handlers/FlagGameHandler.java">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="198" selection-start-line="198" selection-end-line="198" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="-816">
+          <caret line="38" column="20" lean-forward="true" selection-start-line="38" selection-start-column="20" selection-end-line="38" selection-end-column="20" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/Resources/Flags.java">
+    <entry file="file://$PROJECT_DIR$/manifest.yml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ArenaBrawlDiscordBot.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="309" column="8" selection-start-line="309" selection-start-column="8" selection-end-line="309" selection-end-column="8" />
+        <state relative-caret-position="17">
+          <caret line="1" column="41" lean-forward="true" selection-start-line="1" selection-start-column="41" selection-end-line="1" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/ArenaBot/App.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

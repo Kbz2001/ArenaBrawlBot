@@ -19,7 +19,7 @@ public class App extends ListenerAdapter
 
 	public static boolean isOnline = true;
 	
-	public static HashMap<String, Integer> saveUsers = new HashMap();
+	public static HashMap<String, Integer> saveUsers = new HashMap<>();
 
 	public App() throws LoginException
 	{

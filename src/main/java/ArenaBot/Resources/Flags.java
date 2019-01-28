@@ -160,7 +160,7 @@ public class Flags
 		flags.put(":flag_kr:", "South Korea");
 		flags.put(":flag_kw:", "Kuwait");
 		//flags.put(":flag_ky:", "Cayman Islands");
-		flags.put(":flag_kz:", "Kazakhstan");
+		flags.put(":flag_kz:", "Kazahkstan");
 
 		//L Flags
 		flags.put(":flag_la:", "Laos");
