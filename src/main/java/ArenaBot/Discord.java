@@ -21,7 +21,7 @@ public class Discord extends Application
 
             }
 
-            catch (LoginException e)
+            catch (LoginException | InterruptedException e)
             {
 
                 e.printStackTrace();

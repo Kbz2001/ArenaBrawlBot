@@ -41,6 +41,8 @@ public class KbzTokens extends ListenerAdapter
 
 					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 1);
 
+					MethodsHandler.saveTokenConfig();
+
 				}
 			}
 		}

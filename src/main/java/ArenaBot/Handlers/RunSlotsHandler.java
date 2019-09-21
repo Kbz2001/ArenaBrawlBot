@@ -80,16 +80,16 @@ public class RunSlotsHandler
 						pic1 = "<:RAU:481298032865050625>";
 						break;
 					case 2:
-						pic1 = "<:HelperLapis:336621217752809473>";
+						pic1 = "<:Useful:554445582715060224>";
 						break;
 					case 3:
-						pic1 = "<:ModEmerald:336621225927245825>";
+						pic1 = "<:Like:554444088816959497>";
 						break;
 					case 4:
-						pic1 = "<:AdminDiamond:336621232738795521>";
+						pic1 = "<:AdminDiamond:554448167400243200>";
 						break;
 					case 5:
-						pic1 = "<:Bug:346470020013883395>";
+						pic1 = "<:Bug:554448470409347114>";
 						break;
 
 
@@ -104,16 +104,16 @@ public class RunSlotsHandler
 						pic2 = "<:RAU:481298032865050625>";
 						break;
 					case 2:
-						pic2 = "<:HelperLapis:336621217752809473>";
+						pic2 = "<:Useful:554445582715060224>";
 						break;
 					case 3:
-						pic2 = "<:ModEmerald:336621225927245825>";
+						pic2 = "<:Like:554444088816959497>";
 						break;
 					case 4:
-						pic2 = "<:AdminDiamond:336621232738795521>";
+						pic2 = "<:AdminDiamond:554448167400243200>";
 						break;
 					case 5:
-						pic2 = "<:Bug:346470020013883395>";
+						pic2 = "<:Bug:554448470409347114>";
 						break;
 
 				}
@@ -127,16 +127,16 @@ public class RunSlotsHandler
 						pic3 = "<:RAU:481298032865050625>";
 						break;
 					case 2:
-						pic3 = "<:HelperLapis:336621217752809473>";
+						pic3 = "<:Useful:554445582715060224>";
 						break;
 					case 3:
-						pic3 = "<:ModEmerald:336621225927245825>";
+						pic3 = "<:Like:554444088816959497>";
 						break;
 					case 4:
-						pic3 = "<:AdminDiamond:336621232738795521>";
+						pic3 = "<:AdminDiamond:554448167400243200>";
 						break;
 					case 5:
-						pic3 = "<:Bug:346470020013883395>";
+						pic3 = "<:Bug:554448470409347114>";
 						break;
 
 				}
@@ -150,16 +150,16 @@ public class RunSlotsHandler
 						pic4 = "<:RAU:481298032865050625>";
 						break;
 					case 2:
-						pic4 = "<:HelperLapis:336621217752809473>";
+						pic4 = "<:Useful:554445582715060224>";
 						break;
 					case 3:
-						pic4 = "<:ModEmerald:336621225927245825>";
+						pic4 = "<:Like:554444088816959497>";
 						break;
 					case 4:
-						pic4 = "<:AdminDiamond:336621232738795521>";
+						pic4 = "<:AdminDiamond:554448167400243200>";
 						break;
 					case 5:
-						pic4 = "<:Bug:346470020013883395>";
+						pic4 = "<:Bug:554448470409347114>";
 						break;
 
 				}
@@ -173,16 +173,16 @@ public class RunSlotsHandler
 						pic5 = "<:RAU:481298032865050625>";
 						break;
 					case 2:
-						pic5 = "<:HelperLapis:336621217752809473>";
+						pic5 = "<:Useful:554445582715060224>";
 						break;
 					case 3:
-						pic5 = "<:ModEmerald:336621225927245825>";
+						pic5 = "<:Like:554444088816959497>";
 						break;
 					case 4:
-						pic5 = "<:AdminDiamond:336621232738795521>";
+						pic5 = "<:AdminDiamond:554448167400243200>";
 						break;
 					case 5:
-						pic5 = "<:Bug:346470020013883395>";
+						pic5 = "<:Bug:554448470409347114>";
 						break;
 
 				}
@@ -196,16 +196,16 @@ public class RunSlotsHandler
 						pic6 = "<:RAU:481298032865050625>";
 						break;
 					case 2:
-						pic6 = "<:HelperLapis:336621217752809473>";
+						pic6 = "<:Useful:554445582715060224>";
 						break;
 					case 3:
-						pic6 = "<:ModEmerald:336621225927245825>";
+						pic6 = "<:Like:554444088816959497>";
 						break;
 					case 4:
-						pic6 = "<:AdminDiamond:336621232738795521>";
+						pic6 = "<:AdminDiamond:554448167400243200>";
 						break;
 					case 5:
-						pic6 = "<:Bug:346470020013883395>";
+						pic6 = "<:Bug:554448470409347114>";
 						break;
 
 				}
@@ -219,16 +219,16 @@ public class RunSlotsHandler
 						pic7 = "<:RAU:481298032865050625>";
 						break;
 					case 2:
-						pic7 = "<:HelperLapis:336621217752809473>";
+						pic7 = "<:Useful:554445582715060224>";
 						break;
 					case 3:
-						pic7 = "<:ModEmerald:336621225927245825>";
+						pic7 = "<:Like:554444088816959497>";
 						break;
 					case 4:
-						pic7 = "<:AdminDiamond:336621232738795521>";
+						pic7 = "<:AdminDiamond:554448167400243200>";
 						break;
 					case 5:
-						pic7 = "<:Bug:346470020013883395>";
+						pic7 = "<:Bug:554448470409347114>";
 						break;
 
 				}
@@ -242,16 +242,16 @@ public class RunSlotsHandler
 						pic8 = "<:RAU:481298032865050625>";
 						break;
 					case 2:
-						pic8 = "<:HelperLapis:336621217752809473>";
+						pic8 = "<:Useful:554445582715060224>";
 						break;
 					case 3:
-						pic8 = "<:ModEmerald:336621225927245825>";
+						pic8 = "<:Like:554444088816959497>";
 						break;
 					case 4:
-						pic8 = "<:AdminDiamond:336621232738795521>";
+						pic8 = "<:AdminDiamond:554448167400243200>";
 						break;
 					case 5:
-						pic8 = "<:Bug:346470020013883395>";
+						pic8 = "<:Bug:554448470409347114>";
 						break;
 
 				}
@@ -265,16 +265,16 @@ public class RunSlotsHandler
 						pic9 = "<:RAU:481298032865050625>";
 						break;
 					case 2:
-						pic9 = "<:HelperLapis:336621217752809473>";
+						pic9 = "<:Useful:554445582715060224>";
 						break;
 					case 3:
-						pic9 = "<:ModEmerald:336621225927245825>";
+						pic9 = "<:Like:554444088816959497>";
 						break;
 					case 4:
-						pic9 = "<:AdminDiamond:336621232738795521>";
+						pic9 = "<:AdminDiamond:554448167400243200>";
 						break;
 					case 5:
-						pic9 = "<:Bug:346470020013883395>";
+						pic9 = "<:Bug:554448470409347114>";
 						break;
 
 				}

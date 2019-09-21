@@ -9,6 +9,7 @@ import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.*;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
+
 import java.awt.*;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -27,7 +28,7 @@ public class UserCommands extends ListenerAdapter
 	@Override
 	public void onMessageReceived(MessageReceivedEvent e)
 	{
-	
+
 		Message msg = e.getMessage();
     	MessageChannel channel = e.getChannel();
     	User user = e.getAuthor();
@@ -101,6 +102,8 @@ public class UserCommands extends ListenerAdapter
 						+ "\n"
 						+ "\n%alltokenreset: Resets all personal Kbz Token counts to 0."
 						+ "\n"
+						+ "\n%settokens: Sets the specified user's token count."
+						+ "\n"
 						+ "\n%warn: Warns a user on the Discord via the Bot in PMs."
 						+ "\n"
 						+ "\n%mute: Mutes a user."
@@ -110,6 +113,10 @@ public class UserCommands extends ListenerAdapter
 						+ "\n%kick: Kicks a user from the Discord."
 						+ "\n"
 						+ "\n%ban: Bans a user from the Discord."
+						+ "\n"
+						+ "\n%cmute: Mutes the entire channel."
+						+ "\n"
+						+ "\n%cunmute: Unmutes the entire channel."
 						+ "\n"
 						+ "\n```"
 						+ "\n"
@@ -181,9 +188,13 @@ public class UserCommands extends ListenerAdapter
 						+ "\n"
 						+ "\n%lbreset: Resets the current leaderboard."
 						+ "\n"
-						+ "\n%alluserreset: Resets all personal message counts to 0."
+						+ "\n%allmsgreset: Resets all personal message counts to 0."
 						+ "\n"
-						+ "\n%userreset: Resets the specified user's message count."
+						+ "\n%msgreset: Resets the specified user's message count."
+						+ "\n"
+						+ "\n%settotalmsgs: Sets the total message count."
+						+ "\n"
+						+ "\n%setmsgs: Sets the specified user's message count."
 						+ "\n"
 						+ "\n%purge: Deletes a specific number messages in the text channel."
 						+ "\n"
@@ -208,6 +219,12 @@ public class UserCommands extends ListenerAdapter
 						+ "\n%toggleonline: Brings me into Online/Offline mode."
 						+ "\n"
 						+ "\n%shutdown: Shuts me down."
+						+ "\n"
+						+ "\n%announce: Uses the bot to send an announcement."
+						+ "\n"
+						+ "\n%quote: Uses the bot to send a quote."
+						+ "\n"
+						+ "\n%setgame: Sets the Bot's status."
 						+ "\n"
 						+ "\n```"
 						+ "\n"
@@ -267,7 +284,7 @@ public class UserCommands extends ListenerAdapter
 
 					channel.sendMessage("You have sent " + Integer.toString(App.saveUsers.get(user.getId())) + " messages " + user.getAsMention()).queue();
 
-					MethodsHandler.saveMessageConfig();
+					MethodsHandler.saveUserMessageConfig();
 
 				}
 
@@ -276,7 +293,7 @@ public class UserCommands extends ListenerAdapter
 
 					channel.sendMessage("You have sent 0 messages " + user.getAsMention()).queue();
 
-					MethodsHandler.saveMessageConfig();
+					MethodsHandler.saveUserMessageConfig();
 
 				}
 			}
@@ -494,10 +511,11 @@ public class UserCommands extends ListenerAdapter
 
 			if(msg.getContentRaw().equalsIgnoreCase("%server-info"))
 			{
-
-				Channel generalChannel = guild.getTextChannelById("336291415908679690");
-
-				channel.sendMessage("This Discord was created on: " + generalChannel.getCreationTime()).queue();
+				channel.sendMessage("-> The Acronym for this Discord is **ABCD**!"
+						+ "\n"
+						+ "-> This Discord was created on: " + "**2017-7-16**!"
+						+ "\n"
+						+ "-> There are currently **" + guild.getMembers().size() + "** users in this Discord!").queue();
 
 			}
 

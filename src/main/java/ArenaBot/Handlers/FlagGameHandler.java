@@ -1,5 +1,6 @@
 package ArenaBot.Handlers;
 
+import ArenaBot.Currency.KbzTokens;
 import ArenaBot.Resources.Flags;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
@@ -180,11 +181,13 @@ public class FlagGameHandler extends ListenerAdapter
 
 					guessedOne = true;
 
-					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(0) + ")" ).queue();
+					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(0) + ")" + " +20 Kbz Tokens").queue();
 
 					editCounter++;
 
-					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:336621149243047938>").queue();
+					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 20);
+
+					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:554445062528827433>").queue();
 
 				}
 			}
@@ -208,11 +211,13 @@ public class FlagGameHandler extends ListenerAdapter
 
 					guessedTwo = true;
 
-					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(1) + ")" ).queue();
+					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(1) + ")" + " +20 Kbz Tokens").queue();
 
 					editCounter++;
 
-					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:336621149243047938>").queue();
+					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 20);
+
+					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:554445062528827433>").queue();
 
 				}
 			}
@@ -237,11 +242,13 @@ public class FlagGameHandler extends ListenerAdapter
 
 					guessedThree = true;
 
-					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(2) + ")" ).queue();
+					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(2) + ")" + " +20 Kbz Tokens").queue();
 
 					editCounter++;
 
-					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:336621149243047938>").queue();
+					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 20);
+
+					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:554445062528827433>").queue();
 
 				}
 			}
@@ -267,11 +274,13 @@ public class FlagGameHandler extends ListenerAdapter
 
 					guessedFour = true;
 
-					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(3) + ")" ).queue();
+					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(3) + ")" + " +20 Kbz Tokens").queue();
 
 					editCounter++;
 
-					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:336621149243047938>").queue();
+					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 20);
+
+					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:554445062528827433>").queue();
 
 				}
 			}
@@ -296,11 +305,13 @@ public class FlagGameHandler extends ListenerAdapter
 
 					guessedFive = true;
 
-					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(4) + ")" ).queue();
+					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(4) + ")" + " +20 Kbz Tokens").queue();
 
 					editCounter++;
 
-					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:336621149243047938>").queue();
+					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 20);
+
+					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:554445062528827433>").queue();
 
 				}
 			}
@@ -334,6 +345,8 @@ public class FlagGameHandler extends ListenerAdapter
 			}
 
 			channel.sendMessage("The flag game has ended! The person with the most correct guesses wins!").queue();
+
+			MethodsHandler.saveTokenConfig();
 
 		}
 	}
