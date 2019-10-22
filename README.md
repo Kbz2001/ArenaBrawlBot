@@ -1,2 +1,2 @@
 # ArenaBrawlBot
-ABCD Bot
+This bot is for the Arena Brawl Discord!

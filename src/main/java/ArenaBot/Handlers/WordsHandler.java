@@ -1,176 +1,251 @@
 package ArenaBot.Handlers;
 
 import ArenaBot.App;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.Message;
+import org.javacord.api.entity.message.MessageAuthor;
+import org.javacord.api.entity.user.User;
+import org.javacord.api.event.message.MessageCreateEvent;
+import org.javacord.api.listener.message.MessageCreateListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class WordsHandler extends ListenerAdapter 
+public class WordsHandler implements MessageCreateListener
 {
 
 	static ArrayList<String> mandemEmotes = new ArrayList<>();
 
 	@Override
-	public void onMessageReceived(MessageReceivedEvent e)
+	public void onMessageCreate(MessageCreateEvent e)
 	{
-		
-		Message msg = e.getMessage();
-    	MessageChannel channel = e.getChannel();
-    	User user = e.getAuthor();
 
-    	if(App.isOnline && !user.isBot())
+		Message msg = e.getMessage();
+		TextChannel tChannel = e.getChannel();
+		MessageAuthor user = e.getMessageAuthor();
+
+		if (!App.isOnline)
 		{
 
-			if(msg.getContentRaw().equalsIgnoreCase("hello") ||
-					msg.getContentRaw().equalsIgnoreCase("hi") ||
-					msg.getContentRaw().equalsIgnoreCase("hey") ||
-					msg.getContentRaw().equalsIgnoreCase("hai"))
+			MethodsHandler.sendOfflineErrorMessage(tChannel);
+
+		}
+
+		else
+		{
+
+			if (msg.getContent().equalsIgnoreCase("hello") ||
+					msg.getContent().equalsIgnoreCase("hi") ||
+					msg.getContent().equalsIgnoreCase("hey") ||
+					msg.getContent().equalsIgnoreCase("hai"))
 			{
 
-				channel.sendMessage("Hello " + user.getAsMention() + "!").queue();
-
-			}
-
-			if(msg.getContentRaw().toLowerCase().contains("hej"))
-			{
-
-				channel.sendMessage("Hej " + user.getAsMention() + "!").queue();
-
-			}
-
-			if(msg.getContentRaw().toLowerCase().contains("goodnight") ||
-					msg.getContentRaw().toLowerCase().contains("good night") ||
-					msg.getContentRaw().toLowerCase().contains("gn"))
-			{
-
-				channel.sendMessage("Goodbye " + user.getAsMention() + "!").queue();
-				msg.addReaction(":gamer818:341311893132279818").queue();
-
-			}
-
-			if(msg.getContentRaw().toLowerCase().contains("godnat"))
-			{
-
-				channel.sendMessage("Godnat " + user.getAsMention() + "!").queue();
-				msg.addReaction(":gamer818:341311893132279818").queue();
-
-			}
-
-			if(msg.getContentRaw().toLowerCase().contains("doe"))
-			{
-
-				msg.addReaction(":Kbz:336927247363604491").queue();
-
-			}
-
-			if(msg.getContentRaw().toLowerCase().contains("railed"))
-			{
-
-				msg.addReaction(":Invincitron2000:336680103973093387").queue();
-
-			}
-
-			if(msg.getContentRaw().toLowerCase().contains("rily") && !msg.getContentRaw().equalsIgnoreCase("narily"))
-			{
-
-				msg.addReaction(":SnapDoomy:336660661570502656").queue();
-
-			}
-
-//			if(msg.getContentRaw().toLowerCase().contains("narily") && !msg.getContentRaw().equalsIgnoreCase("rily"))
-//			{
-//
-//				msg.addReaction(":Natily:539196345966264371").queue();
-//
-//			}
-
-			if(msg.getContentRaw().toLowerCase().contains("snorp") ||
-					msg.getContentRaw().toLowerCase().contains("garbaga") ||
-					msg.getContentRaw().toLowerCase().contains("barbara") ||
-					msg.getContentRaw().toLowerCase().contains("frick"))
-			{
-
-
-				channel.sendMessage("Please do not say that " + user.getAsMention() + "!").queue();
-				msg.addReaction(":Rude:554448338200690689").queue();
-
-			}
-
-			if(msg.getContentRaw().toLowerCase().contains("guey"))
-			{
-
-				msg.addReaction(":DevinHuey:336629496922767360").queue();
-
-			}
-
-			if(msg.getContentRaw().toLowerCase().contains("rau") ||
-					msg.getContentRaw().toLowerCase().contains("respect all users"))
-			{
-
-				msg.addReaction(":RAU:481298032865050625").queue();
-
-			}
-
-			if(msg.getContentRaw().toLowerCase().contains("mandem"))
-			{
-
-				Collections.shuffle(mandemEmotes);
-
-				for(int i = 0; i < 8; i++)
+				if (!user.isBotUser())
 				{
 
-					msg.addReaction(mandemEmotes.get(i)).queue();
+					tChannel.sendMessage("Hello " + user.asUser().map(User::getMentionTag).get() + "!");
 
 				}
 			}
 
-			if(msg.getContentRaw().toLowerCase().contains("bloke"))
+			if (msg.getContent().equalsIgnoreCase("hej"))
 			{
 
-				Collections.shuffle(mandemEmotes);
-
-				for(int i = 0; i < 1; i++)
+				if (!user.isBotUser())
 				{
 
-					msg.addReaction(mandemEmotes.get(i)).queue();
+					tChannel.sendMessage("Hej " + user.asUser().map(User::getMentionTag).get() + "!");
 
 				}
 			}
 
-			if(msg.getContentRaw().toLowerCase().contains("pekka"))
+			if (msg.getContent().toLowerCase().contains("goodnight") ||
+					msg.getContent().toLowerCase().contains("good night") ||
+					msg.getContent().toLowerCase().contains("gn"))
 			{
 
-				msg.addReaction(":Pekkaguey:551182374449315870").queue();
+				if (!user.isBotUser())
+				{
 
+					tChannel.sendMessage("Goodbye " + user.asUser().map(User::getMentionTag).get() + "!");
+					msg.addReaction(":gamer818:341311893132279818");
+
+				}
 			}
 
-			if(msg.getContentRaw().toLowerCase().contains("arena brawl"))
+			if (msg.getContent().toLowerCase().contains("godnat"))
 			{
 
-				msg.addReaction(":ArenaBrawl:481298350856077322").queue();
+				if (!user.isBotUser())
+				{
 
+					tChannel.sendMessage("Godnat " + user.asUser().map(User::getMentionTag).get() + "!");
+					msg.addReaction(":gamer818:341311893132279818");
+
+				}
 			}
 
-			if(msg.getContentRaw().toLowerCase().contains("climbin")
-					|| msg.getContentRaw().toLowerCase().contains("climbing")
-					|| msg.getContentRaw().toLowerCase().contains("climb"))
-
+			if (msg.getContent().toLowerCase().contains("doe"))
 			{
 
-				msg.addReaction(":Wat:554447921748246529").queue();
+				if (!user.isBotUser())
+				{
 
+					msg.addReaction(":Kbz:336927247363604491");
+
+				}
 			}
 
-			if(msg.getContentRaw().toLowerCase().contains("yanked"))
+			if (msg.getContent().toLowerCase().contains("railed"))
 			{
 
-				msg.addReaction(":Ferozion:550861421718798338").queue();
+				if (!user.isBotUser())
+				{
 
+					msg.addReaction(":Invincitron2000:336680103973093387");
+
+				}
+			}
+
+			if (msg.getContent().toLowerCase().contains("rily"))
+			{
+
+				if (!user.isBotUser())
+				{
+
+					msg.addReaction(":SnapDoomy:336660661570502656");
+
+				}
+			}
+
+			if (msg.getContent().toLowerCase().contains("snorp") ||
+					msg.getContent().toLowerCase().contains("garbaga") ||
+					msg.getContent().toLowerCase().contains("barbara") ||
+					msg.getContent().toLowerCase().contains("frick"))
+			{
+
+				if (!user.isBotUser())
+				{
+
+					tChannel.sendMessage("Please do not say that " + user.asUser().map(User::getMentionTag).get() + "!");
+					msg.addReaction(":Rude:554448338200690689");
+
+				}
+			}
+
+			if (msg.getContent().toLowerCase().contains("guey"))
+			{
+
+				if (!user.isBotUser())
+				{
+
+					msg.addReaction(":DevinHuey:336629496922767360");
+
+				}
+			}
+
+			if (msg.getContent().toLowerCase().contains("rau") ||
+					msg.getContent().toLowerCase().contains("respect all users"))
+			{
+
+				if (!user.isBotUser())
+				{
+
+					msg.addReaction(":RAU:481298032865050625");
+
+				}
+			}
+
+			if (msg.getContent().toLowerCase().contains("mandem"))
+			{
+
+				if (!user.isBotUser())
+				{
+
+					Collections.shuffle(mandemEmotes);
+
+					for (int i = 0; i < 8; i++)
+					{
+
+						msg.addReaction(mandemEmotes.get(i));
+
+					}
+				}
+			}
+
+			if (msg.getContent().toLowerCase().contains("bloke"))
+			{
+
+				if (!user.isBotUser())
+				{
+
+					Collections.shuffle(mandemEmotes);
+
+					for (int i = 0; i < 1; i++)
+					{
+
+						msg.addReaction(mandemEmotes.get(i));
+
+					}
+				}
+			}
+
+			if (msg.getContent().toLowerCase().contains("pekka"))
+			{
+
+				if (!user.isBotUser())
+				{
+
+					msg.addReaction(":Pekkaguey:551182374449315870");
+
+				}
+			}
+
+			if (msg.getContent().toLowerCase().contains("arena brawl"))
+			{
+
+				if (!user.isBotUser())
+				{
+
+					msg.addReaction(":ArenaBrawl:481298350856077322");
+
+				}
+			}
+
+			if (msg.getContent().toLowerCase().contains("pekka"))
+			{
+
+				if (!user.isBotUser())
+				{
+
+					msg.addReaction(":Pekkaguey:551182374449315870");
+
+				}
+			}
+
+			if (msg.getContent().toLowerCase().contains("climbin")
+					|| msg.getContent().toLowerCase().contains("climbing")
+					|| msg.getContent().toLowerCase().contains("climb"))
+			{
+
+				if (!user.isBotUser())
+				{
+
+					msg.addReaction(":Wat:554447921748246529");
+
+				}
+			}
+
+			if (msg.getContent().toLowerCase().contains("yanked"))
+			{
+
+
+				if (!user.isBotUser())
+				{
+
+					msg.addReaction(":Ferozion:550861421718798338");
+
+				}
 			}
 		}
 	}

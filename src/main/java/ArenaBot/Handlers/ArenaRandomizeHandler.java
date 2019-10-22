@@ -1,23 +1,43 @@
 package ArenaBot.Handlers;
 
+import ArenaBot.App;
 import ArenaBot.Commands.UserCommands;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+
+import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.Message;
+import org.javacord.api.entity.message.MessageAuthor;
+import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.util.Collections;
 
 public class ArenaRandomizeHandler
 {
 
-	public static void runRandomize(MessageReceivedEvent e)
+	public static void runRandomize(MessageCreateEvent e)
 	{
 
-		MessageChannel channel = e.getChannel();
+		Message msg = e.getMessage();
+		TextChannel tChannel = e.getChannel();
+		MessageAuthor user = e.getMessageAuthor();
+
+		if(!App.isOnline)
+		{
+
+			MethodsHandler.sendOfflineErrorMessage(tChannel);
+
+		}
+
+		if(msg.getContent().startsWith("%") && user.isBotUser())
+		{
+
+			MethodsHandler.sendBotPermissionErrorMessage(tChannel);
+
+		}
 
 		if(UserCommands.listOfEnteredPlayers.size() % 4 != 0 || UserCommands.listOfEnteredPlayers.size() == 0)
 		{
 
-			channel.sendMessage("I cannot randomize because I require 4, 8, or 12 players to function!").queue();
+			tChannel.sendMessage("I cannot randomize because I require 4, 8, or 12 players to function!");
 
 			return;
 
@@ -34,11 +54,11 @@ public class ArenaRandomizeHandler
 			team1 = UserCommands.listToRandom.get(0) + " " + UserCommands.listToRandom.get(1);
 			team2 = UserCommands.listToRandom.get(2) + " " + UserCommands.listToRandom.get(3);
 
-			channel.sendMessage("*__Teams:__*"
+			tChannel.sendMessage("*__Teams:__*"
 					+ "\n"
 					+ "**Team 1:** " + team1
 					+ "\n"
-					+ "**Team 2:** " + team2).queue();
+					+ "**Team 2:** " + team2);
 
 		}
 
@@ -58,7 +78,7 @@ public class ArenaRandomizeHandler
 			team4 = UserCommands.listToRandom.get(6) + " " + UserCommands.listToRandom.get(7);
 
 
-			channel.sendMessage("*__Teams:__*"
+			tChannel.sendMessage("*__Teams:__*"
 					+ "\n"
 					+ "**Team 1:** " + team1
 					+ "\n"
@@ -66,7 +86,7 @@ public class ArenaRandomizeHandler
 					+ "\n"
 					+ "**Team 3:** " + team3
 					+ "\n"
-					+ "**Team 4:** " + team4).queue();
+					+ "**Team 4:** " + team4);
 		}
 
 		if(UserCommands.listOfEnteredPlayers.size() == 12)
@@ -88,7 +108,7 @@ public class ArenaRandomizeHandler
 			team5 = UserCommands.listToRandom.get(8) + " " + UserCommands.listToRandom.get(9);
 			team6 = UserCommands.listToRandom.get(10) + " " + UserCommands.listToRandom.get(11);
 
-			channel.sendMessage("*__Teams:__*"
+			tChannel.sendMessage("*__Teams:__*"
 					+ "\n"
 					+ "**Team 1:** " + team1
 					+ "\n"
@@ -100,9 +120,8 @@ public class ArenaRandomizeHandler
 					+ "\n"
 					+ "**Team 5:** " + team5
 					+ "\n"
-					+ "**Team 6:** " + team6).queue();
+					+ "**Team 6:** " + team6);
 
 		}
-
 	}
 }

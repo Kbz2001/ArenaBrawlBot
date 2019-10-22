@@ -2,16 +2,23 @@ package ArenaBot.Handlers;
 
 import ArenaBot.App;
 import ArenaBot.Currency.KbzTokens;
-import net.dv8tion.jda.core.entities.Game;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.TextChannel;
 
+import org.javacord.api.entity.activity.ActivityType;
+import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.MessageAuthor;
+import org.javacord.api.entity.message.MessageBuilder;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
+import org.javacord.api.entity.user.User;
+
+import java.awt.*;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class MethodsHandler
 {
@@ -93,6 +100,62 @@ public class MethodsHandler
 		}
 
 		return true;
+
+	}
+
+	public static void sendOfflineErrorMessage(TextChannel tChannel)
+	{
+
+		MessageBuilder builder = new MessageBuilder()
+				.setEmbed(new EmbedBuilder()
+						.setTitle("Command Failed.")
+						.setDescription("Sorry I am currently **Offline** :(!")
+						.setColor(Color.RED));
+
+		builder.send(tChannel);
+
+	}
+
+	public static void sendBotPermissionErrorMessage(TextChannel tChannel)
+	{
+
+		MessageBuilder builder = new MessageBuilder()
+				.setEmbed(new EmbedBuilder()
+						.setTitle("Permission Denied.")
+						.setDescription("Sorry I am not allowed to use commands :(!")
+						.setColor(Color.RED));
+
+		builder.send(tChannel);
+
+	}
+
+	public static void sendSlotsWinnerMessageBasic(TextChannel tChannel, int wager, MessageAuthor user)
+	{
+
+		MessageBuilder builder = new MessageBuilder()
+				.setEmbed(new EmbedBuilder()
+						.setTitle("**Winner!")
+						.setDescription("Congratulations, you won " + wager * 5 + " Kbz Tokens! " + user.asUser().map(User::getMentionTag).get())
+						.setColor(Color.GREEN));
+
+		builder.send(tChannel);
+
+		KbzTokens.Tokens.put(user.getIdAsString(), KbzTokens.Tokens.get(user.getIdAsString()) + wager * 5);
+
+	}
+
+	public static void sendSlotsWinnerMessageJackpot(TextChannel tChannel, int wager, MessageAuthor user)
+	{
+
+		MessageBuilder builder = new MessageBuilder()
+				.setEmbed(new EmbedBuilder()
+						.setTitle("**Winner!")
+						.setDescription("JACKPOT:, you won " + wager * 10 + " Kbz Tokens! " + user.asUser().map(User::getMentionTag).get())
+						.setColor(Color.GREEN));
+
+		builder.send(tChannel);
+
+		KbzTokens.Tokens.put(user.getIdAsString(), KbzTokens.Tokens.get(user.getIdAsString()) + wager * 10);
 
 	}
 
@@ -220,28 +283,29 @@ public class MethodsHandler
 		if(mode.equalsIgnoreCase("playing"))
 		{
 
-			App.jdaBot.getPresence().setGame(Game.playing(game));
+			App.api.updateActivity(ActivityType.PLAYING, game);
 
 		}
 
 		if(mode.equalsIgnoreCase("streaming"))
 		{
 
-			App.jdaBot.getPresence().setGame(Game.streaming(game, "https://www.twitch.tv/kbz2001"));
+			//App.jdaBot.getPresence().setGame(Game.streaming(game, "https://www.twitch.tv/kbz2001"));
+			App.api.updateActivity(ActivityType.STREAMING, game);
 
 		}
 
 		if(mode.equalsIgnoreCase("watching"))
 		{
 
-			App.jdaBot.getPresence().setGame(Game.watching(game));
+			App.api.updateActivity(ActivityType.WATCHING, game);
 
 		}
 
 		if(mode.equalsIgnoreCase("listening"))
 		{
 
-			App.jdaBot.getPresence().setGame(Game.listening(game));
+			App.api.updateActivity(ActivityType.LISTENING, game);
 
 		}
 	}
@@ -249,22 +313,21 @@ public class MethodsHandler
 	public static void saveUserMessageConfig()
 	{
 
-		TextChannel messagesChannel = App.jdaBot.getGuildById("336291415908679690")
-				.getTextChannelById("551824721356783619");
+		TextChannel messagesChannel = App.api.getTextChannelById("551824721356783619").get();
 
 		StringBuilder sb = new StringBuilder();
 
 		int i = 0;
 
-		for(Member m : App.jdaBot.getGuildById("336291415908679690").getMembers())
+		for(User m : App.api.getServerById("336291415908679690").get().getMembers())
 		{
 
-			if(App.saveUsers.get(m.getUser().getId()) != null || i < 5)
+			if(App.saveUsers.get(m.getIdAsString()) != null || i < 5)
 			{
 
 				i++;
 
-				sb.append("#").append(i).append(" ").append(m.getUser().getId()).append("=").append(App.saveUsers.get(m.getUser().getId())).append("\r\n");
+				sb.append("#").append(i).append(" ").append(m.getIdAsString()).append("=").append(App.saveUsers.get(m.getIdAsString())).append("\r\n");
 
 			}
 		}
@@ -286,16 +349,16 @@ public class MethodsHandler
 		try
 		{
 
-			messagesChannel.editMessageById("551939321184387093",parts1[0]).queueAfter(0, TimeUnit.SECONDS);
-			messagesChannel.editMessageById("551939329728184351",parts2[0]).queueAfter(1, TimeUnit.SECONDS);
-			messagesChannel.editMessageById("551939338137632768",parts3[0]).queueAfter(2, TimeUnit.SECONDS);
-			messagesChannel.editMessageById("551939346752864265",parts4[0]).queueAfter(3, TimeUnit.SECONDS);
-			messagesChannel.editMessageById("551939354671710220",parts5[0]).queueAfter(4, TimeUnit.SECONDS);
-			messagesChannel.editMessageById("551939362997403669",parts5[1]).queueAfter(5, TimeUnit.SECONDS);
+			messagesChannel.getMessageById("551939321184387093").thenAccept(part1 -> part1.edit(parts1[0])).get(0, TimeUnit.SECONDS);
+			messagesChannel.getMessageById("551939329728184351").thenAccept(part2 -> part2.edit(parts2[0])).get(1, TimeUnit.SECONDS);
+			messagesChannel.getMessageById("551939338137632768").thenAccept(part3 -> part3.edit(parts3[0])).get(2, TimeUnit.SECONDS);
+			messagesChannel.getMessageById("551939346752864265").thenAccept(part4 -> part4.edit(parts4[0])).get(3, TimeUnit.SECONDS);
+			messagesChannel.getMessageById("551939354671710220").thenAccept(part5 -> part5.edit(parts5[0])).get(4, TimeUnit.SECONDS);
+			messagesChannel.getMessageById("551939362997403669").thenAccept(part6 -> part6.edit(parts5[1])).get(5, TimeUnit.SECONDS);
 
 		}
 
-		catch(ArrayIndexOutOfBoundsException ex)
+		catch(ArrayIndexOutOfBoundsException | ExecutionException | TimeoutException | InterruptedException ex)
 		{
 
 			ex.printStackTrace();
@@ -306,32 +369,29 @@ public class MethodsHandler
 	public static void saveTotalMessageConfig()
 	{
 
-		TextChannel messagesChannel = App.jdaBot.getGuildById("336291415908679690")
-				.getTextChannelById("551824721356783619");
+		TextChannel messagesChannel = App.api.getTextChannelById("551824721356783619").get();
 
-		messagesChannel.editMessageById("551940047348301845", "Total Messages: " + App.totalMessages).queue();
+		messagesChannel.getMessageById("551940047348301845").thenAccept(totalmsgs -> totalmsgs.edit("Total Messages: " + App.totalMessages));
 
 	}
 
-	public static void saveTokenConfig()
-	{
+	public static void saveTokenConfig() throws InterruptedException, ExecutionException, TimeoutException {
 
-		TextChannel kbzTokensChannel = App.jdaBot.getGuildById("336291415908679690")
-				.getTextChannelById("551824671293571073");
+		TextChannel kbzTokensChannel = App.api.getTextChannelById("551824671293571073").get();
 
 		StringBuilder sb = new StringBuilder();
 
 		int i = 0;
 
-		for(Member m : App.jdaBot.getGuildById("336291415908679690").getMembers())
+		for(User m : App.api.getServerById("336291415908679690").get().getMembers())
 		{
 
-			if(KbzTokens.Tokens.get(m.getUser().getId()) != null || i < 5)
+			if(KbzTokens.Tokens.get(m.getIdAsString()) != null || i < 5)
 			{
 
 				i++;
 
-				sb.append("#").append(i).append(" ").append(m.getUser().getId()).append("=").append(KbzTokens.Tokens.get(m.getUser().getId())).append("\r\n");
+				sb.append("#").append(i).append(" ").append(m.getIdAsString()).append("=").append(KbzTokens.Tokens.get(m.getIdAsString())).append("\r\n");
 
 			}
 		}
@@ -350,38 +410,36 @@ public class MethodsHandler
 		String[] parts4 = parts3[1].split("#"+ String.valueOf(splitRegex4));
 		String[] parts5 = parts4[1].split("#"+ String.valueOf(splitRegex5));
 
-		kbzTokensChannel.editMessageById("551941521897947137",parts1[0]).queueAfter(0, TimeUnit.SECONDS);
-		kbzTokensChannel.editMessageById("551941530068320277",parts2[0]).queueAfter(1, TimeUnit.SECONDS);
-		kbzTokensChannel.editMessageById("551941538763243535",parts3[0]).queueAfter(2, TimeUnit.SECONDS);
-		kbzTokensChannel.editMessageById("551941546946199583",parts4[0]).queueAfter(3, TimeUnit.SECONDS);
-		kbzTokensChannel.editMessageById("551941555523551232",parts5[0]).queueAfter(4, TimeUnit.SECONDS);
-		kbzTokensChannel.editMessageById("551941563908096010",parts5[1]).queueAfter(5, TimeUnit.SECONDS);
+		kbzTokensChannel.getMessageById("551941521897947137").thenAccept(part1 -> part1.edit(parts1[0])).get(0, TimeUnit.SECONDS);
+		kbzTokensChannel.getMessageById("551941530068320277").thenAccept(part2 -> part2.edit(parts2[0])).get(1, TimeUnit.SECONDS);
+		kbzTokensChannel.getMessageById("551941538763243535").thenAccept(part3 -> part3.edit(parts3[0])).get(2, TimeUnit.SECONDS);
+		kbzTokensChannel.getMessageById("551941546946199583").thenAccept(part4 -> part4.edit(parts4[0])).get(3, TimeUnit.SECONDS);
+		kbzTokensChannel.getMessageById("551941555523551232").thenAccept(part5 -> part5.edit(parts5[0])).get(4, TimeUnit.SECONDS);
+		kbzTokensChannel.getMessageById("551941563908096010").thenAccept(part6 -> part6.edit(parts5[1])).get(5, TimeUnit.SECONDS);
 
 	}
 
 	public static void saveValuables()
 	{
 
-		TextChannel valuablesChannel = App.jdaBot.getGuildById("336291415908679690")
-				.getTextChannelById("556847977449390115");
+		TextChannel valuablesChannel = App.api.getTextChannelById("556847977449390115").get();
 
-		valuablesChannel.editMessageById("556849369316327424", "Mode-" + App.mode + "&&" + "Game-" + App.game).queue();
+		valuablesChannel.getMessageById("556849369316327424").thenAccept(valuablemsg -> valuablemsg.edit("Mode-" + App.mode + " && " + "Game-" + App.game.replace(" ", "")));
 
 	}
 
-	public static void loadMessageConfig() 
+	public static void loadMessageConfig() throws ExecutionException, InterruptedException
 	{
 
-		TextChannel messagesChannel = App.jdaBot.getGuildById("336291415908679690")
-				.getTextChannelById("551824721356783619");
+		TextChannel messagesChannel = App.api.getTextChannelById("551824721356783619").get();
 
-		String msg1 = messagesChannel.getMessageById("551939321184387093").complete().getContentRaw();
-		String msg2 = messagesChannel.getMessageById("551939329728184351").complete().getContentRaw();
-		String msg3 = messagesChannel.getMessageById("551939338137632768").complete().getContentRaw();
-		String msg4 = messagesChannel.getMessageById("551939346752864265").complete().getContentRaw();
-		String msg5 = messagesChannel.getMessageById("551939354671710220").complete().getContentRaw();
-		String msg6 = messagesChannel.getMessageById("551939362997403669").complete().getContentRaw();
-		String totalmsgs = messagesChannel.getMessageById("551940047348301845").complete().getContentRaw();
+		String msg1 = messagesChannel.getMessageById("551939321184387093").get().getContent();
+		String msg2 = messagesChannel.getMessageById("551939329728184351").get().getContent();
+		String msg3 = messagesChannel.getMessageById("551939338137632768").get().getContent();
+		String msg4 = messagesChannel.getMessageById("551939346752864265").get().getContent();
+		String msg5 = messagesChannel.getMessageById("551939354671710220").get().getContent();
+		String msg6 = messagesChannel.getMessageById("551939362997403669").get().getContent();
+		String totalmsgs = messagesChannel.getMessageById("551940047348301845").get().getContent();
 
 		Scanner sc1 = new Scanner(msg1);
 		Scanner sc2 = new Scanner(msg2);
@@ -402,18 +460,17 @@ public class MethodsHandler
 
 	}
 	
-	public static void loadTokenConfig() 
+	public static void loadTokenConfig() throws ExecutionException, InterruptedException
 	{
 
-		TextChannel kbzTokensChannel = App.jdaBot.getGuildById("336291415908679690")
-				.getTextChannelById("551824671293571073");
+		TextChannel kbzTokensChannel = App.api.getTextChannelById("551824671293571073").get();
 
-		String msg1 = kbzTokensChannel.getMessageById("551941521897947137").complete().getContentRaw();
-		String msg2 = kbzTokensChannel.getMessageById("551941530068320277").complete().getContentRaw();
-		String msg3 = kbzTokensChannel.getMessageById("551941538763243535").complete().getContentRaw();
-		String msg4 = kbzTokensChannel.getMessageById("551941546946199583").complete().getContentRaw();
-		String msg5 = kbzTokensChannel.getMessageById("551941555523551232").complete().getContentRaw();
-		String msg6 = kbzTokensChannel.getMessageById("551941563908096010").complete().getContentRaw();
+		String msg1 = kbzTokensChannel.getMessageById("551941521897947137").get().getContent();
+		String msg2 = kbzTokensChannel.getMessageById("551941530068320277").get().getContent();
+		String msg3 = kbzTokensChannel.getMessageById("551941538763243535").get().getContent();
+		String msg4 = kbzTokensChannel.getMessageById("551941546946199583").get().getContent();
+		String msg5 = kbzTokensChannel.getMessageById("551941555523551232").get().getContent();
+		String msg6 = kbzTokensChannel.getMessageById("551941563908096010").get().getContent();
 
 		Scanner sc1 = new Scanner(msg1);
 		Scanner sc2 = new Scanner(msg2);
@@ -431,13 +488,12 @@ public class MethodsHandler
 
 	}
 
-	public static void loadValuables()
+	public static void loadValuables() throws ExecutionException, InterruptedException
 	{
 
-		TextChannel valuablesChannel = App.jdaBot.getGuildById("336291415908679690")
-				.getTextChannelById("556847977449390115");
+		TextChannel valuablesChannel = App.api.getTextChannelById("556847977449390115").get();
 
-		String msg1 = valuablesChannel.getMessageById("556849369316327424").complete().getContentRaw();
+		String msg1 = valuablesChannel.getMessageById("556849369316327424").get().getContent();
 
 		Scanner sc1 = new Scanner(msg1);
 
@@ -445,12 +501,12 @@ public class MethodsHandler
 
 	}
 
-    public static ArrayList<Member> getMembers()
+    public static ArrayList<User> getMembers()
     {
 
-    	ArrayList<Member> members = new ArrayList <Member>();
+    	ArrayList<User> members = new ArrayList <User>();
 
-        for(Member m : App.jdaBot.getGuildById("336291415908679690").getMembers())
+        for(User m : App.api.getServerById("336291415908679690").get().getMembers())
         {
 
             members.add(m);

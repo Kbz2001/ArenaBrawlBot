@@ -1,76 +1,92 @@
 package ArenaBot.Handlers;
 
 import ArenaBot.App;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.events.message.react.MessageReactionAddEvent;
-import net.dv8tion.jda.core.events.message.react.MessageReactionRemoveEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.Message;
+import org.javacord.api.entity.permission.Role;
+import org.javacord.api.entity.user.User;
+import org.javacord.api.event.message.reaction.ReactionAddEvent;
+import org.javacord.api.event.message.reaction.ReactionRemoveEvent;
+import org.javacord.api.listener.message.reaction.ReactionAddListener;
+import org.javacord.api.listener.message.reaction.ReactionRemoveListener;
 
-public class SelfRoles extends ListenerAdapter
+import java.util.Optional;
+
+public class SelfRoles implements ReactionAddListener, ReactionRemoveListener
 {
 
     @Override
-    public void onMessageReactionAdd(MessageReactionAddEvent e)
+    public void onReactionAdd(ReactionAddEvent e)
     {
 
-        MessageChannel channel = e.getTextChannel();
-        MessageReaction.ReactionEmote reaction = e.getReactionEmote();
-        Member member = e.getMember();
-        User user = e.getUser();
-
         String rolesChannelID = "551576804713037824";
-        String getMsgID = e.getMessageId();
         String msgID = "551592395800838154";
 
-        Role arenaRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("480842311060946984");
-        Role mcRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("551186530949922826");
-        Role brawlhallaRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("489295469969670174");
-        Role rauRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("354767956292665345");
-        Role homeworkRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("551171545129549834");
-        Role coderRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("344703514229866497");
+        Optional<Message> msg = e.getMessage();
+        String getMsgID = String.valueOf(e.getMessageId());
+        TextChannel tChannel = e.getChannel();
+        User user = e.getUser();
+        String emoji = e.getEmoji().getMentionTag()
+                .replaceAll(":", "")
+                .replace("<", "")
+                .replace(">", "").replaceAll("[\\d]", "");
 
-        if(channel.getId().equals(rolesChannelID) && !user.isBot())
+        Optional<Role> arenaRole = App.api.getRoleById("480842311060946984");
+        Optional<Role> mcRole = App.api.getRoleById("551186530949922826");
+        Optional<Role> brawlhallaRole = App.api.getRoleById("489295469969670174");
+        Optional<Role> rauRole = App.api.getRoleById("354767956292665345");
+        Optional<Role> homeworkRole = App.api.getRoleById("551171545129549834");
+        Optional<Role> coderRole = App.api.getRoleById("344703514229866497");
+
+        if(!App.isOnline)
+        {
+
+            MethodsHandler.sendOfflineErrorMessage(tChannel);
+
+        }
+
+        else if(tChannel.getIdAsString().equals(rolesChannelID))
         {
 
             if(getMsgID.equals(msgID))
             {
 
-                switch(reaction.getName())
+                switch(emoji)
                 {
 
                     case "ArenaBrawl":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().addSingleRoleToMember(member, arenaRole).queue();
+                        arenaRole.ifPresent(user::addRole);
 
                         break;
 
                     case "Creative":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().addSingleRoleToMember(member, mcRole).queue();
+                        mcRole.ifPresent(user::addRole);
 
                         break;
 
                     case "⚔":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().addSingleRoleToMember(member, brawlhallaRole).queue();
+                        brawlhallaRole.ifPresent(user::addRole);
 
                         break;
 
                     case "RAU":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().addSingleRoleToMember(member, rauRole).queue();
+                        rauRole.ifPresent(user::addRole);
 
                         break;
 
                     case "\uD83D\uDCDA":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().addSingleRoleToMember(member, homeworkRole).queue();
+                        homeworkRole.ifPresent(user::addRole);
 
                         break;
 
                     case "\uD83D\uDCBB":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().addSingleRoleToMember(member, coderRole).queue();
+                        coderRole.ifPresent(user::addRole);
 
                         break;
 
@@ -80,69 +96,77 @@ public class SelfRoles extends ListenerAdapter
     }
 
     @Override
-    public void onMessageReactionRemove(MessageReactionRemoveEvent e)
+    public void onReactionRemove(ReactionRemoveEvent e)
     {
 
-        super.onMessageReactionRemove(e);
-
-        MessageChannel channel = e.getTextChannel();
-        MessageReaction.ReactionEmote reaction = e.getReactionEmote();
-        Member member = e.getMember();
-        User user = e.getUser();
-
         String rolesChannelID = "551576804713037824";
-        String getMsgID = e.getMessageId();
         String msgID = "551592395800838154";
 
-        Role arenaRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("480842311060946984");
-        Role mcRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("551186530949922826");
-        Role brawlhallaRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("489295469969670174");
-        Role rauRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("354767956292665345");
-        Role homeworkRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("551171545129549834");
-        Role coderRole = App.jdaBot.getGuildById("336291415908679690").getRoleById("344703514229866497");
+        Optional<Message> msg = e.getMessage();
+        String getMsgID = String.valueOf(e.getMessageId());
+        TextChannel tChannel = e.getChannel();
+        User user = e.getUser();
+        String emoji = e.getEmoji().getMentionTag()
+                .replaceAll(":", "")
+                .replace("<", "")
+                .replace(">", "").replaceAll("[\\d]", "");
 
-        if(channel.getId().equals(rolesChannelID) && !user.isBot())
+        Optional<Role> arenaRole = App.api.getRoleById("480842311060946984");
+        Optional<Role> mcRole = App.api.getRoleById("551186530949922826");
+        Optional<Role> brawlhallaRole = App.api.getRoleById("489295469969670174");
+        Optional<Role> rauRole = App.api.getRoleById("354767956292665345");
+        Optional<Role> homeworkRole = App.api.getRoleById("551171545129549834");
+        Optional<Role> coderRole = App.api.getRoleById("344703514229866497");
+
+        if(!App.isOnline)
+        {
+
+            MethodsHandler.sendOfflineErrorMessage(tChannel);
+
+        }
+
+        else if(tChannel.getIdAsString().equals(rolesChannelID))
         {
 
             if(getMsgID.equals(msgID))
             {
 
-                switch(reaction.getName())
+                switch(emoji)
                 {
 
                     case "ArenaBrawl":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().removeSingleRoleFromMember(member, arenaRole).queue();
+                        arenaRole.ifPresent(user::addRole);
 
                         break;
 
                     case "Creative":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().removeSingleRoleFromMember(member, mcRole).queue();
+                        mcRole.ifPresent(user::addRole);
 
                         break;
 
                     case "⚔":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().removeSingleRoleFromMember(member, brawlhallaRole).queue();
+                        brawlhallaRole.ifPresent(user::addRole);
 
                         break;
 
                     case "RAU":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().removeSingleRoleFromMember(member, rauRole).queue();
+                        rauRole.ifPresent(user::addRole);
 
                         break;
 
                     case "\uD83D\uDCDA":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().removeSingleRoleFromMember(member, homeworkRole).queue();
+                        homeworkRole.ifPresent(user::addRole);
 
                         break;
 
                     case "\uD83D\uDCBB":
 
-                        App.jdaBot.getGuildById("336291415908679690").getController().removeSingleRoleFromMember(member, coderRole).queue();
+                        coderRole.ifPresent(user::addRole);
 
                         break;
 

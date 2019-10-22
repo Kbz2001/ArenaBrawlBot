@@ -1,11 +1,14 @@
 package ArenaBot.Handlers;
 
+import ArenaBot.App;
 import ArenaBot.Currency.KbzTokens;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.Message;
+import org.javacord.api.entity.message.MessageAuthor;
+import org.javacord.api.entity.message.MessageBuilder;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
+import org.javacord.api.entity.user.User;
+import org.javacord.api.event.message.MessageCreateEvent;
 
 import java.awt.*;
 import java.util.Random;
@@ -13,12 +16,12 @@ import java.util.Random;
 public class RunSlotsHandler
 {
 
-	public static void runSlots(MessageReceivedEvent e)
+	public static void runSlots(MessageCreateEvent e)
 	{
 
 		Message msg = e.getMessage();
-		MessageChannel channel = e.getChannel();
-		User user = e.getAuthor();
+		TextChannel tChannel = e.getChannel();
+		MessageAuthor user = e.getMessageAuthor();
 
 		Random slotPic = new Random();
 
@@ -32,34 +35,67 @@ public class RunSlotsHandler
 		String pic8 = "";
 		String pic9 = "";
 
-		String[] slotsCmd = msg.getContentRaw().split(" ");
+		String[] slotsCmd = msg.getContent().split(" ");
 
-		if (slotsCmd.length >= 2 && MethodsHandler.isInteger(slotsCmd[1])) {
+		if(!App.isOnline)
+		{
 
+			MethodsHandler.sendOfflineErrorMessage(tChannel);
+
+		}
+
+		if(msg.getContent().startsWith("%") && user.isBotUser())
+		{
+
+			MethodsHandler.sendBotPermissionErrorMessage(tChannel);
+
+		}
+
+		if (slotsCmd.length != 2 || !MethodsHandler.isInteger(slotsCmd[1]))
+		{
+
+			MessageBuilder builder = new MessageBuilder()
+					.setEmbed(new EmbedBuilder()
+					.setTitle("**Incorrect command format.**")
+					.setDescription("Please used the correct command format " + user.asUser().map(User::getMentionTag).get()
+					+ "\n %slots <wager>")
+					.setColor(Color.RED));
+
+			builder.send(tChannel);
+
+		}
+
+		else
+		{
 			int wager = Integer.parseInt(slotsCmd[1]);
 
 			if (wager < 0) {
 
-				EmbedBuilder builder = new EmbedBuilder();
+				MessageBuilder builder = new MessageBuilder()
+						.setEmbed(new EmbedBuilder()
+								.setTitle("**Invalid Wager**")
+								.setDescription("Please wager a positive integer " + user.asUser().map(User::getMentionTag).get() + "!")
+								.setColor(Color.RED));
 
-				builder.setColor(Color.RED).setDescription("Please wager a positive integer " + user.getAsMention()
-						+ "!");
-
-				channel.sendMessage(builder.build()).queue();
-
-			}
-
-			if (KbzTokens.Tokens.get(user.getId()) < wager) {
-
-				EmbedBuilder builder = new EmbedBuilder();
-
-				builder.setColor(Color.RED).setDescription("You do not have enough tokens to make that bet!");
-
-				channel.sendMessage(builder.build()).queue();
+				builder.send(tChannel);
 
 			}
 
-			if (KbzTokens.Tokens.get(user.getId()) >= wager) {
+			if (KbzTokens.Tokens.get(user.getIdAsString()) < wager)
+			{
+
+				MessageBuilder builder = new MessageBuilder()
+						.setEmbed(new EmbedBuilder()
+								.setTitle("**Invalid Wager**")
+								.setDescription("You don't have enough tokens to make that bet " + user.asUser().map(User::getMentionTag).get() + "!")
+								.setColor(Color.RED));
+
+				builder.send(tChannel);
+
+			}
+
+			if (KbzTokens.Tokens.get(user.getIdAsString()) >= wager)
+			{
 
 				int pos1 = slotPic.nextInt(6);
 				int pos2 = slotPic.nextInt(6);
@@ -71,7 +107,8 @@ public class RunSlotsHandler
 				int pos8 = slotPic.nextInt(6);
 				int pos9 = slotPic.nextInt(6);
 
-				switch (pos1) {
+				switch (pos1)
+				{
 
 					case 0:
 						pic1 = "<:ArenaBrawl:481298350856077322>";
@@ -95,7 +132,8 @@ public class RunSlotsHandler
 
 				}
 
-				switch (pos2) {
+				switch (pos2)
+				{
 
 					case 0:
 						pic2 = "<:ArenaBrawl:481298350856077322>";
@@ -118,7 +156,8 @@ public class RunSlotsHandler
 
 				}
 
-				switch (pos3) {
+				switch (pos3)
+				{
 
 					case 0:
 						pic3 = "<:ArenaBrawl:481298350856077322>";
@@ -141,7 +180,8 @@ public class RunSlotsHandler
 
 				}
 
-				switch (pos4) {
+				switch (pos4)
+				{
 
 					case 0:
 						pic4 = "<:ArenaBrawl:481298350856077322>";
@@ -164,7 +204,8 @@ public class RunSlotsHandler
 
 				}
 
-				switch (pos5) {
+				switch (pos5)
+				{
 
 					case 0:
 						pic5 = "<:ArenaBrawl:481298350856077322>";
@@ -187,7 +228,8 @@ public class RunSlotsHandler
 
 				}
 
-				switch (pos6) {
+				switch (pos6)
+				{
 
 					case 0:
 						pic6 = "<:ArenaBrawl:481298350856077322>";
@@ -210,7 +252,8 @@ public class RunSlotsHandler
 
 				}
 
-				switch (pos7) {
+				switch (pos7)
+				{
 
 					case 0:
 						pic7 = "<:ArenaBrawl:481298350856077322>";
@@ -233,7 +276,8 @@ public class RunSlotsHandler
 
 				}
 
-				switch (pos8) {
+				switch (pos8)
+				{
 
 					case 0:
 						pic8 = "<:ArenaBrawl:481298350856077322>";
@@ -256,7 +300,8 @@ public class RunSlotsHandler
 
 				}
 
-				switch (pos9) {
+				switch (pos9)
+				{
 
 					case 0:
 						pic9 = "<:ArenaBrawl:481298350856077322>";
@@ -279,7 +324,7 @@ public class RunSlotsHandler
 
 				}
 
-				channel.sendMessage(
+				tChannel.sendMessage(
 						":moneybag: " + ":moneybag: " + ":moneybag: " + ":moneybag: " + ":moneybag:\n\n"
 								+
 								":moneybag: " + pic1 + " " + pic2 + " " + pic3 + " " + ":moneybag:\n\n"
@@ -288,238 +333,148 @@ public class RunSlotsHandler
 								+
 								":moneybag: " + pic7 + " " + pic8 + " " + pic9 + " " + ":moneybag:\n\n"
 								+
-								":moneybag: " + ":moneybag: " + ":moneybag: " + ":moneybag: " + ":moneybag: "
-				).queue();
+								":moneybag: " + ":moneybag: " + ":moneybag: " + ":moneybag: " + ":moneybag: ");
 
 				//Left Diagonal
-				if (pic1 == pic5 && pic1 == pic9 && pic5 == pic9 && pic1 != "<:RAU:481298032865050625>" && wager > 0) {
+				if (pic1 == pic5 && pic1 == pic9 && pic5 == pic9 && pic1 != "<:RAU:481298032865050625>" && wager > 0)
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("Congratulations, you won " + wager * 5 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 5);
+					MethodsHandler.sendSlotsWinnerMessageBasic(tChannel, wager, user);
 
 				}
 
 				//Right Diagonal
-				else if (pic3 == pic5 && pic3 == pic7 && pic5 == pic7 && pic3 != "<:RAU:481298032865050625>" && wager > 0) {
+				else if (pic3 == pic5 && pic3 == pic7 && pic5 == pic7 && pic3 != "<:RAU:481298032865050625>" && wager > 0) 
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("Congratulations, you won " + wager * 5 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 5);
+					MethodsHandler.sendSlotsWinnerMessageBasic(tChannel, wager, user);
 
 				}
 
 				//Top Row
-				else if (pic1 == pic2 && pic1 == pic3 && pic2 == pic3 && pic1 != "<:RAU:481298032865050625>" && wager > 0) {
+				else if (pic1 == pic2 && pic1 == pic3 && pic2 == pic3 && pic1 != "<:RAU:481298032865050625>" && wager > 0) 
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("Congratulations, you won " + wager * 5 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 5);
+					MethodsHandler.sendSlotsWinnerMessageBasic(tChannel, wager, user);
 
 				}
 
 				//Middle Row
-				else if (pic4 == pic5 && pic4 == pic6 && pic5 == pic6 && pic4 != "<:RAU:481298032865050625>" && wager > 0) {
+				else if (pic4 == pic5 && pic4 == pic6 && pic5 == pic6 && pic4 != "<:RAU:481298032865050625>" && wager > 0) 
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("Congratulations, you won " + wager * 5 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 5);
+					MethodsHandler.sendSlotsWinnerMessageBasic(tChannel, wager, user);
 
 				}
 
 				//Bottom Row
-				else if (pic7 == pic8 && pic7 == pic9 && pic8 == pic9 && pic7 != "<:RAU:481298032865050625>" && wager > 0) {
+				else if (pic7 == pic8 && pic7 == pic9 && pic8 == pic9 && pic7 != "<:RAU:481298032865050625>" && wager > 0) 
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("Congratulations, you won " + wager * 5 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 5);
+					MethodsHandler.sendSlotsWinnerMessageBasic(tChannel, wager, user);
 
 				}
 
 				//Left Column
-				else if (pic1 == pic4 && pic1 == pic7 && pic4 == pic7 && pic1 != "<:RAU:481298032865050625>" && wager > 0) {
+				else if (pic1 == pic4 && pic1 == pic7 && pic4 == pic7 && pic1 != "<:RAU:481298032865050625>" && wager > 0) 
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("Congratulations, you won " + wager * 5 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 5);
+					MethodsHandler.sendSlotsWinnerMessageBasic(tChannel, wager, user);
 
 				}
 
 				//Middle Column
-				else if (pic2 == pic5 && pic2 == pic8 && pic5 == pic8 && pic2 != ":RAU:" && wager > 0) {
+				else if (pic2 == pic5 && pic2 == pic8 && pic5 == pic8 && pic2 != ":RAU:" && wager > 0) 
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("Congratulations, you won " + wager * 5 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 5);
+					MethodsHandler.sendSlotsWinnerMessageBasic(tChannel, wager, user);
 
 				}
 
 				//Right Column
-				else if (pic3 == pic6 && pic3 == pic9 && pic6 == pic9 && pic3 != "<:RAU:481298032865050625>" && wager > 0) {
+				else if (pic3 == pic6 && pic3 == pic9 && pic6 == pic9 && pic3 != "<:RAU:481298032865050625>" && wager > 0) 
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("Congratulations, you won " + wager * 5 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 5);
+					MethodsHandler.sendSlotsWinnerMessageBasic(tChannel, wager, user);
 
 				}
 
 				//Left Diagonal
-				else if (pic1 == "<:RAU:481298032865050625>" && pic1 == pic9 && pic5 == pic9 && wager > 0) {
+				else if (pic1 == "<:RAU:481298032865050625>" && pic1 == pic9 && pic5 == pic9 && wager > 0) 
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("JACKPOT: You won " + wager * 10 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 10);
+					MethodsHandler.sendSlotsWinnerMessageJackpot(tChannel, wager, user);
 
 				}
 
 				//Right Diagonal
-				else if (pic3 == "<:RAU:481298032865050625>" && pic3 == pic7 && pic5 == pic7 && wager > 0) {
+				else if (pic3 == "<:RAU:481298032865050625>" && pic3 == pic7 && pic5 == pic7 && wager > 0)
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("JACKPOT: You won " + wager * 10 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 10);
+					MethodsHandler.sendSlotsWinnerMessageJackpot(tChannel, wager, user);
 
 				}
 
 				//Top Row
-				else if (pic1 == "<:RAU:481298032865050625>" && pic1 == pic3 && pic2 == pic3 && wager > 0) {
+				else if (pic1 == "<:RAU:481298032865050625>" && pic1 == pic3 && pic2 == pic3 && wager > 0)
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("JACKPOT: You won " + wager * 10 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 10);
+					MethodsHandler.sendSlotsWinnerMessageJackpot(tChannel, wager, user);
 
 				}
 
 				//Middle Row
-				else if (pic4 == "<:RAU:481298032865050625>" && pic4 == pic6 && pic5 == pic6 && wager > 0) {
+				else if (pic4 == "<:RAU:481298032865050625>" && pic4 == pic6 && pic5 == pic6 && wager > 0)
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("JACKPOT: You won " + wager * 10 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 10);
+					MethodsHandler.sendSlotsWinnerMessageJackpot(tChannel, wager, user);
 
 				}
 
 				//Bottom Row
-				else if (pic7 == "<:RAU:481298032865050625>" && pic7 == pic9 && pic8 == pic9 && wager > 0) {
+				else if (pic7 == "<:RAU:481298032865050625>" && pic7 == pic9 && pic8 == pic9 && wager > 0)
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("JACKPOT: You won " + wager * 10 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 10);
+					MethodsHandler.sendSlotsWinnerMessageJackpot(tChannel, wager, user);
 
 				}
 
 				//Left Column
-				else if (pic1 == "<:RAU:481298032865050625>" && pic1 == pic7 && pic4 == pic7 && wager > 0) {
+				else if (pic1 == "<:RAU:481298032865050625>" && pic1 == pic7 && pic4 == pic7 && wager > 0)
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("JACKPOT: You won " + wager * 10 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 10);
+					MethodsHandler.sendSlotsWinnerMessageJackpot(tChannel, wager, user);
 
 				}
 
 				//Middle Column
-				else if (pic2 == "<:RAU:481298032865050625>" && pic2 == pic8 && pic5 == pic8 && wager > 0) {
+				else if (pic2 == "<:RAU:481298032865050625>" && pic2 == pic8 && pic5 == pic8 && wager > 0)
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.GREEN).setDescription("JACKPOT: You won " + wager * 10 + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 10);
+					MethodsHandler.sendSlotsWinnerMessageJackpot(tChannel, wager, user);
 
 				}
 
 				//Right Column
-				else if (pic3 == "<:RAU:481298032865050625>" && pic3 == pic9 && pic6 == pic9 && wager > 0) {
+				else if (pic3 == "<:RAU:481298032865050625>" && pic3 == pic9 && pic6 == pic9 && wager > 0)
+				{
 
-					EmbedBuilder builder = new EmbedBuilder();
+					MethodsHandler.sendSlotsWinnerMessageJackpot(tChannel, wager, user);
 
-					builder.setColor(Color.GREEN).setDescription("JACKPOT: You won " + wager * 10 + " Kbz Tokens! " + user.getAsMention());
+				}
+				else
+				{
 
-					channel.sendMessage(builder.build()).queue();
+					MessageBuilder builder = new MessageBuilder()
+							.setEmbed(new EmbedBuilder()
+							.setTitle("Loser!")
+							.setDescription("Sorry, you lost " + wager + " Kbz Tokens!" + user.asUser().map(User::getMentionTag).get())
+							.setColor(Color.RED));
 
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + wager * 10);
-
-				} else {
-
-					EmbedBuilder builder = new EmbedBuilder();
-
-					builder.setColor(Color.RED).setDescription("Sorry, you lost " + wager + " Kbz Tokens! " + user.getAsMention());
-
-					channel.sendMessage(builder.build()).queue();
-
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) - wager);
+					builder.send(tChannel);
 
 				}
 			}
-		}
-
-		if (slotsCmd.length <= 1) {
-
-			EmbedBuilder builder = new EmbedBuilder();
-
-			builder.setColor(Color.RED).setDescription("Please follow the command format " + user.getAsMention()
-					+ "\n %slots <wager>");
-
-			channel.sendMessage(builder.build()).queue();
-
 		}
 	}
 }

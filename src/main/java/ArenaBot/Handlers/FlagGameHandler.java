@@ -2,19 +2,22 @@ package ArenaBot.Handlers;
 
 import ArenaBot.Currency.KbzTokens;
 import ArenaBot.Resources.Flags;
-import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.MessageChannel;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+
+import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.Message;
+import org.javacord.api.entity.message.MessageBuilder;
+import org.javacord.api.entity.message.embed.EmbedBuilder;
+import org.javacord.api.entity.user.User;
+import org.javacord.api.event.message.MessageCreateEvent;
+import org.javacord.api.listener.message.MessageCreateListener;
 
 import java.awt.*;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
-public class FlagGameHandler extends ListenerAdapter
+public class FlagGameHandler implements MessageCreateListener
 {
 
 	private static HashMap<Integer, String> store5Flags = new HashMap <>();
@@ -29,32 +32,29 @@ public class FlagGameHandler extends ListenerAdapter
 
 	private static int editCounter = 0;
 
-	public static void startFlagGame(MessageReceivedEvent e)
+	public static void startFlagGame(MessageCreateEvent e)
 	{
 
-		MessageChannel channel = e.getChannel();
+		 TextChannel tChannel = e.getChannel();
 
-		EmbedBuilder builder1 = new EmbedBuilder();
+		MessageBuilder builder = new MessageBuilder()
+				.setEmbed(new EmbedBuilder()
+						.setTitle("**A New Flag Game has Started!")
+						.setDescription("The person who guesses the most right wins.")
+						.setColor(Color.CYAN));
 
-		builder1.setColor(Color.CYAN).setDescription("**A New Flag Game has Started!**"
-				+ "\n"
-				+ "------------------------------------");
-
-		channel.sendMessage(builder1.build()).queue();
+		builder.send(tChannel);
 
 		isRunning = true;
 
 	}
 
-	public static void runFlagGame(MessageReceivedEvent e)
+	public static void runFlagGame(MessageCreateEvent e) throws InterruptedException, ExecutionException
 	{
 
-		MessageChannel channel = e.getChannel();
-
+		TextChannel tChannel = e.getChannel();
 		HashMap<String, String> flags = Flags.getFlags();
-
 		List<Map.Entry <String, String>> randomFlags = new ArrayList <>(flags.entrySet());
-
 		Map.Entry <String, String> flagToPlace;
 
 		Collections.shuffle(randomFlags);
@@ -68,16 +68,22 @@ public class FlagGameHandler extends ListenerAdapter
 
 			store5Flags.put(i, flagToPlace.getValue());
 
-			channel.sendMessage("#" + String.valueOf(i+1) + " Generating please wait...").queueAfter(1, TimeUnit.SECONDS, message -> message.editMessage(finalFlagToPlace.getKey()).queueAfter(2, TimeUnit.SECONDS));
+			int finalI = i;
 
+			tChannel.sendMessage("#" + (i + 1) + " Generating please wait...").thenAccept(msg -> {
+
+				storeMessageIDs.put(store5Flags.get(finalI), msg.getIdAsString());
+				msg.edit(finalFlagToPlace.getKey());
+
+			});
 		}
 	}
 
-	public static void stopFlagGame(MessageReceivedEvent e)
+	public static void stopFlagGame(MessageCreateEvent e)
 	{
 
-		User user = e.getAuthor();
-		MessageChannel channel = e.getChannel();
+		User user = e.getMessageAuthor().asUser().get();
+		TextChannel tChannel = e.getChannel();
 
 		store5Flags.clear();
 		storeMessageIDs.clear();
@@ -92,85 +98,34 @@ public class FlagGameHandler extends ListenerAdapter
 		guessedFour = false;
 		guessedFive = false;
 
-		channel.sendMessage("The game has been stopped by " + user.getAsMention() + " !").queue();
+		tChannel.sendMessage("The game has been stopped by " + user.getMentionTag() + " !");
 
 	}
 
-	public static void flagGameAnswers(MessageReceivedEvent e)
+	public static void flagGameAnswers(MessageCreateEvent e)
 	{
 
-		User user = e.getAuthor();
-		MessageChannel channel = e.getChannel();
+		TextChannel tChannel = e.getChannel();
 
-		channel.sendMessage("The answers to this round are:").queue();
+		tChannel.sendMessage("The answers to this round are:");
 
 		for(int i = 0; i <= 4; i++)
 		{
 
-			channel.sendMessage("#" + String.valueOf(i+1) + " = " + store5Flags.get(i)).queue();
+			tChannel.sendMessage("#" + (i + 1) + " = " + store5Flags.get(i));
 
 		}
 	}
 
 	@Override
-	public void onMessageReceived(MessageReceivedEvent e)
+	public void onMessageCreate(MessageCreateEvent e)
 	{
 
 		Message msg = e.getMessage();
-		MessageChannel channel = e.getTextChannel();
-		User user = e.getAuthor();
+		TextChannel tChannel = e.getChannel();
+		User user = e.getMessageAuthor().asUser().get();
 
-		if(user.isBot() && user.getId().equals("494363113030680576"))
-		{
-
-			if(msg.getContentRaw().startsWith("#1") ||
-					msg.getContentRaw().startsWith("#2") ||
-					msg.getContentRaw().startsWith("#3") ||
-					msg.getContentRaw().startsWith("#4") ||
-					msg.getContentRaw().startsWith("#5"))
-			{
-
-				EmbedBuilder builder = new EmbedBuilder();
-
-				switch(msg.getContentRaw())
-				{
-
-
-					case "#1 Generating please wait...":
-						storeMessageIDs.put(store5Flags.get(0), msg.getId());
-
-						break;
-
-					case "#2 Generating please wait...":
-						storeMessageIDs.put(store5Flags.get(1), msg.getId());
-
-						break;
-
-					case "#3 Generating please wait...":
-						storeMessageIDs.put(store5Flags.get(2), msg.getId());
-
-						break;
-
-					case "#4 Generating please wait...":
-
-						storeMessageIDs.put(store5Flags.get(3), msg.getId());
-
-						break;
-
-					case "#5 Generating please wait...":
-
-						storeMessageIDs.put(store5Flags.get(4), msg.getId());
-
-						builder.setColor(Color.CYAN).setDescription("------------------------------------");
-						channel.sendMessage(builder.build()).queue();
-
-						break;
-
-				}
-			}
-		}
-
-		if(msg.getContentRaw().equalsIgnoreCase(store5Flags.get(0)))
+		if(msg.getContent().equalsIgnoreCase(store5Flags.get(0)))
 		{
 
 			if(!guessedOne)
@@ -181,26 +136,37 @@ public class FlagGameHandler extends ListenerAdapter
 
 					guessedOne = true;
 
-					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(0) + ")" + " +20 Kbz Tokens").queue();
+					tChannel.sendMessage(user.getMentionTag() + " has guessed a flag correctly! (" + store5Flags.get(0) + ")" + " +20 Kbz Tokens");
 
 					editCounter++;
 
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 20);
+					KbzTokens.Tokens.put(user.getIdAsString(), KbzTokens.Tokens.get(user.getIdAsString()) + 20);
 
-					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:554445062528827433>").queue();
+					try
+					{
 
+						tChannel.getMessageById(storeMessageIDs.get(msg.getContent())).get().edit(msg.getContent() + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
+
+					}
+
+					catch (InterruptedException | ExecutionException ex)
+					{
+
+						ex.printStackTrace();
+
+					}
 				}
 			}
 
 			else
 			{
 
-				channel.sendMessage("That flag has already been guessed " + user.getAsMention() + "!").queue();
+				tChannel.sendMessage("That flag has already been guessed " + user.getMentionTag() + "!");
 
 			}
 		}
 
-		if(msg.getContentRaw().equalsIgnoreCase(store5Flags.get(1)))
+		if(msg.getContent().equalsIgnoreCase(store5Flags.get(1)))
 		{
 
 			if(!guessedTwo)
@@ -211,27 +177,37 @@ public class FlagGameHandler extends ListenerAdapter
 
 					guessedTwo = true;
 
-					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(1) + ")" + " +20 Kbz Tokens").queue();
+					tChannel.sendMessage(user.getMentionTag() + " has guessed a flag correctly! (" + store5Flags.get(1) + ")" + " +20 Kbz Tokens");
 
 					editCounter++;
 
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 20);
+					KbzTokens.Tokens.put(user.getIdAsString(), KbzTokens.Tokens.get(user.getIdAsString()) + 20);
 
-					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:554445062528827433>").queue();
+					try
+					{
 
+						tChannel.getMessageById(storeMessageIDs.get(msg.getContent())).get().edit(msg.getContent() + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
+
+					}
+
+					catch (InterruptedException | ExecutionException ex)
+					{
+
+						ex.printStackTrace();
+
+					}
 				}
 			}
 
 			else
 			{
 
-				channel.sendMessage("That flag has already been guessed " + user.getAsMention() + "!").queue();
+				tChannel.sendMessage("That flag has already been guessed " + user.getMentionTag() + "!");
 
 			}
 		}
 
-		if(msg.getContentRaw().equalsIgnoreCase(store5Flags.get(2)))
-
+		if(msg.getContent().equalsIgnoreCase(store5Flags.get(2)))
 		{
 
 			if(!guessedThree)
@@ -242,28 +218,37 @@ public class FlagGameHandler extends ListenerAdapter
 
 					guessedThree = true;
 
-					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(2) + ")" + " +20 Kbz Tokens").queue();
+					tChannel.sendMessage(user.getMentionTag() + " has guessed a flag correctly! (" + store5Flags.get(2) + ")" + " +20 Kbz Tokens");
 
 					editCounter++;
 
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 20);
+					KbzTokens.Tokens.put(user.getIdAsString(), KbzTokens.Tokens.get(user.getIdAsString()) + 20);
 
-					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:554445062528827433>").queue();
+					try
+					{
 
+						tChannel.getMessageById(storeMessageIDs.get(msg.getContent())).get().edit(msg.getContent() + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
+
+					}
+
+					catch (InterruptedException | ExecutionException ex)
+					{
+
+						ex.printStackTrace();
+
+					}
 				}
 			}
 
 			else
 			{
 
-				channel.sendMessage("That flag has already been guessed " + user.getAsMention() + "!").queue();
-
+				tChannel.sendMessage("That flag has already been guessed " + user.getMentionTag() + "!");
 
 			}
 		}
 
-		if(msg.getContentRaw().equalsIgnoreCase(store5Flags.get(3)))
-
+		if(msg.getContent().equalsIgnoreCase(store5Flags.get(3)))
 		{
 
 			if(!guessedFour)
@@ -274,27 +259,37 @@ public class FlagGameHandler extends ListenerAdapter
 
 					guessedFour = true;
 
-					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(3) + ")" + " +20 Kbz Tokens").queue();
+					tChannel.sendMessage(user.getMentionTag() + " has guessed a flag correctly! (" + store5Flags.get(3) + ")" + " +20 Kbz Tokens");
 
 					editCounter++;
 
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 20);
+					KbzTokens.Tokens.put(user.getIdAsString(), KbzTokens.Tokens.get(user.getIdAsString()) + 20);
 
-					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:554445062528827433>").queue();
+					try
+					{
 
+						tChannel.getMessageById(storeMessageIDs.get(msg.getContent())).get().edit(msg.getContent() + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
+
+					}
+
+					catch (InterruptedException | ExecutionException ex)
+					{
+
+						ex.printStackTrace();
+
+					}
 				}
 			}
 
 			else
 			{
 
-				channel.sendMessage("That flag has already been guessed " + user.getAsMention() + "!").queue();
-
+				tChannel.sendMessage("That flag has already been guessed " + user.getMentionTag() + "!");
 
 			}
 		}
 
-		if(msg.getContentRaw().equalsIgnoreCase(store5Flags.get(4)))
+		if(msg.getContent().equalsIgnoreCase(store5Flags.get(4)))
 		{
 
 			if(!guessedFive)
@@ -305,22 +300,32 @@ public class FlagGameHandler extends ListenerAdapter
 
 					guessedFive = true;
 
-					channel.sendMessage(user.getAsMention() + " has guessed a flag correctly! (" + store5Flags.get(4) + ")" + " +20 Kbz Tokens").queue();
+					tChannel.sendMessage(user.getMentionTag() + " has guessed a flag correctly! (" + store5Flags.get(4) + ")" + " +20 Kbz Tokens");
 
 					editCounter++;
 
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 20);
+					KbzTokens.Tokens.put(user.getIdAsString(), KbzTokens.Tokens.get(user.getIdAsString()) + 20);
 
-					channel.editMessageById(storeMessageIDs.get(msg.getContentRaw()), msg.getContentRaw() + " has been claimed by: " + user.getAsMention() + " <:Agree:554445062528827433>").queue();
+					try
+					{
 
+						tChannel.getMessageById(storeMessageIDs.get(msg.getContent())).get().edit(msg.getContent() + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
+
+					}
+
+					catch (InterruptedException | ExecutionException ex)
+					{
+
+						ex.printStackTrace();
+
+					}
 				}
 			}
 
 			else
 			{
 
-				channel.sendMessage("That flag has already been guessed " + user.getAsMention() + "!").queue();
-
+				tChannel.sendMessage("That flag has already been guessed " + user.getMentionTag() + "!");
 
 			}
 		}
@@ -344,9 +349,21 @@ public class FlagGameHandler extends ListenerAdapter
 
 			}
 
-			channel.sendMessage("The flag game has ended! The person with the most correct guesses wins!").queue();
+			tChannel.sendMessage("The flag game has ended! The person with the most correct guesses wins!");
 
-			MethodsHandler.saveTokenConfig();
+			try
+			{
+
+				MethodsHandler.saveTokenConfig();
+
+			}
+
+			catch (InterruptedException | ExecutionException | TimeoutException ex)
+			{
+
+				ex.printStackTrace();
+
+			}
 
 		}
 	}

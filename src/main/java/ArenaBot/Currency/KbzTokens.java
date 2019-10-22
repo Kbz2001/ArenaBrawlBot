@@ -2,46 +2,74 @@ package ArenaBot.Currency;
 
 import ArenaBot.App;
 import ArenaBot.Handlers.MethodsHandler;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.User;
-import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
-import net.dv8tion.jda.core.hooks.ListenerAdapter;
+
+import org.javacord.api.entity.channel.TextChannel;
+import org.javacord.api.entity.message.Message;
+import org.javacord.api.entity.message.MessageAuthor;
+import org.javacord.api.event.message.MessageCreateEvent;
+import org.javacord.api.listener.message.MessageCreateListener;
 
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
-public class KbzTokens extends ListenerAdapter 
+public class KbzTokens implements MessageCreateListener
 {
 
 	public static HashMap<String, Integer> Tokens = new HashMap<String, Integer>();
-		
+
 	@Override
-	public void onMessageReceived(MessageReceivedEvent e)
+	public void onMessageCreate(MessageCreateEvent e)
 	{
 
 		Message msg = e.getMessage();
-		User user = e.getAuthor();
+		TextChannel tChannel = e.getChannel();
+		MessageAuthor user = e.getMessageAuthor();
 
-		if(App.isOnline && !user.isBot())
+		if(!App.isOnline)
 		{
 
-			if(msg.getContentRaw().length() != 0 && !msg.getContentRaw().startsWith("%"))
+			MethodsHandler.sendOfflineErrorMessage(tChannel);
+
+		}
+
+		if(msg.getContent().startsWith("%") && user.isBotUser())
+		{
+
+			MethodsHandler.sendBotPermissionErrorMessage(tChannel);
+
+		}
+
+		else
+		{
+
+			if(msg.getContent().length() != 0)
 			{
 
-				if(!KbzTokens.Tokens.containsKey(user.getId()) || KbzTokens.Tokens.get(user.getId()) < 0)
+				if(!Tokens.containsKey(user.getIdAsString()) || Tokens.get(user.getIdAsString()) < 0)
 				{
 
-					KbzTokens.Tokens.put(user.getId(), 0);
-
-					MethodsHandler.saveTokenConfig();
+					Tokens.put(user.getIdAsString(), 0);
+					try {
+						MethodsHandler.saveTokenConfig();
+					} catch (InterruptedException | TimeoutException | ExecutionException ex) {
+						ex.printStackTrace();
+					}
 
 				}
 
-				if(KbzTokens.Tokens.containsKey(user.getId()) && App.saveUsers.get(user.getId()) % 5 == 0)
+				if(Tokens.containsKey(user.getIdAsString()) && App.saveUsers.get(user.getIdAsString()) % 5 == 0)
 				{
 
-					KbzTokens.Tokens.put(user.getId(), KbzTokens.Tokens.get(user.getId()) + 1);
-
-					MethodsHandler.saveTokenConfig();
+					Tokens.put(user.getIdAsString(), Tokens.get(user.getIdAsString()) + 1);
+					try
+					{
+						MethodsHandler.saveTokenConfig();
+					}
+					catch (InterruptedException | ExecutionException | TimeoutException ex)
+					{
+						ex.printStackTrace();
+					}
 
 				}
 			}

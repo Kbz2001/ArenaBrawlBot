@@ -1,8 +1,8 @@
 package ArenaBot;
 
-import javax.security.auth.login.LoginException;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import java.util.concurrent.ExecutionException;
 
 @ApplicationPath("/")
 public class Discord extends Application
@@ -21,7 +21,7 @@ public class Discord extends Application
 
             }
 
-            catch (LoginException | InterruptedException e)
+            catch (InterruptedException | ExecutionException e)
             {
 
                 e.printStackTrace();

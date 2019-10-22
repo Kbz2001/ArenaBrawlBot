@@ -3,19 +3,17 @@ package ArenaBot;
 import ArenaBot.Commands.*;
 import ArenaBot.Currency.*;
 import ArenaBot.Handlers.*;
-import discord4j.core.DiscordClient;
-import net.dv8tion.jda.core.*;
-import net.dv8tion.jda.core.entities.*;
-import net.dv8tion.jda.core.hooks.*;
+import org.javacord.api.DiscordApi;
+import org.javacord.api.DiscordApiBuilder;
+import org.javacord.api.entity.activity.ActivityType;
 
-import javax.security.auth.login.LoginException;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
-public class App extends ListenerAdapter
+public class App
 {
 
-	public static JDA jdaBot;
-	public static DiscordClient disClient;
+	public static DiscordApi api;
 
 	public static int totalMessages = 0;
 
@@ -23,35 +21,30 @@ public class App extends ListenerAdapter
 	
 	public static HashMap<String, Integer> saveUsers = new HashMap<>();
 
-	public static Game setGame = null;
-	public static net.dv8tion.jda.core.entities.Game.GameType setGameType = null;
-
 	public static String mode = "";
 	public static String game = "";
 
-	public App() throws LoginException, InterruptedException
-	{
+	public App() throws ExecutionException, InterruptedException {
 
-			jdaBot = new JDABuilder(AccountType.BOT)
-					.setGame(Game.playing("Doe:Type %help!")).setToken(MethodsHandler.getToken())
-					.build().awaitReady();
+		api = new DiscordApiBuilder().setToken(MethodsHandler.getToken())
+				.login().join();
 
-			jdaBot.addEventListener(
-					this,
-					new UserCommands(),
-					new AdminCommands(),
-					new WordsHandler(),
-			new MessagesHandler(),
-			new KbzTokens(),
-			new BotCommands(),
-			new SlotsCommand(),
-			new FlagGameHandler(),
-			new SelfRoles());
+		api.updateActivity(ActivityType.PLAYING, "Doe: Type %help!");
 
-			MethodsHandler.loadMessageConfig();
-			MethodsHandler.loadTokenConfig();
-			MethodsHandler.loadValuables();
-			MethodsHandler.loadMandemList();
+		api.addListener(new AdminCommands());
+		api.addListener(new BotCommands());
+		api.addListener(new SlotsCommand());
+		api.addListener(new UserCommands());
+		api.addListener(new KbzTokens());
+		api.addListener(new FlagGameHandler());
+		api.addListener(new MessagesHandler());
+		api.addListener(new SelfRoles());
+		api.addListener(new WordsHandler());
+
+		MethodsHandler.loadMessageConfig();
+		MethodsHandler.loadTokenConfig();
+		MethodsHandler.loadValuables();
+		MethodsHandler.loadMandemList();
 
 	}
 }
