@@ -465,6 +465,8 @@ public class RunSlotsHandler
 				else
 				{
 
+					KbzTokens.Tokens.put(user.getIdAsString(), KbzTokens.Tokens.get(user.getIdAsString()) - wager);
+
 					MessageBuilder builder = new MessageBuilder()
 							.setEmbed(new EmbedBuilder()
 							.setTitle("Loser!")

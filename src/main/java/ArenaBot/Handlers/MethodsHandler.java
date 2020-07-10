@@ -28,7 +28,7 @@ public class MethodsHandler
 	public static String getToken()
 	{
 
-		return "NDk0MzYzMTEzMDMwNjgwNTc2.Dx7CjQ.Fs3BGEbM9JvEv_t2buV6GXFEXUQ";
+		return "NDk0MzYzMTEzMDMwNjgwNTc2.Xa58pg.AZwPXq2gn-lbPGKt4C7SCu7f-5o";
 
 	}
 

@@ -1531,7 +1531,7 @@ public class AdminCommands implements MessageCreateListener
                     }
                 }
             }
-
+            
         /*
 
         !!!THIS SETS UP THE SELF ROLES CHANNEL IN CASE THERE ARE MODIFICATIONS!!!

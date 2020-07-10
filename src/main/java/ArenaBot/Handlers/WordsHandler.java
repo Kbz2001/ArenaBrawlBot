@@ -37,49 +37,27 @@ public class WordsHandler implements MessageCreateListener
 			if (msg.getContent().equalsIgnoreCase("hello") ||
 					msg.getContent().equalsIgnoreCase("hi") ||
 					msg.getContent().equalsIgnoreCase("hey") ||
-					msg.getContent().equalsIgnoreCase("hai"))
+					msg.getContent().equalsIgnoreCase("hai") ||
+					msg.getContent().equalsIgnoreCase("hej"))
 			{
 
 				if (!user.isBotUser())
 				{
 
-					tChannel.sendMessage("Hello " + user.asUser().map(User::getMentionTag).get() + "!");
-
-				}
-			}
-
-			if (msg.getContent().equalsIgnoreCase("hej"))
-			{
-
-				if (!user.isBotUser())
-				{
-
-					tChannel.sendMessage("Hej " + user.asUser().map(User::getMentionTag).get() + "!");
+					msg.addReaction("\uD83D\uDC4B");
 
 				}
 			}
 
 			if (msg.getContent().toLowerCase().contains("goodnight") ||
 					msg.getContent().toLowerCase().contains("good night") ||
-					msg.getContent().toLowerCase().contains("gn"))
+					msg.getContent().toLowerCase().contains("gn") ||
+					msg.getContent().toLowerCase().contains("godnat"))
 			{
 
 				if (!user.isBotUser())
 				{
 
-					tChannel.sendMessage("Goodbye " + user.asUser().map(User::getMentionTag).get() + "!");
-					msg.addReaction(":gamer818:341311893132279818");
-
-				}
-			}
-
-			if (msg.getContent().toLowerCase().contains("godnat"))
-			{
-
-				if (!user.isBotUser())
-				{
-
-					tChannel.sendMessage("Godnat " + user.asUser().map(User::getMentionTag).get() + "!");
 					msg.addReaction(":gamer818:341311893132279818");
 
 				}

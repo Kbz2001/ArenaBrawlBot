@@ -17,6 +17,8 @@ import org.javacord.api.listener.message.MessageCreateListener;
 
 import java.awt.*;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -730,27 +732,37 @@ public class UserCommands implements MessageCreateListener {
 
 				User randomMember = MethodsHandler.getMembers().get(ran.nextInt(max));
 
-				if (!someoneCD.containsKey(user.getIdAsString())) {
+				try {
+					if (new SimpleDateFormat("MMdd").parse("0401").equals(new Date())) {
+						if (!someoneCD.containsKey(user.getIdAsString())) {
 
-					tChannel.sendMessage(randomMember.getMentionTag());
+							tChannel.sendMessage(randomMember.getMentionTag());
 
-					someoneCD.put(user.getIdAsString(), LocalDateTime.now());
+							someoneCD.put(user.getIdAsString(), LocalDateTime.now());
 
-				}
+						}
 
-				if (someoneCD.containsKey(user.getIdAsString())) {
+						if (someoneCD.containsKey(user.getIdAsString())) {
 
-					if (someoneCD.get(user.getIdAsString()).plusMinutes(10).isBefore(LocalDateTime.now())) {
+							if (someoneCD.get(user.getIdAsString()).plusMinutes(10).isBefore(LocalDateTime.now())) {
 
-						someoneCD.remove(user.getIdAsString());
+								someoneCD.remove(user.getIdAsString());
 
-					} else {
+								tChannel.sendMessage(randomMember.getMentionTag());
 
-						tChannel.sendMessage("You are currently on cooldown for 10 minutes " + user.getMentionTag() + "!");
+							} else {
 
-						someoneCD.put(user.getIdAsString(), LocalDateTime.now());
+								tChannel.sendMessage("You are currently on cooldown for 10 minutes " + user.getMentionTag() + "!");
 
+							}
+							someoneCD.put(user.getIdAsString(), LocalDateTime.now());
+						}
 					}
+					else{
+						System.out.println("It is not April Fools! The command is currently disabled!");
+					}
+				} catch (ParseException ex) {
+					ex.printStackTrace();
 				}
 			}
 
