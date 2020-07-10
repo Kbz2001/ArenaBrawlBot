@@ -28,7 +28,7 @@ public class MethodsHandler
 	public static String getToken()
 	{
 
-		return "[REDACTED]";
+		return "NDk0MzYzMTEzMDMwNjgwNTc2.Dx7CjQ.Fs3BGEbM9JvEv_t2buV6GXFEXUQ";
 
 	}
 
