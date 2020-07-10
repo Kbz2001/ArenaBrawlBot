@@ -744,18 +744,17 @@ public class UserCommands implements MessageCreateListener {
 
 						if (someoneCD.containsKey(user.getIdAsString())) {
 
-							if (someoneCD.get(user.getIdAsString()).plusMinutes(10).isBefore(LocalDateTime.now())) {
+							if (someoneCD.get(user.getIdAsString()).plusMinutes(10).isAfter(LocalDateTime.now())) {
 
-								someoneCD.remove(user.getIdAsString());
-
-								tChannel.sendMessage(randomMember.getMentionTag());
+								someoneCD.put(user.getIdAsString(), LocalDateTime.now());
+								tChannel.sendMessage("You are currently on cooldown for 10 minutes " + user.getMentionTag() + "!");
 
 							} else {
 
-								tChannel.sendMessage("You are currently on cooldown for 10 minutes " + user.getMentionTag() + "!");
+								someoneCD.remove(user.getIdAsString());
+								tChannel.sendMessage(randomMember.getMentionTag());
 
 							}
-							someoneCD.put(user.getIdAsString(), LocalDateTime.now());
 						}
 					}
 					else{

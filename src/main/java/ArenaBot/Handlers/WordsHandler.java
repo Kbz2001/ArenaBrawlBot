@@ -49,10 +49,10 @@ public class WordsHandler implements MessageCreateListener
 				}
 			}
 
-			if (msg.getContent().toLowerCase().contains("goodnight") ||
-					msg.getContent().toLowerCase().contains("good night") ||
-					msg.getContent().toLowerCase().contains("gn") ||
-					msg.getContent().toLowerCase().contains("godnat"))
+			if (msg.getContent().equalsIgnoreCase("goodnight") ||
+					msg.getContent().equalsIgnoreCase("good night") ||
+					msg.getContent().equalsIgnoreCase("gn") ||
+					msg.getContent().equalsIgnoreCase("godnat"))
 			{
 
 				if (!user.isBotUser())
@@ -221,7 +221,7 @@ public class WordsHandler implements MessageCreateListener
 				if (!user.isBotUser())
 				{
 
-					msg.addReaction(":Ferozion:550861421718798338");
+					msg.addReaction(":Ferozion:570431297005027368");
 
 				}
 			}
