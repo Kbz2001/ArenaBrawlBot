@@ -759,7 +759,7 @@ public class UserCommands implements MessageCreateListener {
 						}
 					}
 					else{
-						System.out.println("It is not April Fools! The command is currently disabled!");
+						tChannel.sendMessage("It is not April Fools! The command is currently disabled!");
 					}
 				} catch (ParseException ex) {
 					ex.printStackTrace();
