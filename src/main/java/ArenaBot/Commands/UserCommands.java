@@ -317,7 +317,7 @@ public class UserCommands implements MessageCreateListener {
 				int tails = 1;
 				int random = (int) (Math.random() * 2);
 
-				if (flipCmd.length != 3 || MethodsHandler.isInteger(flipCmd[2]) || !MethodsHandler.isInteger(flipCmd[1])) {
+				if (flipCmd.length != 3 || !MethodsHandler.isInteger(flipCmd[2]) || MethodsHandler.isInteger(flipCmd[1])) {
 
 					MessageBuilder builder = new MessageBuilder()
 							.setEmbed(new EmbedBuilder()
@@ -458,8 +458,8 @@ public class UserCommands implements MessageCreateListener {
 				Map<String, Integer> topTen = App.saveUsers.entrySet()
 						.stream()
 						.sorted(Map.Entry.comparingByValue(Comparator.reverseOrder()))
-						.limit(10).
-								collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+						.limit(10)
+						.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
 
 				Set<Entry<String, Integer>> entries = topTen.entrySet();
 				int counter = 1;
