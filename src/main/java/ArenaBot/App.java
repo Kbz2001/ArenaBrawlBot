@@ -59,5 +59,6 @@ To deploy Server - Side:
 1. Open cmd prompt in Discord Bot directory - MUST have manifest.yml file in the directory.
 2. run C:\Users\kilez\OneDrive\Desktop\Hosting\IBM_Cloud_CLI_0.10.1_windows_amd64\IBM_Cloud_CLI\ibmcloud.exe cf push.
 3. If API point isn't set do ibmcloud target --cf.
+4. Update IBM Cloud if certificate error x509 occurs.
 
 */

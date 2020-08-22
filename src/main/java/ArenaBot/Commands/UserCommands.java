@@ -270,7 +270,7 @@ public class UserCommands implements MessageCreateListener {
 						float secs2 = calendar2.get(Calendar.MILLISECOND);
 
 						pongmsg.edit("***Pong!***"
-								+ "\n:heart: " + "Ping: " + (secs2 - secs1) + "."
+								+ "\n:heart: " + "Ping: " + (Math.abs(secs2 - secs1)) + "."
 								+ "\n:stopwatch: " + "Connection Delay: " + App.api.getReconnectDelay(900) + "."
 								+ "\n:alarm_clock: " + "Status: " + App.api.getStatus() + ".");
 
@@ -318,7 +318,6 @@ public class UserCommands implements MessageCreateListener {
 				int random = (int) (Math.random() * 2);
 
 				if (flipCmd.length != 3 || !MethodsHandler.isInteger(flipCmd[2]) || MethodsHandler.isInteger(flipCmd[1])) {
-
 					MessageBuilder builder = new MessageBuilder()
 							.setEmbed(new EmbedBuilder()
 									.setTitle("**Incorrect command format.**")
@@ -345,7 +344,7 @@ public class UserCommands implements MessageCreateListener {
 
 					}
 
-					if (KbzTokens.Tokens.get(user.getIdAsString()) < wager) {
+					else if (KbzTokens.Tokens.get(user.getIdAsString()) < wager) {
 
 						MessageBuilder builder = new MessageBuilder()
 								.setEmbed(new EmbedBuilder()
@@ -374,7 +373,7 @@ public class UserCommands implements MessageCreateListener {
 
 									}
 
-									flipmsg.edit("You chose " + choice + " and" + flipped + "was flipped!"
+									flipmsg.edit("You chose " + choice + " and " + flipped + " was flipped!"
 
 											+ "\n You won " + wager + " Kbz Tokens!" + user.getMentionTag()).get(1, TimeUnit.SECONDS);
 
@@ -403,7 +402,7 @@ public class UserCommands implements MessageCreateListener {
 
 									}
 
-									flipmsg.edit("Sorry! You chose " + choice + " but" + flipped + "was flipped!"
+									flipmsg.edit("Sorry! You chose " + choice + " but " + flipped + " was flipped!"
 
 											+ "\n You lost " + wager + " Kbz Tokens!" + user.getMentionTag()).get(1, TimeUnit.SECONDS);
 
