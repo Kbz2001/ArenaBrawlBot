@@ -37,7 +37,6 @@ public class BotCommands implements ServerMemberJoinListener, ServerMemberLeaveL
 					user.getMentionTag() + " has dipped into the **Arena Brawl Community Discord!** :tada::hugging: !"));
 
 		}
-
 	}
 
 	@Override
@@ -49,7 +48,7 @@ public class BotCommands implements ServerMemberJoinListener, ServerMemberLeaveL
 
 		if(srv.getIdAsString().equals("336291415908679690"))
 		{
-
+			System.out.println("THIS WAS RAN");
 			srv.getTextChannelById("369682886040879104").ifPresent(tChannel -> tChannel.sendMessage(
 					user.getName() + "#" + user.getDiscriminator() + " just left the Arena Brawl Community to die. :slight_frown:"));
 

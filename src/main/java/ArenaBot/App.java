@@ -6,8 +6,10 @@ import ArenaBot.Handlers.*;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.DiscordApiBuilder;
 import org.javacord.api.entity.activity.ActivityType;
+import org.javacord.api.entity.channel.TextChannel;
 
 import java.util.HashMap;
+import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 public class App
@@ -27,6 +29,7 @@ public class App
 	public App() throws ExecutionException, InterruptedException {
 
 		api = new DiscordApiBuilder().setToken(MethodsHandler.getToken())
+				.setAllIntents()
 				.login().join();
 
 		api.updateActivity(ActivityType.PLAYING, "Doe: Type %help!");
