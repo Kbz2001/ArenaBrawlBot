@@ -145,7 +145,7 @@ public class FlagGameHandler implements MessageCreateListener
 					try
 					{
 
-						tChannel.getMessageById(storeMessageIDs.get(msg.getContent())).get().edit(msg.getContent() + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
+						tChannel.getMessageById(storeMessageIDs.get(MethodsHandler.capitalize(msg.getContent()))).get().edit(MethodsHandler.capitalize(msg.getContent()) + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
 
 					}
 
@@ -186,7 +186,7 @@ public class FlagGameHandler implements MessageCreateListener
 					try
 					{
 
-						tChannel.getMessageById(storeMessageIDs.get(msg.getContent())).get().edit(msg.getContent() + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
+						tChannel.getMessageById(storeMessageIDs.get(MethodsHandler.capitalize(msg.getContent()))).get().edit(MethodsHandler.capitalize(msg.getContent()) + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
 
 					}
 
@@ -227,7 +227,7 @@ public class FlagGameHandler implements MessageCreateListener
 					try
 					{
 
-						tChannel.getMessageById(storeMessageIDs.get(msg.getContent())).get().edit(msg.getContent() + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
+						tChannel.getMessageById(storeMessageIDs.get(MethodsHandler.capitalize(msg.getContent()))).get().edit(MethodsHandler.capitalize(msg.getContent()) + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
 
 					}
 
@@ -268,7 +268,7 @@ public class FlagGameHandler implements MessageCreateListener
 					try
 					{
 
-						tChannel.getMessageById(storeMessageIDs.get(msg.getContent())).get().edit(msg.getContent() + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
+						tChannel.getMessageById(storeMessageIDs.get(MethodsHandler.capitalize(msg.getContent()))).get().edit(MethodsHandler.capitalize(msg.getContent()) + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
 
 					}
 
@@ -309,7 +309,7 @@ public class FlagGameHandler implements MessageCreateListener
 					try
 					{
 
-						tChannel.getMessageById(storeMessageIDs.get(msg.getContent())).get().edit(msg.getContent() + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
+						tChannel.getMessageById(storeMessageIDs.get(MethodsHandler.capitalize(msg.getContent()))).get().edit(MethodsHandler.capitalize(msg.getContent()) + " has been claimed by: " + user.getMentionTag() + " <:Agree:554445062528827433>");
 
 					}
 

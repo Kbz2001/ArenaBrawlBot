@@ -15,10 +15,13 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class MethodsHandler
 {
@@ -28,6 +31,8 @@ public class MethodsHandler
 	public static String getToken()
 	{
 
+		//When pushing to GitHub, remove this file from pushing.
+		
 		return "[REDACTED]";
 
 	}
@@ -575,7 +580,7 @@ public class MethodsHandler
 
 			}
 
-			in .close();
+			in.close();
 
 			String enitreGameCount = response.toString();
 			String[] parts = enitreGameCount.split("ARENA");
@@ -593,5 +598,14 @@ public class MethodsHandler
 
 		return part4;
 
+	}
+	public static String capitalize(String str) {
+		if (str == null || str.isEmpty()) {
+			return str;
+		}
+
+		return Arrays.stream(str.split("\\s+"))
+				.map(t -> t.substring(0, 1).toUpperCase() + t.substring(1).toLowerCase())
+				.collect(Collectors.joining(" "));
 	}
 }
