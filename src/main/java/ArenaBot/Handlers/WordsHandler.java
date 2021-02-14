@@ -4,7 +4,6 @@ import ArenaBot.App;
 import org.javacord.api.entity.channel.TextChannel;
 import org.javacord.api.entity.message.Message;
 import org.javacord.api.entity.message.MessageAuthor;
-import org.javacord.api.entity.user.User;
 import org.javacord.api.event.message.MessageCreateEvent;
 import org.javacord.api.listener.message.MessageCreateListener;
 
@@ -105,7 +104,6 @@ public class WordsHandler implements MessageCreateListener
 				if (!user.isBotUser())
 				{
 
-					tChannel.sendMessage("Please do not say that " + user.asUser().map(User::getMentionTag).get() + "!");
 					msg.addReaction(":Rude:554448338200690689");
 
 				}
